@@ -1,0 +1,517 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Overlay</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://socialstream.ninja/libs/colours.js" type="text/javascript"></script>
+    <!-- Links to Social Stream Ninja resources -->
+    <link rel="canonical" href="https://socialstream.ninja/">
+    <meta name="generator" content="Social Stream Ninja - https://github.com/steveseguin/social_stream">
+<style>
+/* -- TEMA STREAM ELEMENTS DIADAPTASI UNTUK SOCIAL STREAM NINJA -- */
+/* Ganti seluruh isi <style> Anda dengan kode ini */
+
+/* 1. Impor Font dan Pengaturan Dasar */
+/* =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Radley:wght@600;700;900&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: 'Radley', serif;
+    overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan */
+}
+
+/* 2. Wadah Utama Pesan */
+/* =================================== */
+/* ID ini harus sama dengan yang ada di HTML Anda */
+#chat-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px; /* Sedikit mengurangi jarak agar lebih pas */
+    overflow: visible;
+}
+
+/* 3. Animasi Pesan */
+/* =================================== */
+.chat-message {
+    padding: 4px 4px;
+    background-color: #ffffff;
+    border-radius: 14px;
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    position: relative;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3) translateX(-80px) translateY(50px) rotate(20deg); }
+    50% { opacity: 1; transform: scale(1.05); }
+    70% { opacity: 1; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.fade-out {
+    animation: fadeOut 0.6s ease-in forwards;
+}
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-50px); }
+}
+
+/* Animasi ornamen */
+@keyframes sway {
+    from { transform: rotate(-6deg); }
+    to { transform: rotate(6deg); }
+}
+@keyframes sway-tilt-neg-90 {
+    from { transform: rotate(-96deg); }
+    to { transform: rotate(-84deg); }
+}
+@keyframes sway-tilt-neg90 {
+    from { transform: rotate(84deg); }
+    to { transform: rotate(96deg); }
+}
+
+
+/* 4. Gaya Pesan Biasa & Lencana */
+/* =================================== */
+.message {
+    font-weight: 700;
+    background: #ffffff;
+    color: #FF7070;
+    font-size: 14px;
+    padding: 8px 32px;
+    border-radius: 10px;
+    display: inline-block;
+    min-width: 100px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    font-weight: 700;
+    color: #FF7070;
+    padding: 2px 10px;
+    border: 0.5px solid #FF7070;
+    border-radius: 6px;
+    font-size: 12px;
+    top: -26px;
+    left: 8px;
+    z-index: 4;
+    background-color: #ffffff;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: ellipsis;
+}
+
+/* Perbaikan final untuk SEMUA jenis emoji dan stiker */
+.message img {
+    /* Atur ukuran yang diinginkan */
+    width: 28px !important;
+    height: 28px !important;
+
+    /* Jaga agar tetap sejajar dengan teks */
+    vertical-align: middle !important;
+    
+    /* Perbaikan visual minor */
+    display: inline-block !important;
+    margin: -4px 2px 0 2px !important;
+}
+
+/* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
+/* ================================================= */
+/* Ornamen dasar */
+.message::before, .message::after, .badge::before, .badge::after, .ornament-extra-1, .ornament-extra-2 {
+    content: '';
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform-origin: bottom center;
+}
+
+/* Owner */
+.chat-message.owner {
+  background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/65dd3895abfa4c568c1a7afc44f412663cfcf72b/ornament-bg.svg'), 
+  linear-gradient(to bottom, #FCC8C4, #E46870);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: clamp(56px, 50%, 80vw) auto, cover;
+  padding: 4px; 
+  border-radius: 14px;
+  margin-bottom: 10px; 
+}
+.chat-message.owner .message {
+    background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
+    border: 1px solid #ffffff;
+    color: #ffffff;
+}
+.chat-message.owner .badge {
+    background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
+    border: 0.5px solid #ffffff;
+    color: #ffffff;
+}
+.chat-message.owner .message::before {
+    background-image: url('');
+    width: 48px; height: 32px; top: -11px; right: -11px; z-index: 4;
+}
+.chat-message.owner .message::after {
+    background-image: url('');
+    width: 28px; height: 20px; bottom: -2px; right: -10px; z-index: 4;
+    animation: sway 1s ease-in-out infinite alternate;
+}
+.chat-message.owner .badge::before {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/4a7cc5caa94e701385054171b2f5d49cf807575a/tangkai%2012x10.svg');
+  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  transform: rotate(-35deg);
+}
+.chat-message.owner .badge::after {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3c5b20bebe3c172dba2146922770a8734ec42648/star%20putih.svg');
+    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
+}
+
+/* Moderator */
+.chat-message.moderator {
+  background-image: linear-gradient(to bottom, #E46870, #5E0B15);
+  padding: 1px;
+  border: 4px solid #4B1F1B;
+  border-radius: 15px;
+  margin-bottom: 10px; 
+}
+.chat-message.moderator .message {
+  background-color: #4B1F1B;
+  color: #F6C4C3;
+}
+.chat-message.moderator .badge {
+  background-color: #4B1F1B;
+  border: 0.5px solid #E46870;
+  color: #F6C4C3;
+}
+.chat-message.moderator .message::before {
+  background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3024d0ffa56ba361c728ddd0f8300de7b63b473c/lumeran%20pink%2050x24.svg');
+  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
+}
+.chat-message.moderator .badge::before {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/4a7cc5caa94e701385054171b2f5d49cf807575a/tangkai%2012x10.svg');
+  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  transform: rotate(-35deg);
+}
+.chat-message.moderator .badge::after {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3c5b20bebe3c172dba2146922770a8734ec42648/star%20merah.svg');
+    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
+}
+
+/* Member */
+.chat-message.member {
+  background-image: linear-gradient(to right, #E46870, #5E0B15);
+  padding: 4px; 
+  border-radius: 14px;
+  margin-bottom: 10px; 
+}
+.chat-message.member .message {
+  background-image: linear-gradient(to right, #E46870, #5E0B15);
+  border: 1px solid #F6C4C3;
+  color: #F6C4C3;
+}
+.chat-message.member .badge {
+  background-image: linear-gradient(to right, #E46870, #5E0B15);
+  border: 0.5px solid #F6C4C3;
+  color: #F6C4C3;
+}
+.chat-message.member .message::before {
+  background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3024d0ffa56ba361c728ddd0f8300de7b63b473c/lumeran%20cerah%2050x24.svg');
+  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
+}
+.chat-message.member .message::after {
+  background-image: url('');
+  width: 28px; height: 20px; bottom: 2px; right: -12px; z-index: 4;
+  transform: rotate(90deg);
+}
+.chat-message.member .badge::before {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/4a7cc5caa94e701385054171b2f5d49cf807575a/tangkai%2012x10.svg');
+  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  transform: rotate(-35deg);
+}
+.chat-message.member .badge::after {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3c5b20bebe3c172dba2146922770a8734ec42648/star%20pink.svg');
+    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
+}
+
+/* Regular */
+.chat-message.regular {
+  background-color: #FFEBD3;
+  padding: 4px;
+  border-radius: 14px;
+  margin-bottom: 10px; 
+}
+.chat-message.regular .message {
+  background-color: #FFEBD3;
+  border: 1px solid #4B1F1B;;
+  color: #4B1F1B;
+}
+.chat-message.regular .badge {
+  background-color: #FFEBD3;
+  border: 0.5px solid #4B1F1B;
+  color: #4B1F1B;
+}
+.chat-message.regular .message::before {
+  background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3c5b20bebe3c172dba2146922770a8734ec42648/lumeran%20coklat%2050x24.svg');
+  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
+}
+.chat-message.regular .badge::before {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/4a7cc5caa94e701385054171b2f5d49cf807575a/tangkai%2012x10.svg');
+  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  transform: rotate(-35deg);
+}
+.chat-message.regular .badge::after {
+    background-image: url('https://raw.githubusercontent.com/Kirito55-test/test-streamelement-svg/3c5b20bebe3c172dba2146922770a8734ec42648/star%20coklat.svg');
+    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
+}
+
+</style>
+</head>
+<body>
+<div id="chat-container">
+    <div id="message-list-wrapper">
+		<div id="spacer" style="height: 2200px; width: 100%;"></div>
+    </div>
+</div>
+<script>
+    // ===================================================================
+    // == BAGIAN 1: PENGATURAN & LOGIKA KUSTOM DARI STREAM ELEMENTS
+    // ===================================================================
+
+    const chatContainer = document.getElementById('chat-container'); // Pastikan ID ini ada di HTML Anda
+    const urlParams = new URLSearchParams(window.location.search);
+    const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
+    const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 0; // Tambahkan &autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
+
+    // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
+    const messageQueue = [];
+    let isProcessing = false;
+
+    function processQueue() {
+        if (isProcessing || messageQueue.length === 0) return;
+
+        isProcessing = true;
+        const { username, message, role, extra } = messageQueue.shift();
+        addChatMessage(username, message, role, extra);
+
+        setTimeout(() => {
+            isProcessing = false;
+            processQueue();
+        }, 600); // Jeda 600ms antar pesan agar tidak spam
+    }
+
+    function enqueueMessage(username, message, role = 'regular', extra = {}) {
+        messageQueue.push({ username, message, role, extra });
+        if (!isProcessing) {
+            processQueue();
+        }
+    }
+
+    // === FUNGSI PENGGANTI EMOTE ===
+    function makeRichMessageWithEmotes(message) {
+        if (!message) return '';
+        // Mengganti emote kustom
+        let richMessage = message.replace(/:[a-z0-9\-_]+:/gi, (match) => {
+            const youtubeEmote = emotesArray.find(emote => emote.shortcuts.includes(match));
+            if (youtubeEmote) {
+                const emoteUrl = youtubeEmote.image.thumbnails[youtubeEmote.image.thumbnails.length - 1].url;
+                return `<img class="emoji" src="${emoteUrl}" alt="${match}" />`;
+            }
+            return match;
+        });
+        return richMessage;
+    }
+
+    // === FUNGSI ANIMASI ===
+    function animateChatShift(newEl) {
+        const messages = Array.from(chatContainer.children);
+        const firstRects = messages.map(el => el.getBoundingClientRect());
+        
+        chatContainer.appendChild(newEl); // Tambahkan elemen baru dulu
+        
+        const lastRects = messages.map(el => el.getBoundingClientRect());
+        
+        messages.forEach((el, i) => {
+            const deltaY = firstRects[i]?.top - lastRects[i]?.top;
+            if (deltaY) {
+                requestAnimationFrame(() => {
+                    el.style.transform = `translateY(${deltaY}px)`;
+                    el.style.transition = 'transform 0s';
+                });
+            }
+        });
+
+        requestAnimationFrame(() => {
+            messages.forEach(el => {
+                el.style.transform = '';
+                el.style.transition = 'transform 0.4s ease-out';
+            });
+        });
+    }
+
+    // === FUNGSI PEMBUAT TAMPILAN PESAN (HTML Builder) ===
+    function addChatMessage(username, messageHTML, role = 'regular', extra = {}) {
+        const chatEl = document.createElement('div');
+        // Menggunakan nama class dari CSS kustom Anda
+        chatEl.className = `chat-message ${role}`;
+
+        if (role === 'donation' || role === 'new-subscriber') {
+            const badgeText = role === 'donation' ? 'DONATION' : 'NEW SUBSCRIBER';
+            chatEl.innerHTML = `
+                <div class="special-card ${role}" style="${extra.style || ''}">
+                    <div class="special-badge">${badgeText}</div>
+                    <div class="special-message">${username} ${messageHTML || ''}</div>
+                </div>
+            `;
+        } else {
+            chatEl.innerHTML = `
+                <div class="badge">${username}</div>
+                <div class="message">
+                    ${messageHTML}
+                    <span class="ornament-extra-1"></span>
+                    <span class="ornament-extra-2"></span>
+                </div>
+            `;
+        }
+
+        // Panggil fungsi animasi Anda, bukan appendChild biasa
+        animateChatShift(chatEl);
+
+        if (AUTO_HIDE > 0) {
+            setTimeout(() => {
+                chatEl.classList.add('fade-out');
+                setTimeout(() => chatEl.remove(), 600);
+            }, AUTO_HIDE * 1000);
+        }
+
+        if (chatContainer.children.length > MAX_MESSAGES) {
+            const firstMessage = chatContainer.children[0];
+            firstMessage.classList.add('fade-out');
+            setTimeout(() => firstMessage.remove(), 600);
+        }
+    }console.log("Ini adalah pesan standar untuk informasi umum.");
+
+    // ===================================================================
+    // == BAGIAN 2: "JEMBATAN" PENGHUBUNG SSN KE SISTEM ANDA
+    // ===================================================================
+
+    function addMessageToOverlay(data) {
+        // Selalu cetak data mentah untuk debugging
+        console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
+
+        const username = data.chatname;
+        const message = data.chatmessage; // Ambil pesan mentah
+                
+        // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
+        if (data.event === true) {
+            console.log("Event umum diabaikan (Follow/Share/Like):", data);
+            return;
+        }
+
+        // Prioritas #4: Jika bukan event di atas, maka ini adalah PESAN OBROLAN BIASA
+        // Abaikan jika tidak ada isi pesan
+        if (!message) {
+            return;
+        }
+
+        // Tentukan peran untuk pesan obrolan biasa
+        let roleClass = 'regular';
+        const badgeSrcs = (data.chatbadges || []).map(badge => {
+            if (typeof badge === 'string') return badge.toLowerCase();
+            if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();
+            return '';
+        }).filter(Boolean);
+
+        if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
+            roleClass = 'owner';
+        } else if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+            roleClass = 'moderator';
+        } else if (
+            data.membership === "MEMBERSHIP" ||
+            badgeSrcs.some(src =>
+                src.includes('gifter') ||
+                src.includes('subscriber') ||
+                src.includes('member') ||
+                (src.includes('fans_badge') && !src.includes('grey'))
+            )
+        ) {
+            roleClass = 'member';
+        }
+
+        // Kirim pesan obrolan biasa ke antrian
+        enqueueMessage(username, message, roleClass);
+    }
+
+    // ===================================================================
+    // == BAGIAN 3: KODE BAWAAN SSN UNTUK MENERIMA DATA (JANGAN DIUBAH)
+    // ===================================================================
+    var roomID = "iWWnKL28tQ";
+    if (urlParams.has("session")) {
+        roomID = urlParams.get("session");
+    }
+    var password = "false";
+    var featuredMode = false;
+
+    var iframe = document.createElement("iframe");
+    if (featuredMode) {
+        iframe.src = `https://vdo.socialstream.ninja/?ln&password=${password}&salt=vdo.ninja&label=overlay&exclude=${roomID}&scene&novideo&noaudio&cleanoutput&room=${roomID}`;
+    } else {
+        iframe.src = "https://vdo.socialstream.ninja/?ln&salt=vdo.ninja&password=" + password + "&push&label=dock&vd=0&ad=0&novideo&noaudio&autostart&cleanoutput&room=" + roomID;
+    }
+    iframe.style.cssText = "width:0;height:0;border:0;position:absolute;top:-10px;left:-10px;";
+    document.body.appendChild(iframe);
+    window.addEventListener("message", function(e) {
+        if (e.source != iframe.contentWindow) return;
+        if (e.data.dataReceived && e.data.dataReceived.overlayNinja) {
+            addMessageToOverlay(e.data.dataReceived.overlayNinja);
+        }
+    });
+
+    var conCon = 1;
+    var socketserver = false;
+    var serverURL = urlParams.has("localserver") ? "ws://127.0.0.1:3000" : "wss://io.socialstream.ninja";
+
+    function setupSocket() {
+        socketserver.onclose = function() {
+            setTimeout(function() {
+                conCon += 1;
+                socketserver = new WebSocket(serverURL);
+                setupSocket();
+            }, 100 * conCon);
+        };
+        socketserver.onopen = function() {
+            conCon = 1;
+            socketserver.send(JSON.stringify({ "join": roomID, "out": 3, "in": 4 }));
+        };
+        socketserver.addEventListener('message', function(event) {
+            if (event.data) {
+                try {
+                    var data = JSON.parse(event.data);
+                    if (data) {
+                        addMessageToOverlay(data);
+                    }
+                } catch (error) {
+                    console.error("Error processing WebSocket message:", error, "Data:", event.data);
+                }
+            }
+        });
+    }
+
+    if (urlParams.has("server") || urlParams.has("server2")) {
+        serverURL = urlParams.get("server") || urlParams.get("server2") || serverURL;
+        socketserver = new WebSocket(serverURL);
+        setupSocket();
+    }
+</script>
+</body>
+</html>
