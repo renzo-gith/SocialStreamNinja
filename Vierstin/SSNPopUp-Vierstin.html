@@ -214,6 +214,18 @@
             background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/star%20coklat.svg');
             width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
         }
+
+        /* Animasi */
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3) translateX(-50px) translateY(50px); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { opacity: 1; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1) translateY(-50px); }
+            to { opacity: 0; transform: scale(0); }
+        }
     </style>
 </head>
 <body>
