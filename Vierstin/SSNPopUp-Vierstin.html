@@ -7,13 +7,13 @@
     <meta name="robots" content="noindex">
     <style>
         /* -- TEMA KUSTOM FINAL ANDA -- */
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Radley:wght@600;700;900&display=swap');
 
         body, html {
             margin: 0;
             padding: 0;
             background: transparent;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Radley', serif;
             overflow: hidden;
         }
 
@@ -30,7 +30,9 @@
 
         /* Ini adalah nama class yang dibuat oleh JS di bawah */
         .chat-message {
-            opacity: 0;
+            padding: 8px 8px;
+            opacity: #ffffff;
+            border-radius: 32px;
             animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             position: relative;
             display: block;
@@ -38,18 +40,18 @@
         }
 
         .badge {
-            font-weight: 900; color: #ffffff; padding: 10px 32px;
-            border-radius: 40px; font-size: 20px; position: absolute;
-            z-index: 99; background-color: #222222;
+            font-weight: 900; color: #ffffff; padding: 6px 14px;
+            border-radius: 20px; font-size: 20px; position: absolute;
+            z-index: 3; background-color: #222222;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;
-            top: -24px; left: 50%; transform: translateX(-50%);
+            top: -26px; left: 50%; transform: translateX(-50%);
             max-width: 100%;
         }
 
         .message {
             font-weight: 700; background: #222222; color: #ffffff;
-            font-size: 30px; padding: 30px 38px; text-align: center;
-            border-radius: 4px 24px 4px 24px;
+            font-size: 30px; padding: 18px 38px; text-align: center;
+            border-radius: 24px;
             box-sizing: border-box; overflow-wrap: break-word;
             position: relative; display: block;
             width: 100%;
@@ -90,12 +92,12 @@
         }
         .chat-message.owner .message {
             background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
-            border: 1px solid #ffffff;
+            border: 2px solid #ffffff;
             color: #ffffff;
         }
         .chat-message.owner .badge {
             background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
-            border: 0.5px solid #ffffff;
+            border: 1px solid #ffffff;
             color: #ffffff;
         }
         .chat-message.owner .message::before {
@@ -120,8 +122,8 @@
         /* Moderator */
         .chat-message.moderator {
         background-image: linear-gradient(to bottom, #E46870, #5E0B15);
-        padding: 1px;
-        border: 4px solid #4B1F1B;
+        padding: 2px;
+        border: 8px solid #4B1F1B;
         border-radius: 15px;
         margin-bottom: 10px; 
         }
@@ -131,7 +133,7 @@
         }
         .chat-message.moderator .badge {
         background-color: #4B1F1B;
-        border: 0.5px solid #E46870;
+        border: 1px solid #E46870;
         color: #F6C4C3;
         }
         .chat-message.moderator .message::before {
@@ -157,12 +159,12 @@
         }
         .chat-message.member .message {
         background-image: linear-gradient(to right, #E46870, #5E0B15);
-        border: 1px solid #F6C4C3;
+        border: 2px solid #F6C4C3;
         color: #F6C4C3;
         }
         .chat-message.member .badge {
         background-image: linear-gradient(to right, #E46870, #5E0B15);
-        border: 0.5px solid #F6C4C3;
+        border: 1px solid #F6C4C3;
         color: #F6C4C3;
         }
         .chat-message.member .message::before {
@@ -193,12 +195,12 @@
         }
         .chat-message.regular .message {
         background-color: #FFEBD3;
-        border: 1px solid #4B1F1B;;
+        border: 2px solid #4B1F1B;;
         color: #4B1F1B;
         }
         .chat-message.regular .badge {
         background-color: #FFEBD3;
-        border: 0.5px solid #4B1F1B;
+        border: 1px solid #4B1F1B;
         color: #4B1F1B;
         }
         .chat-message.regular .message::before {
