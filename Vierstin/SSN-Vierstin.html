@@ -406,30 +406,44 @@ body, html {
     // ===================================================================
 
     function addMessageToOverlay(data) {
+        // Selalu cetak data mentah untuk debugging
         console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
 
         const username = data.chatname;
-        const message = data.chatmessage;
-
-        // --- LOGIKA LENGKAP DENGAN PRIORITAS ---
-
-        // EDIT NAMA PENGGUNA STREAMER DI SINI
-        const STREAMER_USERNAME = "El Pirstinn"; // GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
-
-        let roleClass = 'regular'; // Peran default
-
-        if (username === STREAMER_USERNAME) {
-            roleClass = 'owner';
+        const message = data.chatmessage; // Ambil pesan mentah
+                
+        // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
+        if (data.event === true) {
+            console.log("Event umum diabaikan (Follow/Share/Like):", data);
+            return;
         }
 
-        else {
+        // Prioritas #4: Jika bukan event di atas, maka ini adalah PESAN OBROLAN BIASA
+        // Abaikan jika tidak ada isi pesan
+        if (!message) {
+            return;
+        }
+
+        // Tentukan peran untuk pesan obrolan biasa
+        let roleClass = 'regular';
+
+        // EDIT NAMA PENGGUNA DI SINI
+        const STREAMER_USERNAME = "El Pirstinn"; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
+
+        // Cek dulu apakah pengirimnya adalah streamer
+        if (data.chatname === STREAMER_USERNAME) {
+            roleClass = 'owner';
+        } else {
+
             const badgeSrcs = (data.chatbadges || []).map(badge => {
                 if (typeof badge === 'string') return badge.toLowerCase();
                 if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();
                 return '';
             }).filter(Boolean);
 
-            if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+            if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
+                roleClass = 'owner';
+            } else if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
                 roleClass = 'moderator';
             } else if (
                 data.membership === "MEMBERSHIP" ||
@@ -443,23 +457,9 @@ body, html {
                 roleClass = 'member';
             }
         }
-        
-        if (!message || data.event === true) {
-            console.log("Pesan kosong atau event umum diabaikan:", data);
-            return;
-        }
 
-        const messageContent = `
-            <div class="chat-message ${roleClass}">
-                <div class="badge">${username}</div>
-                <div class="message">
-                    ${message}
-                </div>
-            </div>
-        `;
-
-        // Tampilkan hasilnya (menggantikan isi #output karena ini mode highlight)
-        document.getElementById('output').innerHTML = messageContent;
+        // Kirim pesan obrolan biasa ke antrian
+        enqueueMessage(username, message, roleClass);
     }
 
     // ===================================================================
