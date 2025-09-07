@@ -318,9 +318,9 @@
             const OWNER_USERNAMES = ["El Pirstinn", "Rey ~ Design & Illustration"];
             let roleClass = 'regular';
             
-            // Prioritas #1: Cek apakah nama pengguna ada di dalam daftar OWNER
-            // Menggunakan .includes() untuk memeriksa Array
-            if (OWNER_USERNAMES.includes(content.chatname)) {
+            // 2. Buat pengecekan yang lebih kuat (case-insensitive dan trim spasi)
+            const normalizedChatname = content.chatname.trim().toLowerCase();
+            if (OWNER_USERNAMES.some(owner => owner.toLowerCase() === normalizedChatname)) {
                 roleClass = 'owner';
             } 
             // Prioritas #2: Jika bukan owner, cek apakah dia member
