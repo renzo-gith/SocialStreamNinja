@@ -285,13 +285,9 @@
 
         // FUNGSI INTI ANDA (sudah bersih dan terintegrasi)
         // ===============================================
-        // GANTIKAN FUNGSI showMessage LAMA ANDA DENGAN YANG INI
         showMessage(data) {
             const content = data;
 
-            // --- LOGIKA BARU YANG SUDAH DISEMPURNAKAN ---
-
-            // Prioritas 1: Event "New Subscriber" TULEN (hanya notifikasi, tanpa isi chat)
             if (content.membership && !content.chatmessage) {
                 const messageContent = `
                     <div class="chat-message new-subscriber">
@@ -305,7 +301,6 @@
                 return; // Hentikan di sini
             }
 
-            // Prioritas 2: Donasi
             if (content.hasDonation) {
                 const messageContent = `
                     <div class="chat-message donation">
@@ -316,20 +311,22 @@
                     </div>
                 `;
                 document.getElementById('output').innerHTML = messageContent;
-                return; // Hentikan di sini
+                return;
             }
 
-            // Jika lolos dari atas, ini adalah pesan obrolan biasa.
-            // Sekarang kita tentukan gayanya.
+            // NAMA PENGGUNA
+            const STREAMER_USERNAME = "El Pirstinn"; // GANTI DENGAN NAMA PENGGUNA ANDA
 
-            // 2. Deteksi Peran dari Lencana atau Properti Membership
             let roleClass = 'regular';
             
-            // Deteksi Member YouTube secara spesifik
+            if (content.chatname === STREAMER_USERNAME) {
+                roleClass = 'owner';
+            }
+
             if (content.membership === "MEMBERSHIP") {
                 roleClass = 'member';
             } 
-            // Deteksi peran lain dari lencana
+
             else if (content.chatbadges) {
                 const badgeSrcs = content.chatbadges.map(badge => (badge.src || badge).toLowerCase());
                 
@@ -348,7 +345,6 @@
                 }
             }
 
-            // 3. Buat HTML untuk pesan obrolan biasa dengan peran yang sesuai
             const messageContent = `
                 <div class="chat-message ${roleClass}">
                     <div class="badge">${content.chatname}</div>
@@ -360,7 +356,6 @@
                 </div>
             `;
 
-            // 4. Tampilkan Hasilnya
             document.getElementById('output').innerHTML = messageContent;
         }
     };

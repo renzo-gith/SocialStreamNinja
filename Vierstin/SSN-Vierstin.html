@@ -169,7 +169,7 @@ body, html {
 }
 .chat-message.owner .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
   transform: rotate(-35deg);
 }
 .chat-message.owner .badge::after {
@@ -200,7 +200,7 @@ body, html {
 }
 .chat-message.moderator .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
   transform: rotate(-35deg);
 }
 .chat-message.moderator .badge::after {
@@ -236,7 +236,7 @@ body, html {
 }
 .chat-message.member .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
   transform: rotate(-35deg);
 }
 .chat-message.member .badge::after {
@@ -267,7 +267,7 @@ body, html {
 }
 .chat-message.regular .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e2ee1873f92ea90b04dc3cce99e00f821e3d2d04/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6; left: -1px; z-index: 5;
+  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
   transform: rotate(-35deg);
 }
 .chat-message.regular .badge::after {
@@ -406,50 +406,60 @@ body, html {
     // ===================================================================
 
     function addMessageToOverlay(data) {
-        // Selalu cetak data mentah untuk debugging
         console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
 
         const username = data.chatname;
-        const message = data.chatmessage; // Ambil pesan mentah
-                
-        // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
-        if (data.event === true) {
-            console.log("Event umum diabaikan (Follow/Share/Like):", data);
-            return;
-        }
+        const message = data.chatmessage;
 
-        // Prioritas #4: Jika bukan event di atas, maka ini adalah PESAN OBROLAN BIASA
-        // Abaikan jika tidak ada isi pesan
-        if (!message) {
-            return;
-        }
+        // --- LOGIKA LENGKAP DENGAN PRIORITAS ---
 
-        // Tentukan peran untuk pesan obrolan biasa
-        let roleClass = 'regular';
-        const badgeSrcs = (data.chatbadges || []).map(badge => {
-            if (typeof badge === 'string') return badge.toLowerCase();
-            if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();
-            return '';
-        }).filter(Boolean);
+        // EDIT NAMA PENGGUNA STREAMER DI SINI
+        const STREAMER_USERNAME = "El Pirstinn"; // GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
 
-        if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
+        let roleClass = 'regular'; // Peran default
+
+        if (username === STREAMER_USERNAME) {
             roleClass = 'owner';
-        } else if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
-            roleClass = 'moderator';
-        } else if (
-            data.membership === "MEMBERSHIP" ||
-            badgeSrcs.some(src =>
-                src.includes('gifter') ||
-                src.includes('subscriber') ||
-                src.includes('member') ||
-                (src.includes('fans_badge') && !src.includes('grey'))
-            )
-        ) {
-            roleClass = 'member';
         }
 
-        // Kirim pesan obrolan biasa ke antrian
-        enqueueMessage(username, message, roleClass);
+        else {
+            const badgeSrcs = (data.chatbadges || []).map(badge => {
+                if (typeof badge === 'string') return badge.toLowerCase();
+                if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();
+                return '';
+            }).filter(Boolean);
+
+            if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+                roleClass = 'moderator';
+            } else if (
+                data.membership === "MEMBERSHIP" ||
+                badgeSrcs.some(src =>
+                    src.includes('gifter') ||
+                    src.includes('subscriber') ||
+                    src.includes('member') ||
+                    (src.includes('fans_badge') && !src.includes('grey'))
+                )
+            ) {
+                roleClass = 'member';
+            }
+        }
+        
+        if (!message || data.event === true) {
+            console.log("Pesan kosong atau event umum diabaikan:", data);
+            return;
+        }
+
+        const messageContent = `
+            <div class="chat-message ${roleClass}">
+                <div class="badge">${username}</div>
+                <div class="message">
+                    ${message}
+                </div>
+            </div>
+        `;
+
+        // Tampilkan hasilnya (menggantikan isi #output karena ini mode highlight)
+        document.getElementById('output').innerHTML = messageContent;
     }
 
     // ===================================================================
