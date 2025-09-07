@@ -431,10 +431,9 @@ body, html {
         const STREAMER_USERNAME = ["El Pirstinn", "Rey ~ Design &amp; Illustration"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
 
         // Cek dulu apakah pengirimnya adalah streamer
-        if (data.chatname === STREAMER_USERNAME) {
+        if (STREAMER_USERNAME.includes(username)) {
             roleClass = 'owner';
         } else {
-
             const badgeSrcs = (data.chatbadges || []).map(badge => {
                 if (typeof badge === 'string') return badge.toLowerCase();
                 if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();

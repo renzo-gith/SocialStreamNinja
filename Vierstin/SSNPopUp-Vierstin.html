@@ -315,21 +315,23 @@
             }
 
             // NAMA PENGGUNA
-            const STREAMER_USERNAME = ["El Pirstinn", "Rey ~ Design &amp; Illustration"]; // GANTI DENGAN NAMA PENGGUNA ANDA
-
+            const OWNER_USERNAMES = ["El Pirstinn", "Rey ~ Design & Illustration"];
             let roleClass = 'regular';
             
-            if (content.chatname === STREAMER_USERNAME) {
+            // Prioritas #1: Cek apakah nama pengguna ada di dalam daftar OWNER
+            // Menggunakan .includes() untuk memeriksa Array
+            if (OWNER_USERNAMES.includes(content.chatname)) {
                 roleClass = 'owner';
-            }
-
-            if (content.membership === "MEMBERSHIP") {
+            } 
+            // Prioritas #2: Jika bukan owner, cek apakah dia member
+            else if (content.membership === "MEMBERSHIP") {
                 roleClass = 'member';
             } 
-
+            // Prioritas #3: Jika bukan keduanya, baru cek lencana
             else if (content.chatbadges) {
                 const badgeSrcs = content.chatbadges.map(badge => (badge.src || badge).toLowerCase());
                 
+                // Pengecekan owner dari lencana tetap ada sebagai cadangan
                 if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
                     roleClass = 'owner';
                 } else if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
