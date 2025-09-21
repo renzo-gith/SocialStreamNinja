@@ -442,7 +442,7 @@ body, html {
 
             if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
                 roleClass = 'owner';
-            } else if (badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+            } else if (data.mod === true || badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
                 roleClass = 'moderator';
             } else if (
                 data.membership === "MEMBERSHIP" ||
