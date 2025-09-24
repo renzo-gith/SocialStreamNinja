@@ -34,7 +34,7 @@ body, html {
     width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 28px; /* Sedikit mengurangi jarak agar lebih pas */
+    gap: 24px; /* Sedikit mengurangi jarak agar lebih pas */
     overflow: visible;
 }
 
@@ -101,7 +101,7 @@ body, html {
     color: #796A69;
     padding: 4px 18px;
     border: 2px solid #ffffff;
-    border-radius: 12px;
+    border-radius: 20px;
     font-size: 12px;
     top: -12px;
     left: -12px;
@@ -123,7 +123,7 @@ body, html {
     
     /* Perbaikan visual minor */
     display: inline-block !important;
-    margin: -4px 2px 0 2px !important;
+    margin: 0px 2px 0 2px !important;
 }
 
 /* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
@@ -153,7 +153,6 @@ body, html {
 .chat-message.owner .badge {
     background-color: #ffffff;
     border: 2px solid #ffffff;
-    border-radius: 12px;
     color: #545454;
 }
 .chat-message.owner .message::before {
@@ -166,7 +165,7 @@ body, html {
 }
 .chat-message.owner .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0f2c657beb9d5ce040d65822d138aa49cd813f6/Kumayama%20Ryuu/Asset/single%20paw%2014x13.svg');
-    width: 14px; height: 13px; top: 50%; left: -7px; z-index: 5;
+    width: 16px; height: 15px; top: 50%; left: -7px; transform: translateY(-50%); z-index: 5;
     transform: rotate(15deg);
 }
 .chat-message.owner .badge::after {
@@ -189,7 +188,6 @@ body, html {
 .chat-message.moderator .badge {
     background-color: #ffffff;
     border: 2px solid #ffffff;
-    border-radius: 12px;
     color: #545454;
 }
 .chat-message.moderator .message::before {
@@ -202,7 +200,7 @@ body, html {
 }
 .chat-message.moderator .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0f2c657beb9d5ce040d65822d138aa49cd813f6/Kumayama%20Ryuu/Asset/single%20paw%2014x13.svg');
-    width: 14px; height: 13px; top: 50%; left: -7px; z-index: 5;
+    width: 16px; height: 15px; top: 50%; left: -7px; transform: translateY(-50%); z-index: 5;
     transform: rotate(15deg);
 }
 .chat-message.moderator .badge::after {
@@ -225,7 +223,6 @@ body, html {
 .chat-message.member .badge {
     background-color: #796A68;
     border: 2px solid #ffffff;
-    border-radius: 12px;
     color: #ffffff;
 }
 .chat-message.member .message::before {
@@ -233,12 +230,12 @@ body, html {
 }
 .chat-message.member .message::after {
   background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0f2c657beb9d5ce040d65822d138aa49cd813f6/Kumayama%20Ryuu/Asset/big%20paw%2036x32.svg');
-  width: 36px; height: 32px; bottom: 4px; right: -14px; z-index: 4;
+  width: 40px; height: 36px; bottom: 4px; right: -10px; z-index: 4;
   transform: rotate(25deg);
 }
 .chat-message.member .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0f2c657beb9d5ce040d65822d138aa49cd813f6/Kumayama%20Ryuu/Asset/single%20paw%2014x13.svg');
-    width: 14px; height: 13px; top: 50%; left: -7px; z-index: 5;
+    width: 16px; height: 15px; top: 50%; left: -7px; transform: translateY(-50%); z-index: 5;
     transform: rotate(15deg);
 }
 .chat-message.member .badge::after {
@@ -261,7 +258,6 @@ body, html {
 .chat-message.regular .badge {
     background-color: #AC9A97;
     border: 2px solid #ffffff;
-    border-radius: 12px;
     color: #ffffff;
 }
 .chat-message.regular .message::before {
@@ -269,7 +265,7 @@ body, html {
 }
 .chat-message.regular .badge::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0f2c657beb9d5ce040d65822d138aa49cd813f6/Kumayama%20Ryuu/Asset/single%20paw%2014x13.svg');
-    width: 14px; height: 13px; top: 50%; left: -7px; z-index: 5;
+    width: 16px; height: 15px; top: 50%; left: -7px; transform: translateY(-50%); z-index: 5;
     transform: rotate(15deg);
 }
 .chat-message.regular .badge::after {
