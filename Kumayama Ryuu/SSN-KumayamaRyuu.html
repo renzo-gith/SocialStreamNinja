@@ -125,7 +125,7 @@ body, html {
     
     /* Perbaikan visual minor */
     display: inline-block !important;
-    margin: 0px 2px 0 2px !important;
+    margin: 0px 4px 0 4px !important;
 }
 
 /* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
@@ -404,9 +404,22 @@ body, html {
     // == BAGIAN 2: "JEMBATAN" PENGHUBUNG SSN KE SISTEM ANDA
     // ===================================================================
 
+    // --- PENGATURAN FILTER PLATFORM ---
+    // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
+    // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
+    const ALLOWED_PLATFORMS = ['youtube'];
+
     function addMessageToOverlay(data) {
         // Selalu cetak data mentah untuk debugging
         console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
+
+        // --- FILTER PLATFORM DIMULAI ---
+        // Cek apakah filter diaktifkan (array tidak kosong) DAN apakah tipe data tidak ada di dalamnya.
+        if (ALLOWED_PLATFORMS.length > 0 && !ALLOWED_PLATFORMS.includes(data.type)) {
+            console.log(`Pesan dari platform '${data.type}' diabaikan karena tidak ada dalam daftar yang diizinkan.`);
+            return;
+        }
+        // --- FILTER PLATFORM SELESAI ---
 
         const username = data.chatname;
         const message = data.chatmessage; // Ambil pesan mentah
@@ -427,7 +440,7 @@ body, html {
         let roleClass = 'regular';
 
         // EDIT NAMA PENGGUNA DI SINI
-        const STREAMER_USERNAME = ["Rey ~ Design & Illustration"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
+        const STREAMER_USERNAME = ["Renaldy Afif"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
 
         // Cek dulu apakah pengirimnya adalah streamer
         if (STREAMER_USERNAME.includes(username)) {
