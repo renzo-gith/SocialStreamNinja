@@ -41,9 +41,7 @@ body, html {
 /* 3. Animasi Pesan */
 /* =================================== */
 .chat-message {
-    background-color: #ffffff;
-    border-radius: 32px;
-    left: 2px;
+    opacity: 0;
     animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     position: relative;
     display: inline-block;
@@ -87,7 +85,6 @@ body, html {
     color: #ffffff;
     font-size: 18px;
     padding: 16px 42px;
-    border: 2px solid #ffffff;
     border-radius: 28px;
     display: inline-block;
     min-width: 200px;
@@ -101,7 +98,6 @@ body, html {
     font-weight: 600;
     color: #ffffff;
     padding: 2px 18px;
-    border: 2px solid #ffffff;
     border-radius: 20px;
     font-size: 12px;
     top: -12px;
@@ -140,7 +136,7 @@ body, html {
 
 /* Owner */
 .chat-message.owner {
-    background-color: #ffffff;
+    opacity: 0;
 }
 .chat-message.owner .message {
     background-color: #3C0B0A;
@@ -185,7 +181,7 @@ body, html {
 
 /* Moderator */
 .chat-message.moderator {
-    background-color: #ffffff;
+    opacity: 0;
 }
 .chat-message.moderator .message {
     background-color: #3C0B0A;
@@ -230,7 +226,7 @@ body, html {
 
 /* Member */
 .chat-message.member {
-    background-color: #ffffff;
+    opacity: 0;
 }
 .chat-message.member .message {
     background-color: #0D0F4E;
@@ -275,13 +271,13 @@ body, html {
 
 /* Regular */
 .chat-message.regular {
-    background-color: #ffffff;
+    opacity: 0;
 }
 .chat-message.regular .message {
     background-color: #151515;
     border-radius: 28px;
     color: #ffffff;
-    box-shadow: 0px 0px 4px 2px rgba(30, 97, 199, 100), inset 0px -4px 2px rgba(30, 97, 199, 100);
+    box-shadow: 0px 0px 4px 2px rgba(30, 97, 199, 100), inset 0px -4px 12px rgba(30, 97, 199, 100);
 }
 .chat-message.regular .badge {
     background-color: #1E61C7;
