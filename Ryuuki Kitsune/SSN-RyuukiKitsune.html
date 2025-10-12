@@ -34,7 +34,7 @@ body, html {
     width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 22px; /* Sedikit mengurangi jarak agar lebih pas */
+    gap: 24px; /* Sedikit mengurangi jarak agar lebih pas */
     overflow: visible;
 }
 
@@ -161,7 +161,7 @@ body, html {
 }
 .chat-message.owner .message::after {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/triplestrars.svg');
-    width: 48px; height: 38px; bottom: -2px; right: -24px; z-index: 4;
+    width: 48px; height: 38px; bottom: -2px; right: -20px; z-index: 4;
 }
 .chat-message.owner .ornament-extra-1 {
     background-image: url('');
@@ -208,7 +208,7 @@ body, html {
 }
 .chat-message.moderator .message::after {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/triplestrars.svg');
-    width: 48px; height: 38px; bottom: -2px; right: -24px; z-index: 4;
+    width: 48px; height: 38px; bottom: -2px; right: -20px; z-index: 4;
 }
 .chat-message.moderator .ornament-extra-1 {
     background-image: url('');
@@ -234,6 +234,10 @@ body, html {
 }
 .chat-message.member .message {
     background-color: #0D0F4E;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8bfa7a409e3944e8aa9dd8e95c46f71f9f33cdf8/Ryuuki%20Kitsune/Asset/blurblue.svg');
+    background-repeat: no-repeat;
+    background-position: 50% calc(100% - 48px);
+    background-size: 552px 120px;
     border: 1px solid #90C2FF;
     border-radius: 28px;
     color: #ffffff;
@@ -250,9 +254,8 @@ body, html {
     transform: rotate(0deg);
 }
 .chat-message.member .message::after {
-    background-image: url('');
-    width: 34px; height: 34px; bottom: 6px; right: -6px; z-index: 4;
-    transform: rotate(-18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/triplestrars.svg');
+    width: 48px; height: 38px; bottom: -2px; right: -20px; z-index: 4;
 }
 .chat-message.member .ornament-extra-1 {
     background-image: url('');
@@ -263,9 +266,8 @@ body, html {
     background-image: url('');
 }
 .chat-message.member .badge::before {
-    background-image: url('');
-    width: 10px; height: 10px; top: -4px; left: -2px; z-index: 5;
-    transform: rotate(18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/onestar.svg');
+    width: 24px; height: 24px; top: -12px; left: -6px; z-index: 5;
 }
 .chat-message.member .badge::after {
     background-image: url('');
