@@ -97,7 +97,7 @@ body, html {
     position: absolute;
     font-weight: 600;
     color: #ffffff;
-    padding: 2px 18px;
+    padding: 2px 18px 2px 30px;
     border-radius: 20px;
     font-size: 12px;
     top: -12px;
@@ -139,29 +139,28 @@ body, html {
     opacity: 0;
 }
 .chat-message.owner .message {
-    background-image: url(''),
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/yellow-gradient-bg.svg'),
     linear-gradient(to right, #2B2B03, #151515);
     background-repeat: no-repeat;
-    background-position: center 35%;
-    background-size: 200% auto;
-    border: 1px solid #FF9090;
-    border-radius: 28px;
+    background-position: -20px calc(100% + 10px);
+    background-size: 394px 88px;
+    border-radius: 12px;
     color: #ffffff;
-    box-shadow: 0px 0px 6px 1px rgba(255, 130, 130, 100), inset 0px 0px 6px 1px rgba(255, 130, 130, 100), inset 0px -4px 12px rgba(199, 30, 30, 25);
+    box-shadow: 0px 0px 12px 1px rgba(54, 52, 0, 100), inset 1px 0px 2px 0px rgba(73, 54, 0, 100);
 }
 .chat-message.owner .badge {
-    background-color: #FF9090;
-    color: #3C0B0A;
-    box-shadow: 0px 0px 2px 1px rgba(255, 144, 144, 100), inset 1px 2px 4px rgba(255, 255, 255, 50);
+    background-color: #493C00;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(154, 127, 0, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(154, 127, 0, 100);
 }
 .chat-message.owner .message::before {
-    background-image: url('');
-    width: 30.8px; height: 26.7px; top: 16px; left: -8px; z-index: 4;
-    transform: rotate(-25deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    width: 38px; height: 26px; top: -2px; right: -2px; z-index: 4;
 }
 .chat-message.owner .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/triplestrars.svg');
-    width: 48px; height: 38px; bottom: -2px; right: -20px; z-index: 4;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/main-ornament.svg');
+    width: 46px; height: 48px; bottom: -16px; left: -12px; z-index: 4;
+    transform: rotate(6deg);
 }
 .chat-message.owner .ornament-extra-1 {
     background-image: url('');
@@ -174,7 +173,7 @@ body, html {
     transform: translateX(-50%) rotate(23deg);
 }
 .chat-message.owner .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/033cd6355a82f262b5a0c70131d19066ef116b8e/Ryuuki%20Kitsune/Asset/onestar.svg');
+    background-image: url('');
     width: 24px; height: 24px; top: -12px; left: -6px; z-index: 5;
 }
 .chat-message.owner .badge::after {
@@ -184,9 +183,9 @@ body, html {
     position: absolute;
     width: 60px;
     height: 60px;
-    z-index: 10;
-    bottom: -15px;
-    left: -15px;
+    z-index: 3;
+    top: -4px;
+    right: 2px;
     pointer-events: none;
 }
 
