@@ -159,7 +159,7 @@ body, html {
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.owner .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/main-ornament.svg');
+    background-image: url('');
     width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
     transform: rotate(6deg);
 }
@@ -180,13 +180,22 @@ body, html {
 .chat-message.owner .badge::after {
     background-image: url('');
 }
-.lottie-ornament {
+.lottie-ornament-1 {
     position: absolute;
     width: 40px;
     height: 51px;
     z-index: 3;
     top: -2px;
     right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    bottom: -20px;
+    left: -20px;
     pointer-events: none;
 }
 
@@ -215,7 +224,7 @@ body, html {
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.moderator .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/main-ornament.svg');
+    background-image: url('');
     width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
     transform: rotate(6deg);
 }
@@ -236,13 +245,22 @@ body, html {
 .chat-message.moderator .badge::after {
     background-image: url('');
 }
-.lottie-ornament {
+.lottie-ornament-1 {
     position: absolute;
     width: 40px;
     height: 51px;
     z-index: 3;
     top: -2px;
     right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    bottom: -20px;
+    left: -20px;
     pointer-events: none;
 }
 
@@ -271,7 +289,7 @@ body, html {
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.member .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/main-ornament.svg');
+    background-image: url('');
     width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
     transform: rotate(6deg);
 }
@@ -292,13 +310,22 @@ body, html {
     width: 10.5px; height: 9px; bottom: 50%; right: -5px; z-index: 5;
     transform: rotate(-19deg);
 }
-.lottie-ornament {
+.lottie-ornament-1 {
     position: absolute;
     width: 40px;
     height: 51px;
     z-index: 3;
     top: -2px;
     right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    bottom: -20px;
+    left: -20px;
     pointer-events: none;
 }
 
@@ -327,7 +354,7 @@ body, html {
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.regular .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/main-ornament.svg');
+    background-image: url('');
     width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
     transform: rotate(6deg);
 }
@@ -346,13 +373,22 @@ body, html {
 .chat-message.regular .badge::after {
     background-image: url('');
 }
-.lottie-ornament {
+.lottie-ornament-1 {
     position: absolute;
     width: 40px;
     height: 51px;
     z-index: 3;
     top: -2px;
     right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    bottom: -20px;
+    left: -20px;
     pointer-events: none;
 }
 
@@ -463,8 +499,17 @@ body, html {
                     <span class="ornament-extra-2"></span>
 
                     <lottie-player
-                        class="lottie-ornament" 
+                        class="lottie-ornament-1" 
                         src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+
+                    <lottie-player
+                        class="lottie-ornament-2" 
+                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json"
                         background="transparent"
                         speed="1"
                         autoplay
