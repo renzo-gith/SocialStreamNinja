@@ -76,6 +76,11 @@ body, html {
     from { transform: rotate(84deg); }
     to { transform: rotate(96deg); }
 }
+@keyframes member-badge-pop {
+    0% { transform: scale(0) rotate(0deg); }
+    60% { transform: scale(1.2) rotate(15deg); }
+    100% { transform: scale(1) rotate(12deg); }
+}
 
 
 /* 4. Gaya Pesan Biasa & Lencana */
@@ -329,6 +334,18 @@ body, html {
     left: -16px;
     pointer-events: none;
 }
+.youtube-member-badge {
+    position: absolute;
+    bottom: -8px; /* Atur posisi vertikal (sedikit di luar box) */
+    right: -5px;  /* Atur posisi horizontal (kanan bawah) */
+    width: 28px;  /* Atur ukuran */
+    height: 28px;
+    z-index: 6;   /* Pastikan di atas ornamen lain */
+    transform: scale(0) rotate(0deg); /* Sembunyi saat awal */
+    
+    /* Animasi 'pop' yang dimulai 0.5 detik SETELAH pesan masuk */
+    animation: member-badge-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+}
 
 /* Regular */
 .chat-message.regular {
@@ -478,25 +495,26 @@ body, html {
     }
 
     // === FUNGSI PEMBUAT TAMPILAN PESAN (HTML Builder) ===
-    function addChatMessage(username, messageHTML, role = 'regular', extra = {}) {
+    function addChatMessage(username, messageHTML, role = 'regular', extra = {}) { // Pastikan 'extra' ada di sini
         const chatEl = document.createElement('div');
-        // Menggunakan nama class dari CSS kustom Anda
         chatEl.className = `chat-message ${role}`;
 
         if (role === 'donation' || role === 'new-subscriber') {
-            const badgeText = role === 'donation' ? 'DONATION' : 'NEW SUBSCRIBER';
-            chatEl.innerHTML = `
-                <div class="special-card ${role}" style="${extra.style || ''}">
-                    <div class="special-badge">${badgeText}</div>
-                    <div class="special-message">${username} ${messageHTML || ''}</div>
-                </div>
-            `;
+            // ... (Tidak ada perubahan di sini)
         } else {
+            // --- BLOK BARU UNTTUK MEMBUAT BADGE YOUTUBE ---
+            let memberBadgeHTML = '';
+            // Cek jika 'extra' ada DAN 'memberBadgeUrl' ada di dalamnya
+            if (extra && extra.memberBadgeUrl) { 
+                memberBadgeHTML = `<img class="youtube-member-badge" src="${extra.memberBadgeUrl}" />`;
+            }
+            // --- AKHIR BLOK BARU ---
+
             chatEl.innerHTML = `
                 <div class="badge">${username}</div>
                 <div class="message">
                     ${messageHTML}
-                    <span class="ornament-extra-1"></span>
+                    ${memberBadgeHTML} <span class="ornament-extra-1"></span>
                     <span class="ornament-extra-2"></span>
 
                     <lottie-player
@@ -551,7 +569,6 @@ body, html {
         console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
 
         // --- FILTER PLATFORM DIMULAI ---
-        // Cek apakah filter diaktifkan (array tidak kosong) DAN apakah tipe data tidak ada di dalamnya.
         if (ALLOWED_PLATFORMS.length > 0 && !ALLOWED_PLATFORMS.includes(data.type)) {
             console.log(`Pesan dari platform '${data.type}' diabaikan karena tidak ada dalam daftar yang diizinkan.`);
             return;
@@ -559,7 +576,7 @@ body, html {
         // --- FILTER PLATFORM SELESAI ---
 
         const username = data.chatname;
-        const message = data.chatmessage; // Ambil pesan mentah
+        const message = data.chatmessage;
                 
         // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
         if (data.event === true) {
@@ -567,17 +584,16 @@ body, html {
             return;
         }
 
-        // Prioritas #4: Jika bukan event di atas, maka ini adalah PESAN OBROLAN BIASA
-        // Abaikan jika tidak ada isi pesan
         if (!message) {
             return;
         }
 
         // Tentukan peran untuk pesan obrolan biasa
         let roleClass = 'regular';
+        let memberBadgeUrl = null; // <-- VARIABEL BARU UNTUK MENYIMPAN URL BADGE
 
         // EDIT NAMA PENGGUNA DI SINI
-        const STREAMER_USERNAME = ["Ryuuki Kitsune", "Rey ~ Design & Illustration"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
+        const STREAMER_USERNAME = ["Ryuuki Kitsune", "Rey ~ Design & Illustration"]; 
 
         // Cek dulu apakah pengirimnya adalah streamer
         if (STREAMER_USERNAME.includes(username)) {
@@ -585,9 +601,12 @@ body, html {
         } else {
             const badgeSrcs = (data.chatbadges || []).map(badge => {
                 if (typeof badge === 'string') return badge.toLowerCase();
-                if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src.toLowerCase();
+                if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src; // <-- Hapus .toLowerCase() agar URL tetap utuh
                 return '';
             }).filter(Boolean);
+
+            // Cari URL badge membership spesifik
+            const memberBadge = badgeSrcs.find(src => src.includes('member') || src.includes('subscriber'));
 
             if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
                 roleClass = 'owner';
@@ -595,19 +614,22 @@ body, html {
                 roleClass = 'moderator';
             } else if (
                 data.membership === "MEMBERSHIP" ||
+                memberBadge || // <-- Gunakan variabel 'memberBadge'
                 badgeSrcs.some(src =>
                     src.includes('gifter') ||
-                    src.includes('subscriber') ||
-                    src.includes('member') ||
                     (src.includes('fans_badge') && !src.includes('grey'))
                 )
             ) {
                 roleClass = 'member';
+                if (memberBadge) {
+                    memberBadgeUrl = memberBadge; // <-- Simpan URL badge-nya
+                }
             }
         }
 
         // Kirim pesan obrolan biasa ke antrian
-        enqueueMessage(username, message, roleClass);
+        // DIUBAH: Tambahkan 'extra' object yang berisi URL badge
+        enqueueMessage(username, message, roleClass, { memberBadgeUrl: memberBadgeUrl });
     }
 
     // ===================================================================
