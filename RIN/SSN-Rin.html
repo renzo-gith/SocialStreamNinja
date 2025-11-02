@@ -561,12 +561,12 @@ body, html {
     const ALLOWED_PLATFORMS = ['tiktok', 'youtube'];
 
     function addMessageToOverlay(data) {
-        // Selalu cetak data mentah untuk debugging
-        console.log("Data diterima oleh Chat Widget:", JSON.stringify(data, null, 2));
+        // Log utama untuk melihat semua data mentah
+        console.log("--- [DEBUG 0] DATA MENTAH DITERIMA ---", JSON.stringify(data, null, 2));
 
         // --- FILTER PLATFORM DIMULAI ---
         if (ALLOWED_PLATFORMS.length > 0 && !ALLOWED_PLATFORMS.includes(data.type)) {
-            console.log(`Pesan dari platform '${data.type}' diabaikan karena tidak ada dalam daftar yang diizinkan.`);
+            console.log(`Pesan dari platform '${data.type}' diabaikan.`);
             return;
         }
         // --- FILTER PLATFORM SELESAI ---
@@ -576,7 +576,6 @@ body, html {
                 
         // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
         if (data.event === true) {
-            console.log("Event umum diabaikan (Follow/Share/Like):", data);
             return;
         }
 
@@ -586,45 +585,52 @@ body, html {
 
         // Tentukan peran untuk pesan obrolan biasa
         let roleClass = 'regular';
-        let memberBadgeUrl = null; // <-- VARIABEL BARU UNTUK MENYIMPAN URL BADGE
-
-        // EDIT NAMA PENGGUNA DI SINI
+        let memberBadgeUrl = null; 
         const STREAMER_USERNAME = ["Ryuuki Kitsune", "Rey ~ Design & Illustration"]; 
 
-        // Cek dulu apakah pengirimnya adalah streamer
+        // Ambil SEMUA URL badge terlebih dahulu
+        const badgeSrcs = (data.chatbadges || []).map(badge => {
+            if (typeof badge === 'string') return badge;
+            if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src;
+            return '';
+        }).filter(Boolean);
+        
+        // --- LOG DEBUG 1 ---
+        console.log(`[DEBUG 1 - ${username}] Array 'badgeSrcs' yang ditemukan:`, badgeSrcs);
+
+
+        // Tentukan PERAN terlebih dahulu
         if (STREAMER_USERNAME.includes(username)) {
             roleClass = 'owner';
         } else {
-            const badgeSrcs = (data.chatbadges || []).map(badge => {
-                if (typeof badge === 'string') return badge.toLowerCase();
-                if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src; // <-- Hapus .toLowerCase() agar URL tetap utuh
-                return '';
-            }).filter(Boolean);
-
-            // Cari URL badge membership spesifik
-            const memberBadge = badgeSrcs.find(src => src.includes('member') || src.includes('subscriber'));
-
             if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
                 roleClass = 'owner';
             } else if (data.mod === true || badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
                 roleClass = 'moderator';
             } else if (
-                data.membership === "MEMBERSHIP" ||
-                memberBadge || // <-- Gunakan variabel 'memberBadge'
+                data.membership === "MEMBERSHIP" || // <-- INI YANG UTAMA
                 badgeSrcs.some(src =>
                     src.includes('gifter') ||
+                    src.includes('subscriber') ||
+                    src.includes('member') ||
                     (src.includes('fans_badge') && !src.includes('grey'))
                 )
             ) {
-                roleClass = 'member';
-                if (memberBadge) {
-                    memberBadgeUrl = memberBadge; // <-- Simpan URL badge-nya
-                }
+                roleClass = 'member'; // Peran 'member' ditetapkan
             }
         }
 
-        // Kirim pesan obrolan biasa ke antrian
-        // DIUBAH: Tambahkan 'extra' object yang berisi URL badge
+        // --- INI LOGIKA BARU YANG SUDAH DIPERBAIKI ---
+        // SETELAH peran ditentukan, JIKA perannya adalah 'member' DAN ada badge di array,
+        // ambil URL badge PERTAMA, apa pun itu.
+        if (roleClass === 'member' && badgeSrcs.length > 0) {
+            memberBadgeUrl = badgeSrcs[0]; // <-- Mengambil URL pertama dari array
+        }
+        
+        // --- LOG DEBUG 2 & 3 ---
+        console.log(`[DEBUG 2 & 3 - ${username}] Peran: ${roleClass}. URL Badge yang akan dikirim:`, memberBadgeUrl);
+
+        // Kirim pesan dengan URL badge (bisa null jika bukan member atau jika member tapi tak ada badge)
         enqueueMessage(username, message, roleClass, { memberBadgeUrl: memberBadgeUrl });
     }
 
