@@ -336,15 +336,11 @@ body, html {
 }
 .youtube-member-badge {
     position: absolute;
-    bottom: -8px; /* Atur posisi vertikal (sedikit di luar box) */
-    right: -5px;  /* Atur posisi horizontal (kanan bawah) */
-    width: 28px;  /* Atur ukuran */
+    bottom: -8px;
+    right: -5px;
+    width: 28px;
     height: 28px;
-    z-index: 6;   /* Pastikan di atas ornamen lain */
-    transform: scale(0) rotate(0deg); /* Sembunyi saat awal */
-    
-    /* Animasi 'pop' yang dimulai 0.5 detik SETELAH pesan masuk */
-    animation: member-badge-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+    z-index: 6;
 }
 
 /* Regular */
