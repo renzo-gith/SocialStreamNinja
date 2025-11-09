@@ -499,12 +499,11 @@ body, html {
     padding-bottom: 16px;
 }
 
-/* Posisi Lottie (Sama seperti sebelumnya) */
 .lottie-sub-left,
 .lottie-sub-right {
     position: absolute;
-    width: 70px; 
-    height: 70px; 
+    width: 50px; 
+    height: 50px; 
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
@@ -639,8 +638,7 @@ body, html {
                 <div class="special-card ${role}" style="${extra.style || ''}">
                     <div class="special-badge">${badgeText}</div>
                     <div class="special-message">${username} ${messageHTML || ''}</div>
-                    ${lottieHTML} 
-                </div>
+                    ${lottieHTML} </div>
             `;
 
         } else {
