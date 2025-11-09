@@ -455,22 +455,35 @@ body, html {
     margin-right: 8px;
 }
 
-/* Warna untuk New Subscriber */
 .special-card.new-subscriber {
-    /* Kita gunakan style 'Member' yang sudah ada di CSS Anda */
-    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100);
+box-shadow: none;
+border-radius: 12px;
+margin-top: 10px;
+margin-bottom: 10px;
+position: relative;
 }
 .special-card.new-subscriber .special-badge {
-    background-color: #490001; /* Warna badge member */
+    display: none;
 }
 .special-card.new-subscriber .special-message {
-    /* Latar belakang gradasi merah member */
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
-    url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
-    linear-gradient(to right, #2B0304, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
+background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
+linear-gradient(to right, #2B0304, #151515);
+background-repeat: no-repeat, repeat, no-repeat;
+background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+background-size: 394px 88px, auto, cover;
+border-radius: 12px;
+color: #ffffff;
+box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    bottom: -16px;
+    left: -16px;
+    pointer-events: none;
 }
 
 </style>
