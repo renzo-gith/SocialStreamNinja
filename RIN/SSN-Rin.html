@@ -588,8 +588,7 @@ box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73,
 
             let lottieHTML = '';
             if (role === 'new-subscriber') {
-                // Kita gunakan class baru: .lottie-sub-left & .lottie-sub-right
-                // Saya gunakan Lottie Kupu-kupu Anda sebagai default. Ganti URL jika perlu.
+
                 lottieHTML = `
                     <lottie-player
                         class="lottie-sub-left" 
@@ -696,20 +695,21 @@ box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73,
         const message = data.chatmessage;
 
         // === PRIORITAS #1: DONASI (SUPER CHAT) ===
-        if (data.hasDonation === true || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
+        if ((data.hasDonation && data.hasDonation !== true && data.hasDonation !== "") || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
             let roleClass = 'donation';
             
-            // Gabungkan jumlah donasi dan pesan (jika ada)
-            let donationMessage = `<strong>${data.donationAmount || ''}</strong> ${message || ''}`;
+            let amountString = data.hasDonation || data.donationAmount;
+            let donationMessage = `<strong>${amountString || ''}</strong> ${message || ''}`;
             
-            // Siapkan style untuk Super Chat (mengambil warna dari data SSN)
+            // Siapkan style untuk Super Chat
             let donationStyle = '';
             if (data.backgroundColor) {
-                let headerColor = data.backgroundColor;
-                let bodyColor = data.nameColor || getLighterColor(headerColor, 0.3);
+                let headerColor = data.backgroundColor; // Misal: Teal dari log Anda
+                
+                let bodyColor = getLighterColor(headerColor, 0.3);
+                
                 let textColor = data.textColor || getTextColor(bodyColor);
                 
-                // Variabel CSS ini akan dikirim ke CSS
                 donationStyle = `
                     --special-header-bg: ${headerColor};
                     --special-body-bg: ${bodyColor};
