@@ -337,7 +337,7 @@ body, html {
 .youtube-member-badge {
     position: absolute;
     bottom: -8px;
-    right: -5px;
+    right: -10px;
     width: 28px;
     height: 28px;
     z-index: 6;
@@ -404,6 +404,73 @@ body, html {
     bottom: -16px;
     left: -16px;
     pointer-events: none;
+}
+.special-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px; /* Sedikit lebih lebar dari chat biasa */
+    border-radius: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden; /* Penting agar border-radius berfungsi */
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Bagian Header/Badge (misal: "DONATION" atau "NEW SUBSCRIBER") */
+.special-card .special-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 6px 16px;
+    text-align: left; /* Rata kiri agar rapi */
+    text-transform: uppercase;
+}
+
+/* Bagian Body/Pesan (misal: "Nama: $5.00 Pesannya") */
+.special-card .special-message {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 16px;
+    overflow-wrap: break-word;
+}
+    
+/* Warna untuk Donasi (Super Chat) */
+.special-card.donation {
+    /* Warna ini diambil dari variabel yang diatur oleh JavaScript */
+    --special-header-bg: #1C032B;  /* Default (Purple) */
+    --special-body-bg: #430049;    /* Default (Purple) */
+    --special-text-color: #ffffff; /* Default */
+}
+.special-card.donation .special-badge {
+    background-color: var(--special-header-bg);
+    color: var(--special-text-color);
+}
+.special-card.donation .special-message {
+    background-color: var(--special-body-bg);
+    color: var(--special-text-color);
+}
+.special-card.donation .special-message strong {
+    font-weight: 900; /* Membuat jumlah donasi lebih tebal */
+    margin-right: 8px;
+}
+
+/* Warna untuk New Subscriber */
+.special-card.new-subscriber {
+    /* Kita gunakan style 'Member' yang sudah ada di CSS Anda */
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100);
+}
+.special-card.new-subscriber .special-badge {
+    background-color: #490001; /* Warna badge member */
+}
+.special-card.new-subscriber .special-message {
+    /* Latar belakang gradasi merah member */
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+    url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
+    linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
 }
 
 </style>
@@ -496,7 +563,17 @@ body, html {
         chatEl.className = `chat-message ${role}`;
 
         if (role === 'donation' || role === 'new-subscriber') {
-            // ... (Tidak ada perubahan di sini)
+            
+            const badgeText = role === 'donation' ? 'DONATION' : 'NEW SUBSCRIBER';
+            
+            // Membuat kartu notifikasi di dalam .chat-message
+            chatEl.innerHTML = `
+                <div class="special-card ${role}" style="${extra.style || ''}">
+                    <div class="special-badge">${badgeText}</div>
+                    <div class="special-message">${username} ${messageHTML || ''}</div>
+                </div>
+            `;
+
         } else {
             // --- BLOK BARU UNTTUK MEMBUAT BADGE YOUTUBE ---
             let memberBadgeHTML = '';
@@ -573,10 +650,50 @@ body, html {
 
         const username = data.chatname;
         const message = data.chatmessage;
+
+        // === PRIORITAS #1: DONASI (SUPER CHAT) ===
+        if (data.hasDonation === true || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
+            let roleClass = 'donation';
+            
+            // Gabungkan jumlah donasi dan pesan (jika ada)
+            let donationMessage = `<strong>${data.donationAmount || ''}</strong> ${message || ''}`;
+            
+            // Siapkan style untuk Super Chat (mengambil warna dari data SSN)
+            let donationStyle = '';
+            if (data.backgroundColor) {
+                let headerColor = data.backgroundColor;
+                let bodyColor = data.nameColor || getLighterColor(headerColor, 0.3);
+                let textColor = data.textColor || getTextColor(bodyColor);
                 
-        // ---- LOGIKA FINAL DENGAN PRIORITAS TETAP ----
+                // Variabel CSS ini akan dikirim ke CSS
+                donationStyle = `
+                    --special-header-bg: ${headerColor};
+                    --special-body-bg: ${bodyColor};
+                    --special-text-color: ${textColor};
+                `;
+            }
+            
+            console.log("EVENT DONASI DITEMUKAN:", username, donationMessage);
+            enqueueMessage(username, donationMessage, roleClass, { style: donationStyle, memberBadgeUrl: null });
+            return; // Selesai, jangan proses sebagai chat biasa
+        }
+
+        // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
+        if (data.event === true && (data.isSubscriber === true || data.isNewMember === true)) {
+            let roleClass = 'new-subscriber';
+            let subMessage = message || 'Just Subscribed!'; // Pesan default jika tidak ada
+            
+            console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
+            enqueueMessage(username, subMessage, roleClass, { memberBadgeUrl: null });
+            return; // Selesai, jangan proses sebagai chat biasa
+        }
+        
+        // === PRIORITAS #3: EVENT UMUM LAINNYA (Follow, Like, Share) ===
+        // KODE LAMA ANDA: if (data.event === true) { return; }
+        // Kita masih membiarkannya di sini untuk mengabaikan Follow, Like, dll.
         if (data.event === true) {
-            return;
+            console.log("Event umum diabaikan (Follow/Share/Like):", data);
+            return; // Abaikan
         }
 
         if (!message) {
