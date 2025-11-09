@@ -456,7 +456,6 @@ body, html {
 }
 
 .special-card.new-subscriber {
-box-shadow: none;
 border-radius: 12px;
 margin-top: 10px;
 margin-bottom: 10px;
@@ -476,14 +475,22 @@ border-radius: 12px;
 color: #ffffff;
 box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
 }
-.lottie-ornament-2 {
+.lottie-sub-left,
+.lottie-sub-right {
     position: absolute;
-    width: 50px;
-    height: 50px;
-    z-index: 3;
-    bottom: -16px;
-    left: -16px;
-    pointer-events: none;
+    width: 50px; /* Sesuaikan ukuran Lottie */
+    height: 50px; /* Sesuaikan ukuran Lottie */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none; /* Agar tidak bisa diklik */
+}
+.lottie-sub-left {
+    left: -20px; /* Jarak dari kiri */
+}
+.lottie-sub-right {
+    right: -20px; /* Jarak dari kanan */
+    transform: translateY(-50%) scaleX(-1); 
 }
 
 </style>
@@ -578,6 +585,30 @@ box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73,
         if (role === 'donation' || role === 'new-subscriber') {
             
             const badgeText = role === 'donation' ? 'DONATION' : 'NEW SUBSCRIBER';
+
+            let lottieHTML = '';
+            if (role === 'new-subscriber') {
+                // Kita gunakan class baru: .lottie-sub-left & .lottie-sub-right
+                // Saya gunakan Lottie Kupu-kupu Anda sebagai default. Ganti URL jika perlu.
+                lottieHTML = `
+                    <lottie-player
+                        class="lottie-sub-left" 
+                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <lottie-player
+                        class="lottie-sub-right" 
+                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" 
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                `;
+            }
             
             // Membuat kartu notifikasi di dalam .chat-message
             chatEl.innerHTML = `
