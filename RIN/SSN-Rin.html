@@ -458,40 +458,63 @@ body, html {
 }
 
 .special-card.new-subscriber {
-border-radius: 12px;
-margin-top: 10px;
-margin-bottom: 10px;
-position: relative;
+    position: relative; /* Penting untuk Lottie */
+    border-radius: 12px; /* Samakan dengan border member */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: visible;
+        
+    /* Hapus style kartu default */
+    background: transparent;
+    box-shadow: none;
+    min-width: 0; /* Hapus min-width dari kartu default */
 }
+
+/* Sembunyikan headline "NEW SUBSCRIBER" */
 .special-card.new-subscriber .special-badge {
-    display: none;
+    display: none; 
 }
+
+/* Ini adalah kotak pesannya, kita buat SAMA PERSIS seperti .chat-message.member */
 .special-card.new-subscriber .special-message {
-background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
-url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
-linear-gradient(to right, #2B0304, #151515);
-background-repeat: no-repeat, repeat, no-repeat;
-background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-background-size: 394px 88px, auto, cover;
-border-radius: 12px;
-color: #ffffff;
-box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+    /* --- Style disalin dari .chat-message.member --- */
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+                      url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
+                      linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+    /* --- Akhir style member --- */
+    
+    /* Atur teks & padding agar Lottie pas */
+    min-width: 200px;
+    text-align: center;
+    font-weight: 700;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
+
+/* Posisi Lottie (Sama seperti sebelumnya) */
 .lottie-sub-left,
 .lottie-sub-right {
     position: absolute;
-    width: 50px; /* Sesuaikan ukuran Lottie */
-    height: 50px; /* Sesuaikan ukuran Lottie */
+    width: 70px; 
+    height: 70px; 
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    pointer-events: none; /* Agar tidak bisa diklik */
+    pointer-events: none;
 }
 .lottie-sub-left {
-    left: -20px; /* Jarak dari kiri */
+    left: 10px; 
 }
 .lottie-sub-right {
-    right: -20px; /* Jarak dari kanan */
+    right: 10px; 
     transform: translateY(-50%) scaleX(-1); 
 }
 
@@ -616,6 +639,7 @@ box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73,
                 <div class="special-card ${role}" style="${extra.style || ''}">
                     <div class="special-badge">${badgeText}</div>
                     <div class="special-message">${username} ${messageHTML || ''}</div>
+                    ${lottieHTML} 
                 </div>
             `;
 
