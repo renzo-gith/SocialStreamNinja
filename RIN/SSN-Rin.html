@@ -51,6 +51,11 @@ body, html {
     align-self: flex-start;
 }
 
+.chat-message.donation,
+.chat-message.new-subscriber {
+    align-self: center;
+}
+
 @keyframes bounceIn {
     0% { opacity: 0; transform: scale(0.3) translateX(-80px) translateY(50px) rotate(20deg); }
     50% { opacity: 1; transform: scale(1.05); }
@@ -510,10 +515,10 @@ body, html {
     pointer-events: none;
 }
 .lottie-sub-left {
-    left: -16px; 
+    left: -24px; 
 }
 .lottie-sub-right {
-    right: -16px; 
+    right: -24px; 
     transform: translateY(-50%) scaleX(-1); 
 }
 
