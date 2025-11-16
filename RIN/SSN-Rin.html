@@ -356,7 +356,7 @@ body, html {
 }
 .chat-message.regular .message {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
-    url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
     linear-gradient(to right, #1C032B, #151515);
     background-repeat: no-repeat, repeat, no-repeat;
     background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
@@ -463,103 +463,102 @@ body, html {
 }
 
 .special-card.new-subscriber {
-        position: relative;
-        background: transparent;
-        box-shadow: none;
-        min-width: 0;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        /* Lebar bisa diatur agar pas, atau biarkan 'auto' */
-        /* width: 500px; */ 
-    }
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+    min-width: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* Lebar bisa diatur agar pas, atau biarkan 'auto' */
+    /* width: 500px; */ 
+}
 
-    /* Sembunyikan headline "NEW SUBSCRIBER" default */
-    .special-card.new-subscriber .special-badge {
-        display: none; 
-    }
+/* Sembunyikan headline "NEW SUBSCRIBER" default */
+.special-card.new-subscriber .special-badge {
+    display: none; 
+}
 
-    /* Kotak hitam besar di belakang kedua box */
-    .sub-notification-container {
-        display: flex;
-        flex-direction: column;
-        gap: 6px; /* Jarak antara box atas dan box bawah */
-        border-radius: 25px; /* Kelengkungan box luar */
-        padding: 6px; /* Jarak di dalam box hitam */
+/* Kotak hitam besar di belakang kedua box */
+.sub-notification-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* Jarak antara box atas dan box bawah (TETAP DIPERLUKAN) */
         
-        /* Background hitam transparan dengan sparkle */
-        background-image: url(https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true),
-                          linear-gradient(to right, #1C032B, #151515);
-        background-repeat: repeat, no-repeat;
-        
-        /* Efek glow ungu */
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 18px rgba(229, 150, 255, 0.3), 0 0 8px rgba(255, 255, 255, 0.2);
-    }
+    /* Hapus semua style visual */
+    border-radius: 0;
+    padding: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
 
-    /* Box Atas (Merah: "Someone just subscribed") */
-    .sub-notification-badge {
-        position: relative; /* Untuk Lottie mawar/kupu-kupu */
-        background-color: #930000; /* Warna merah (sesuaikan) */
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 18px;
-        text-align: center;
-        border-radius: 20px; /* Kelengkungan box dalam */
-        padding: 10px 50px; /* Padding agar ada ruang untuk lottie */
-        
-        /* Efek glow merah */
-        border: 1px solid rgba(255, 150, 150, 0.5);
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
-    }
+/* Box Atas (Merah: "Someone just subscribed") */
+.sub-notification-badge {
+    position: relative; /* Untuk Lottie mawar/kupu-kupu */
+    background-color: #490001;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 6px 28px;
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
+}
 
-    /* Box Bawah (Pesan: "Hallo, aku...") */
-    .sub-notification-message {
-        background-color: rgba(0, 0, 0, 0.2); /* Warna gelap transparan */
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 18px;
-        text-align: center;
-        border-radius: 20px;
-        padding: 10px 20px;
-    }
+/* Box Bawah (Pesan: "Hallo, aku...") */
+.sub-notification-message {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 16px 42px;
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
 
-    /* Posisi Lottie Mawar/Kupu-kupu (DI DALAM BADGE ATAS) */
-    .lottie-sub-badge-left,
-    .lottie-sub-badge-right {
-        position: absolute;
-        width: 40px; 
-        height: 40px; 
-        top: 50%;
-        transform: translateY(-50%) scale(0.75); /* Dikecilkan 75% */
-        z-index: 10;
-        pointer-events: none;
-    }
-    .lottie-sub-badge-left {
-        left: 10px; 
-    }
-    .lottie-sub-badge-right {
-        right: 10px; 
-        transform: translateY(-50%) scaleX(-1) scale(0.75); 
-    }
+/* Posisi Lottie Mawar/Kupu-kupu (DI DALAM BADGE ATAS) */
+.lottie-sub-badge-left,
+.lottie-sub-badge-right {
+    position: absolute;
+    width: 50px; 
+    height: 50px; 
+    top: 50%;
+    transform: translateY(-50%) scale(0.75); /* Dikecilkan 75% */
+    z-index: 10;
+    pointer-events: none;
+}
+.lottie-sub-badge-left {
+    left: -20px; 
+}
+.lottie-sub-badge-right {
+    right: -20px; 
+    transform: translateY(-50%) scaleX(-1) scale(0.75); 
+}
 
-    /* Posisi Lottie Rantai (DI LUAR CONTAINER) */
-    .lottie-sub-chain-left,
-    .lottie-sub-chain-right {
-        position: absolute;
-        width: 70px; 
-        height: 70px; 
-        top: 50%;
-        transform: translateY(-50%) scale(0.75); /* Dikecilkan 75% */
-        z-index: -1; /* Di belakang kartu */
-        pointer-events: none;
-        opacity: 0.8;
-    }
-    .lottie-sub-chain-left {
-        left: -30px; 
-    }
-    .lottie-sub-chain-right {
-        right: -30px; 
-    }
+/* Posisi Lottie Rantai (DI LUAR CONTAINER) */
+.lottie-sub-chain-left,
+.lottie-sub-chain-right {
+    position: absolute;
+    width: 70px; 
+    height: 70px; 
+    top: 50%;
+    transform: translateY(-50%) scale(0.75); /* Dikecilkan 75% */
+    z-index: -1; /* Di belakang kartu */
+    pointer-events: none;
+    opacity: 0.8;
+}
+.lottie-sub-chain-left {
+    left: -30px; 
+}
+.lottie-sub-chain-right {
+    right: -30px; 
+}
 
 </style>
 </head>
