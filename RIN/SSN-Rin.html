@@ -827,7 +827,7 @@ if (role === 'donation') {
             let memberMessage = message || ""; // Pesan asli member (bisa kosong)
             
             console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
-            enqueueMessage(username, subMessage, roleClass, { memberBadgeUrl: null });
+            enqueueMessage(notificationText, memberMessage, roleClass, { memberBadgeUrl: null });
             return;
         }
         
