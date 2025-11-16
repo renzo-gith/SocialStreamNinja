@@ -491,7 +491,10 @@ body, html {
 
 /* Box Atas (Merah: "Someone just subscribed") */
 .sub-notification-badge {
-    position: relative;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: inline-block;
     background-color: #490001;
     color: #ffffff;
@@ -552,7 +555,7 @@ body, html {
     height: 70px; 
     top: 50%;
     transform: translateY(-50%) scale(0.75); /* Dikecilkan 75% */
-    z-index: -1; /* Di belakang kartu */
+    z-index: 4; /* Di belakang kartu */
     pointer-events: none;
     opacity: 0.8;
 }
