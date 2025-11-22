@@ -478,37 +478,18 @@ body, html {
 }
 
 .sub-notification-container {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    border-radius: 0;
-    padding: 0;
-    background-image: none;
-    border: none;
-    box-shadow: none;
+    margin-top: 24px;
+    min-width: 400px;
+    max-width: 100%;
     overflow: visible;
-    align-items: center;
-}
-
-/* Box Atas (Merah: "Someone just subscribed") */
-.sub-notification-badge {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    background-color: #490001;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 12px;
-    padding: 6px 28px;
-    top: 20px;
-    overflow: visible;
-    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
 }
 
 /* Box Bawah (Pesan: "Hallo, aku...") */
 .sub-notification-message {
+    position: relative;
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
     url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
     linear-gradient(to right, #2B0304, #151515);
@@ -523,7 +504,28 @@ body, html {
     padding: 16px 42px;
     overflow: visible;
     overflow-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
     box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
+
+/* Box Atas (Merah: "Someone just subscribed") */
+.sub-notification-badge {
+    position: absolute;
+    z-index: 3;
+    display: inline-block;
+    background-color: #490001;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 6px 28px;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
 }
 
 .lottie-sub-badge-left,
@@ -549,9 +551,8 @@ body, html {
     position: absolute;
     width: 70px; 
     height: 70px; 
-    z-index: 4;
+    z-index: 2;
     pointer-events: none;
-    top: -30px;
     transform: scale(0.8);
 }
 .lottie-sub-chain-left {
