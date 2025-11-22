@@ -513,6 +513,8 @@ body, html {
 .sub-notification-badge {
     position: absolute;
     z-index: 3;
+    white-space: nowrap;
+    width: max-content;
     display: inline-block;
     background-color: #490001;
     color: #ffffff;
@@ -549,17 +551,18 @@ body, html {
 .lottie-sub-chain-left,
 .lottie-sub-chain-right {
     position: absolute;
-    width: 70px; 
-    height: 70px; 
+    width: 40px; 
+    height: 51px; 
     z-index: 2;
+    top: -2px;
     pointer-events: none;
     transform: scale(0.8);
 }
 .lottie-sub-chain-left {
-    left: 15px;
+    left: -2px;
 }
 .lottie-sub-chain-right {
-    right: 15px;
+    right: -2px;
 }
 
 </style>
