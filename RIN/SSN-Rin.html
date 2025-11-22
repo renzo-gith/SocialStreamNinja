@@ -443,23 +443,78 @@ body, html {
 }
     
 /* Warna untuk Donasi (Super Chat) */
-.special-card.donation {
-    /* Warna ini diambil dari variabel yang diatur oleh JavaScript */
-    --special-header-bg: #1C032B;  /* Default (Purple) */
-    --special-body-bg: #430049;    /* Default (Purple) */
-    --special-text-color: #ffffff; /* Default */
+/* Container Kartu Donasi & Gift */
+.special-card.donation,
+.special-card.gifted-membership {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Rata tengah */
+        
+    /* Reset style container */
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    min-width: 400px; /* Samakan lebar dengan new subs */
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.special-card.donation .special-badge {
-    background-color: var(--special-header-bg);
-    color: var(--special-text-color);
+
+/* Badge Atas (Nominal Uang) - Menggunakan Warna Merah Member (#490001) */
+.sc-badge {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+        
+    /* --- WARNA SERAGAM (MERAH RIN) --- */
+    background-color: #490001; 
+    color: #ffffff;
+    /* ------------------------------- */
+        
+    font-weight: 900;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 8px 32px;
+    margin-bottom: -16px; /* Tumpang tindih ke bawah */
+        
+    /* Shadow merah tipis */
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
 }
-.special-card.donation .special-message {
-    background-color: var(--special-body-bg);
-    color: var(--special-text-color);
+
+/* Body Bawah (Nama & Pesan) - Menggunakan Gradient Ungu/Gelap (Sama kayak New Subs) */
+.sc-body {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+        
+    /* --- WARNA SERAGAM (GRADIENT RIN) --- */
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
+                      url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+                      linear-gradient(to right, #1C032B, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    /* ----------------------------------- */
+        
+    color: #ffffff;
+    text-align: center;
+    border-radius: 16px;
+    padding: 28px 24px 16px 24px; /* Padding atas besar agar tidak tertutup badge */
+        
+    /* Shadow ungu tipis */
+    box-shadow: 0px 0px 12px 1px rgba(49, 0, 54, 100), inset 1px 0px 2px 0px rgba(67, 0, 73, 100);
 }
-.special-card.donation .special-message strong {
-    font-weight: 900; /* Membuat jumlah donasi lebih tebal */
-    margin-right: 8px;
+
+.sc-name {
+    font-size: 16px;
+    font-weight: 700;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.sc-message {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .special-card.new-subscriber {
@@ -811,25 +866,19 @@ body, html {
             let amountString = data.hasDonation || data.donationAmount;
             let donationMessage = `<strong>${amountString || ''}</strong> ${message || ''}`;
             
-            // Siapkan style untuk Super Chat
-            let donationStyle = '';
-            if (data.backgroundColor) {
-                let headerColor = data.backgroundColor; // Misal: Teal dari log Anda
-                
-                let bodyColor = getLighterColor(headerColor, 0.3);
-                
-                let textColor = data.textColor || getTextColor(bodyColor);
-                
-                donationStyle = `
-                    --special-header-bg: ${headerColor};
-                    --special-body-bg: ${bodyColor};
-                    --special-text-color: ${textColor};
-                `;
-            }
+            console.log("EVENT DONASI DITEMUKAN (STATIC COLOR):", username, amountString);
             
-            console.log("EVENT DONASI DITEMUKAN:", username, donationMessage);
-            enqueueMessage(username, donationMessage, roleClass, { style: donationStyle, memberBadgeUrl: null });
-            return; // Selesai, jangan proses sebagai chat biasa
+            // KITA TIDAK LAGI MENGIRIM 'style' WARNA
+            enqueueMessage(username, message, roleClass, { amount: amountString, memberBadgeUrl: null });
+            return;
+        }
+
+        // === PRIORITAS #1.5: GIFTED MEMBERSHIP ===
+        if (data.gifted === true || (data.event === true && data.isGift === true)) {
+            let roleClass = 'gifted-membership';
+            let giftMessage = message || "Gifted a membership!";
+            enqueueMessage(username, giftMessage, roleClass, { memberBadgeUrl: null });
+            return;
         }
 
         // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
