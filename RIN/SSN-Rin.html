@@ -480,7 +480,7 @@ body, html {
 .sub-notification-container {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 2px;
     border-radius: 0;
     padding: 0;
     background-image: none;
@@ -653,7 +653,7 @@ body, html {
         const chatEl = document.createElement('div');
         chatEl.className = `chat-message ${role}`;
 
-if (role === 'donation') {
+        if (role === 'donation') {
             const badgeText = 'DONATION';
             chatEl.innerHTML = `
                 <div class="special-card ${role}" style="${extra.style || ''}">
@@ -701,9 +701,18 @@ if (role === 'donation') {
             
             // Bagian Bawah (Pesan) - KONDISIONAL
             let notificationMessage = '';
-            // 'messageHTML' adalah pesan asli member
+            
+            // Cek apakah ada pesan?
             if (messageHTML && messageHTML.trim() !== "") {
-                notificationMessage = `<div class="sub-notification-message">${messageHTML}</div>`;
+                
+                // --- PERUBAHAN 1: Rantai dimasukkan ke sini ---
+                // Sebelumnya rantai tidak ada di blok ini. 
+                // Sekarang, rantai digabung dengan pesan.
+                notificationMessage = `
+                    <div class="sub-notification-message">
+                        ${messageHTML}
+                        ${lottieChainOrnaments} 
+                    </div>`;
             }
 
             // Gabungkan
@@ -713,8 +722,8 @@ if (role === 'donation') {
                         ${notificationBadge}
                         ${notificationMessage}
                     </div>
-                    ${lottieChainOrnaments}
-                </div>
+                    
+                    </div>
             `;
             
         } else {
