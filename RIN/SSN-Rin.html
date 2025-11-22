@@ -832,7 +832,7 @@ body, html {
         if ((data.event === true && (data.isSubscriber === true || data.isNewMember === true)) || data.event === "new-membership") {
             let roleClass = 'new-subscriber';
 
-            let notificationText = "Someone just subscribed"; // Teks untuk badge atas
+            let notificationText = `${username} just subscribed`;
             let memberMessage = message || ""; // Pesan asli member (bisa kosong)
             
             console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
