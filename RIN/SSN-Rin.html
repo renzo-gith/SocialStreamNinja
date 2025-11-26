@@ -444,77 +444,101 @@ body, html {
     
 /* Warna untuk Donasi (Super Chat) */
 /* Container Kartu Donasi & Gift */
-.special-card.donation,
-.special-card.gifted-membership {
+.special-card.donation {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Rata tengah */
-        
-    /* Reset style container */
+    align-items: center;
     background: transparent;
     box-shadow: none;
-    border: none;
-    min-width: 400px; /* Samakan lebar dengan new subs */
+    min-width: 400px;
     margin-top: 10px;
     margin-bottom: 10px;
+    overflow: visible; /* Agar rantai dan mawar bisa keluar */
 }
 
-/* Badge Atas (Nominal Uang) - Menggunakan Warna Merah Member (#490001) */
-.sc-badge {
+/* 1. Badge Atas (MERAH) */
+.sc-badge-container {
     position: relative;
-    z-index: 2;
-    display: inline-block;
-        
-    /* --- WARNA SERAGAM (MERAH RIN) --- */
-    background-color: #490001; 
-    color: #ffffff;
-    /* ------------------------------- */
-        
-    font-weight: 900;
-    font-size: 20px;
-    text-align: center;
-    border-radius: 12px;
-    padding: 8px 32px;
-    margin-bottom: -16px; /* Tumpang tindih ke bawah */
-        
-    /* Shadow merah tipis */
-    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
-}
-
-/* Body Bawah (Nama & Pesan) - Menggunakan Gradient Ungu/Gelap (Sama kayak New Subs) */
-.sc-body {
-    position: relative;
-    z-index: 1;
+    z-index: 2; /* Di atas kotak pesan */
     width: 100%;
         
-    /* --- WARNA SERAGAM (GRADIENT RIN) --- */
+    /* Style Merah RIN */
+    background-color: #490001;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px 20px;
+        
+    /* Shadow Merah */
+    box-shadow: 0px 0px 8px 2px rgba(118, 0, 2, 0.8), inset 0px 0px 10px rgba(0,0,0,0.5);
+}
+
+/* Teks Nominal (Besar) */
+.sc-amount {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+/* Teks "from Username" (Kecil) */
+.sc-from {
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* 2. Kotak Bawah (HITAM) */
+.sc-message-container {
+    position: relative;
+    z-index: 1;
+    width: 95%; /* Sedikit lebih kecil dari badge atas agar cantik */
+    margin-top: -10px; /* Naik sedikit agar menyatu */
+        
+    /* Style Hitam Gradient */
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
                       url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
                       linear-gradient(to right, #1C032B, #151515);
     background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
-    /* ----------------------------------- */
+    background-position: center;
+    background-size: cover;
         
     color: #ffffff;
     text-align: center;
-    border-radius: 16px;
-    padding: 28px 24px 16px 24px; /* Padding atas besar agar tidak tertutup badge */
+    border-radius: 0 0 12px 12px; /* Melengkung bawah saja */
+    padding: 24px 30px 16px 30px; /* Padding atas besar */
         
-    /* Shadow ungu tipis */
-    box-shadow: 0px 0px 12px 1px rgba(49, 0, 54, 100), inset 1px 0px 2px 0px rgba(67, 0, 73, 100);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
 }
 
-.sc-name {
-    font-size: 16px;
-    font-weight: 700;
-    opacity: 0.9;
-    margin-bottom: 4px;
+/* --- POSISI LOTTIE --- */
+
+/* Rantai (Hanging from Top Corners of Red Badge) */
+.sc-chain-left,
+.sc-chain-right {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: -10px; /* Naik sedikit dari badge */
+    pointer-events: none;
+}
+.sc-chain-left {
+    left: -15px; /* Menggantung di pojok kiri */
+}
+.sc-chain-right {
+    right: -15px; /* Menggantung di pojok kanan */
+    transform: scaleX(-1); /* Balik horizontal */
 }
 
-.sc-message {
-    font-size: 18px;
-    font-weight: 500;
+/* Mawar/Kupu-kupu (Bottom Right of Message Box) */
+.sc-rose {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    bottom: -20px; /* Keluar sedikit ke bawah */
+    right: -20px;  /* Keluar sedikit ke kanan */
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(-15deg); /* Miring sedikit biar manis */
 }
 
 .special-card.new-subscriber {
@@ -710,11 +734,47 @@ body, html {
         chatEl.className = `chat-message ${role}`;
 
         if (role === 'donation') {
-            const badgeText = 'DONATION';
+            // 1. Siapkan Lottie Rantai (Untuk Badge Atas)
+            let lottieChains = `
+                <lottie-player class="sc-chain-left" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
+                <lottie-player class="sc-chain-right" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
+            `;
+
+            // 2. Siapkan Lottie Mawar/Kupu-kupu (Untuk Pesan Bawah)
+            let lottieRose = `
+                <lottie-player class="sc-rose" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" background="transparent" speed="1" autoplay loop></lottie-player>
+            `;
+
+            // 3. Badge Atas (Merah) -> Isi: Nominal + "from Nama" + Rantai
+            let amountText = extra.amount || 'DONATION';
+            let badgeHTML = `
+                <div class="sc-badge-container">
+                    <div class="sc-amount">${amountText}</div>
+                    <div class="sc-from">from ${username}</div>
+                    ${lottieChains}
+                </div>
+            `;
+
+            // 4. Kotak Bawah (Hitam) -> Isi: Pesan + Mawar
+            let messageBoxHTML = '';
+            // Selalu tampilkan kotak bawah jika ini donasi, meskipun pesan kosong (opsional)
+            // Atau hanya jika ada pesan:
+            if (messageHTML && messageHTML.trim() !== "") {
+                messageBoxHTML = `
+                    <div class="sc-message-container">
+                        ${messageHTML}
+                        ${lottieRose}
+                    </div>
+                `;
+            } else {
+                // Jika pesan kosong (Stiker), Mawar pindah ke badge atas? 
+                // Untuk sekarang kita sembunyikan kotak bawah jika kosong.
+            }
+
             chatEl.innerHTML = `
-                <div class="special-card ${role}" style="${extra.style || ''}">
-                    <div class="special-badge">${badgeText}</div>
-                    <div class="special-message">${username} ${messageHTML || ''}</div>
+                <div class="special-card ${role}">
+                    ${badgeHTML}
+                    ${messageBoxHTML}
                 </div>
             `;
 
