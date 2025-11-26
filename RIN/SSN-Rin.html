@@ -450,7 +450,7 @@ body, html {
     align-items: center;
     background: transparent;
     box-shadow: none;
-    min-width: 400px;
+    width: 100vw;
     margin-top: 10px;
     margin-bottom: 10px;
     overflow: visible; /* Agar rantai dan mawar bisa keluar */
@@ -467,9 +467,7 @@ body, html {
     color: #ffffff;
     text-align: center;
     border-radius: 12px;
-    padding: 12px 20px;
-        
-    /* Shadow Merah */
+    padding: 6px 28px;
     box-shadow: 0px 0px 8px 2px rgba(118, 0, 2, 0.8), inset 0px 0px 10px rgba(0,0,0,0.5);
 }
 
@@ -482,32 +480,31 @@ body, html {
 
 /* Teks "from Username" (Kecil) */
 .sc-from {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    opacity: 0.9;
 }
 
 /* 2. Kotak Bawah (HITAM) */
 .sc-message-container {
     position: relative;
     z-index: 1;
-    width: 95%; /* Sedikit lebih kecil dari badge atas agar cantik */
+    width: 100%; /* Sedikit lebih kecil dari badge atas agar cantik */
     margin-top: -10px; /* Naik sedikit agar menyatu */
         
     /* Style Hitam Gradient */
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
                       url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-                      linear-gradient(to right, #1C032B, #151515);
+                      linear-gradient(to right, #2B0304, #151515);
     background-repeat: no-repeat, repeat, no-repeat;
-    background-position: center;
-    background-size: cover;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
         
     color: #ffffff;
     text-align: center;
     border-radius: 0 0 12px 12px; /* Melengkung bawah saja */
     padding: 24px 30px 16px 30px; /* Padding atas besar */
         
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
 }
 
 /* --- POSISI LOTTIE --- */
@@ -518,15 +515,14 @@ body, html {
     position: absolute;
     width: 60px;
     height: 60px;
-    top: -10px; /* Naik sedikit dari badge */
+    top: -10px;
     pointer-events: none;
 }
 .sc-chain-left {
-    left: -15px; /* Menggantung di pojok kiri */
+    left: -15px;
 }
 .sc-chain-right {
-    right: -15px; /* Menggantung di pojok kanan */
-    transform: scaleX(-1); /* Balik horizontal */
+    right: -15px;
 }
 
 /* Mawar/Kupu-kupu (Bottom Right of Message Box) */
@@ -534,11 +530,11 @@ body, html {
     position: absolute;
     width: 70px;
     height: 70px;
-    bottom: -20px; /* Keluar sedikit ke bawah */
-    right: -20px;  /* Keluar sedikit ke kanan */
+    bottom: -16px;
+    right: -16px;
     z-index: 10;
     pointer-events: none;
-    transform: rotate(-15deg); /* Miring sedikit biar manis */
+    transform: scaleX(-1), rotate(-15deg);
 }
 
 .special-card.new-subscriber {
