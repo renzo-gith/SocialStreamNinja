@@ -461,14 +461,12 @@ body, html {
     position: relative;
     z-index: 2;
     width: 100%;
-        
-    /* Style Merah RIN */
     background-color: #490001;
     color: #ffffff;
     text-align: center;
     border-radius: 12px;
     padding: 6px 28px;
-    box-shadow: 0px 0px 8px 2px rgba(118, 0, 2, 0.8), inset 0px 0px 10px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
 }
 
 /* Teks Nominal (Besar) */
@@ -488,10 +486,8 @@ body, html {
 .sc-message-container {
     position: relative;
     z-index: 1;
-    width: 95%;
+    width: 100%;
     margin-top: -10px; /* Naik sedikit agar menyatu */
-        
-    /* Style Hitam Gradient */
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
                       url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
                       linear-gradient(to right, #2B0304, #151515);
@@ -529,10 +525,10 @@ body, html {
 /* Mawar/Kupu-kupu (Bottom Right of Message Box) */
 .sc-rose {
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     bottom: -16px;
-    right: -16px;
+    right: -20px;
     z-index: 10;
     pointer-events: none;
     transform: scaleX(-1);
