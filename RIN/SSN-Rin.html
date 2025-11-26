@@ -426,7 +426,7 @@ body, html {
 /* Bagian Header/Badge (misal: "DONATION" atau "NEW SUBSCRIBER") */
 .special-card .special-badge {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #ffffff;
     padding: 6px 16px;
     text-align: left; /* Rata kiri agar rapi */
@@ -450,7 +450,7 @@ body, html {
     align-items: center;
     background: transparent;
     box-shadow: none;
-    width: 100vw;
+    width: 95%;
     margin-top: 10px;
     margin-bottom: 10px;
     overflow: visible; /* Agar rantai dan mawar bisa keluar */
@@ -460,7 +460,7 @@ body, html {
 .sc-badge-container {
     position: relative;
     z-index: 2; /* Di atas kotak pesan */
-    width: 100%;
+    width: 95%;
         
     /* Style Merah RIN */
     background-color: #490001;
@@ -481,14 +481,14 @@ body, html {
 /* Teks "from Username" (Kecil) */
 .sc-from {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* 2. Kotak Bawah (HITAM) */
 .sc-message-container {
     position: relative;
     z-index: 1;
-    width: 100%; /* Sedikit lebih kecil dari badge atas agar cantik */
+    width: 95%;
     margin-top: -10px; /* Naik sedikit agar menyatu */
         
     /* Style Hitam Gradient */
@@ -498,9 +498,10 @@ body, html {
     background-repeat: no-repeat, repeat, no-repeat;
     background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
     background-size: 394px 88px, auto, cover;
-        
+    font-weight: 700;
     color: #ffffff;
     text-align: center;
+    overflow-wrap: break-word;
     border-radius: 0 0 12px 12px; /* Melengkung bawah saja */
     padding: 24px 30px 16px 30px; /* Padding atas besar */
         
