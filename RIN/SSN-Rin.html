@@ -450,6 +450,9 @@ body, html {
     align-items: center;
     background: transparent;
     box-shadow: none;
+    width: calc(100% - 40px);
+    margin-left: auto;
+    margin-right: auto;
     min-width: 400px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -486,8 +489,9 @@ body, html {
 .sc-message-container {
     position: relative;
     z-index: 1;
-    width: 100%;
+    width: 98%;
     margin-top: -10px; /* Naik sedikit agar menyatu */
+
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
                       url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
                       linear-gradient(to right, #2B0304, #151515);
@@ -510,16 +514,16 @@ body, html {
 .sc-chain-left,
 .sc-chain-right {
     position: absolute;
-    width: 60px;
-    height: 60px;
-    top: -10px;
+    width: 40px;
+    height: 51px;
+    top: -2px;
     pointer-events: none;
 }
 .sc-chain-left {
-    left: -15px;
+    left: -2px;
 }
 .sc-chain-right {
-    right: -15px;
+    right: -2px;
 }
 
 /* Mawar/Kupu-kupu (Bottom Right of Message Box) */
