@@ -86,10 +86,10 @@ body, html {
     font-weight: 700;
     background: #ffffff;
     color: #000000;
-    font-size: 18px;
-    padding: 16px 42px;
-    border: 2px solid #ffffff;
-    border-radius: 28px;
+    font-size: 16px;
+    padding: 20px 32px;
+    border: 1px solid #ffffff;
+    border-radius: 12px;
     display: inline-block;
     min-width: 200px;
     box-sizing: border-box;
@@ -101,13 +101,12 @@ body, html {
     position: absolute;
     font-weight: 500;
     color: #796A69;
-    padding: 2px 18px;
-    border: 2px solid #ffffff;
-    border-radius: 20px;
+    padding: 3px 12px;
+    border-radius: 4px;
     font-size: 12px;
-    top: -12px;
-    left: 18px;
-    z-index: 5;
+    top: -10px;
+    left: 34px;
+    z-index: 3;
     background-color: #ffffff;
     white-space: nowrap;
     overflow: visible;
@@ -141,193 +140,182 @@ body, html {
 
 /* Owner */
 .chat-message.owner {
-    background-color: #FFCCD3;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.owner .message {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #C57784;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'), 
+    url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'),
+    linear-gradient(to right, #BF6BF9, #D89FFF, #BF6BF9);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: left -66px bottom -12px, right -59px bottom -12px, 0px 0px;
+    background-size: 122px 58px, 122px 58px, cover;
+    border: 1px solid #E4BCFF;
+    border-radius: 12px;
+    color: #722AA4;
+    box-shadow: 0px 0px 6px 0px rgba(203, 126, 255, 50), inset 0px 0px 6px 0px rgba(203, 126, 255, 50);
 }
 .chat-message.owner .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-image: linear-gradient(to right, #E4BCFF, #CB7EFF);
+    color: #722AA4;
+    box-shadow: 0px 0px 6px 0px rgba(203, 126, 255, 50);
 }
 .chat-message.owner .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
-    width: 30.8px; height: 26.7px; top: 16px; left: -8px; z-index: 4;
-    transform: rotate(-25deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Chain.svg');
+    width: 36px; height: 52px; top: -2px; left: -12px; z-index: 4;
 }
 .chat-message.owner .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-big.svg');
-    width: 40.9px; height: 44px; bottom: 10px; right: -20px; z-index: 4;
-    transform: rotate(-10deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Moon%26Star.svg');
+    width: 16px; height: 16px; bottom: -8px; left: 36px; z-index: 4;
 }
 .chat-message.owner .ornament-extra-1 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-small.svg');
-    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
-    transform: rotate(18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 25px; height: 25px; top: -16px; right: 52px; z-index: 4;
 }
 .chat-message.owner .ornament-extra-2 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Flower.svg');
-    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
-    transform: translateX(-50%) rotate(23deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloud.svg');
+    width: 52px; height: 24px; bottom: -6px; right: 16px; z-index: 4;
 }
 .chat-message.owner .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Tape.svg');
-    width: 34.1px; height: 18.8px; top: -10px; left: -6px; z-index: 5;
-    transform: rotate(-24deg);
+    background-image: url('');
 }
 .chat-message.owner .badge::after {
-    background-image: url('');
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 10px; height: 10px; top: 50%; right: 50%; z-index: 4;
 }
 
 /* Moderator */
 .chat-message.moderator {
-    background-color: #FFCCD3;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.moderator .message {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #C57784;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'), 
+    url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'),
+    linear-gradient(to right, #BF6BF9, #D89FFF, #BF6BF9);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: left -66px bottom -12px, right -59px bottom -12px, 0px 0px;
+    background-size: 122px 58px, 122px 58px, cover;
+    border: 1px solid #E4BCFF;
+    border-radius: 12px;
+    color: #722AA4;
+    box-shadow: 0px 0px 6px 0px rgba(203, 126, 255, 50), inset 0px 0px 6px 0px rgba(203, 126, 255, 50);
 }
 .chat-message.moderator .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-image: linear-gradient(to right, #E4BCFF, #CB7EFF);
+    color: #722AA4;
+    box-shadow: 0px 0px 6px 0px rgba(203, 126, 255, 50);
 }
 .chat-message.moderator .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
-    width: 30.8px; height: 26.7px; top: 16px; left: -8px; z-index: 4;
-    transform: rotate(-25deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Chain.svg');
+    width: 36px; height: 52px; top: -2px; left: -12px; z-index: 4;
 }
 .chat-message.moderator .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-big.svg');
-    width: 40.9px; height: 44px; bottom: 10px; right: -20px; z-index: 4;
-    transform: rotate(-10deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Moon%26Star.svg');
+    width: 16px; height: 16px; bottom: -8px; left: 36px; z-index: 4;
 }
 .chat-message.moderator .ornament-extra-1 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-small.svg');
-    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
-    transform: rotate(18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 25px; height: 25px; top: -16px; right: 52px; z-index: 4;
 }
 .chat-message.moderator .ornament-extra-2 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Flower.svg');
-    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
-    transform: translateX(-50%) rotate(23deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloud.svg');
+    width: 52px; height: 24px; bottom: -6px; right: 16px; z-index: 4;
 }
 .chat-message.moderator .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Tape.svg');
-    width: 34.1px; height: 18.8px; top: -10px; left: -6px; z-index: 5;
-    transform: rotate(-24deg);
+    background-image: url('');
 }
 .chat-message.moderator .badge::after {
-    background-image: url('');
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 10px; height: 10px; top: 50%; right: 50%; z-index: 4;
 }
 
 /* Member */
 .chat-message.member {
-    background-color: #FAABB9;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.member .message {
-    background-color: #FAABB9;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #FFFAFB;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'), 
+    url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'),
+    linear-gradient(to right, #180E41, #311C82, #180E41);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: left -66px bottom -12px, right -59px bottom -12px, 0px 0px;
+    background-size: 122px 58px, 122px 58px, cover;
+    border: 1px solid #6C65B1;
+    border-radius: 12px;
+    color: #C7C1FF;
+    box-shadow: 0px 0px 6px 0px rgba(108, 101, 177, 50), inset 0px 0px 6px 0px rgba(108, 101, 177, 50);
 }
 .chat-message.member .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FAABB9;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-image: linear-gradient(to right, #6C65B1, #3B3294);
+    color: #C7C1FF;
+    box-shadow: 0px 0px 6px 0px rgba(108, 101, 177, 50);
 }
 .chat-message.member .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
-    width: 30.8px; height: 26.7px; top: 16px; left: -8px; z-index: 4;
-    transform: rotate(-25deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Chain.svg');
+    width: 36px; height: 52px; top: -2px; left: -12px; z-index: 4;
 }
 .chat-message.member .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-big.svg');
-    width: 40.9px; height: 44px; bottom: 10px; right: -20px; z-index: 4;
-    transform: rotate(-10deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Moon%26Star.svg');
+    width: 16px; height: 16px; bottom: -8px; left: 36px; z-index: 4;
 }
 .chat-message.member .ornament-extra-1 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-small.svg');
-    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
-    transform: rotate(18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 25px; height: 25px; top: -16px; right: 52px; z-index: 4;
 }
 .chat-message.member .ornament-extra-2 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Flower.svg');
-    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
-    transform: translateX(-50%) rotate(23deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloud.svg');
+    width: 52px; height: 24px; bottom: -6px; right: 16px; z-index: 4;
 }
 .chat-message.member .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Tape.svg');
-    width: 34.1px; height: 18.8px; top: -10px; left: -6px; z-index: 5;
-    transform: rotate(-24deg);
+    background-image: url('');
 }
 .chat-message.member .badge::after {
-    background-image: url('');
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 10px; height: 10px; top: 50%; right: 50%; z-index: 4;
 }
 
 /* Regular */
 .chat-message.regular {
-    background-color: #FFFAFB;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.regular .message {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    border-radius: 28px;
-    color: #C57784;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'), 
+    url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloude-pink.svg'),
+    linear-gradient(to right, #508EE2, #9AC5FF, #508EE2);
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: left -66px bottom -12px, right -59px bottom -12px, 0px 0px;
+    background-size: 122px 58px, 122px 58px, cover;
+    border: 1px solid #CAE0FF;
+    border-radius: 12px;
+    color: #3464A5;
+    box-shadow: 0px 0px 6px 0px rgba(201, 224, 255, 50), inset 0px 0px 6px 0px rgba(201, 224, 255, 50);
 }
 .chat-message.regular .badge {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    color: #FFFAFB;
+    background-image: linear-gradient(to right, #BCD8FF, #71ADFF);
+    color: #3464A5;
+    box-shadow: 0px 0px 6px 0px rgba(201, 224, 255, 50);
 }
 .chat-message.regular .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
-    width: 30.8px; height: 26.7px; top: 16px; left: -8px; z-index: 4;
-    transform: rotate(-25deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Chain.svg');
+    width: 36px; height: 52px; top: -2px; left: -12px; z-index: 4;
 }
 .chat-message.regular .message::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-big.svg');
-    width: 40.9px; height: 44px; bottom: 10px; right: -20px; z-index: 4;
-    transform: rotate(-10deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Moon%26Star.svg');
+    width: 16px; height: 16px; bottom: -8px; left: 36px; z-index: 4;
 }
 .chat-message.regular .ornament-extra-1 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/MyMelody-small.svg');
-    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
-    transform: rotate(18deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 25px; height: 25px; top: -16px; right: 52px; z-index: 4;
 }
 .chat-message.regular .ornament-extra-2 {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Flower.svg');
-    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
-    transform: translateX(-50%) rotate(23deg);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Cloud.svg');
+    width: 52px; height: 24px; bottom: -6px; right: 16px; z-index: 4;
 }
 .chat-message.regular .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Tape.svg');
-    width: 34.1px; height: 18.8px; top: -10px; left: -6px; z-index: 5;
-    transform: rotate(-24deg);
+    background-image: url('');
 }
 .chat-message.regular .badge::after {
-    background-image: url('');
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/8e5a04cb357b975a808d94169d90f444312f406c/Felinda/Asset/Star.svg');
+    width: 10px; height: 10px; top: 50%; right: 50%; z-index: 4;
 }
 
 </style>
@@ -463,7 +451,7 @@ body, html {
     // --- PENGATURAN FILTER PLATFORM ---
     // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
     // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
-    const ALLOWED_PLATFORMS = ['youtube'];
+    const ALLOWED_PLATFORMS = ['youtube', 'tiktok'];
 
     function addMessageToOverlay(data) {
         // Selalu cetak data mentah untuk debugging
@@ -496,7 +484,7 @@ body, html {
         let roleClass = 'regular';
 
         // EDIT NAMA PENGGUNA DI SINI
-        const STREAMER_USERNAME = ["Kumayama Ryuu", "Renaldy Afif"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
+        const STREAMER_USERNAME = ["Felinda", "Renaldy Afif"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
 
         // Cek dulu apakah pengirimnya adalah streamer
         if (STREAMER_USERNAME.includes(username)) {
