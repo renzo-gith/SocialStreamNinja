@@ -453,7 +453,7 @@ body, html {
     // --- PENGATURAN FILTER PLATFORM ---
     // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
     // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
-    const ALLOWED_PLATFORMS = ['tiktok'];
+    const ALLOWED_PLATFORMS = ['youtube', 'twitch', 'tiktok'];
 
     function addMessageToOverlay(data) {
         // Selalu cetak data mentah untuk debugging
@@ -508,6 +508,7 @@ body, html {
                     src.includes('gifter') ||
                     src.includes('subscriber') ||
                     src.includes('member') ||
+                    src.includes('vip') ||
                     (src.includes('fans_badge') && !src.includes('grey'))
                 )
             ) {
