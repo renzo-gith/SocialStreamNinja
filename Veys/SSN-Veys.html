@@ -31,20 +31,17 @@ body, html {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    width: 400px;
+    width: auto;
     display: flex;
     flex-direction: column;
-    gap: 18px; /* Sedikit mengurangi jarak agar lebih pas */
+    gap: 24px; /* Sedikit mengurangi jarak agar lebih pas */
     overflow: visible;
 }
 
 /* 3. Animasi Pesan */
 /* =================================== */
 .chat-message {
-    padding: 4px 4px;
-    background-color: #ffffff;
-    border-radius: 32px;
-    left: 2px;
+    opacity: 0;
     animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     position: relative;
     display: inline-block;
@@ -84,11 +81,9 @@ body, html {
 /* =================================== */
 .message {
     font-weight: 700;
-    background: #ffffff;
-    color: #000000;
     font-size: 18px;
     padding: 16px 42px;
-    border: 2px solid #ffffff;
+    border: 1px solid #ffffff;
     border-radius: 28px;
     display: inline-block;
     min-width: 200px;
@@ -99,7 +94,7 @@ body, html {
 
 .badge {
     position: absolute;
-    font-weight: 500;
+    font-weight: 700;
     color: #796A69;
     padding: 2px 18px;
     border: 2px solid #ffffff;
@@ -141,22 +136,19 @@ body, html {
 
 /* Owner */
 .chat-message.owner {
-    background-color: #FFCCD3;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.owner .message {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #C57784;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 20), inset 0px 0px 16px 1px rgba(255, 255, 255, 80);
 }
 .chat-message.owner .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-color: #FFBB20;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 199, 72, 100);
 }
 .chat-message.owner .message::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
@@ -189,22 +181,19 @@ body, html {
 
 /* Moderator */
 .chat-message.moderator {
-    background-color: #FFCCD3;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.moderator .message {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #C57784;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 20), inset 0px 0px 16px 1px rgba(255, 255, 255, 80);
 }
 .chat-message.moderator .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-color: #FFBB20;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 199, 72, 100);
 }
 .chat-message.moderator .message::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
@@ -237,22 +226,19 @@ body, html {
 
 /* Member */
 .chat-message.member {
-    background-color: #FAABB9;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.member .message {
-    background-color: #FAABB9;
-    border: 2px solid #FFFAFB;
-    border-radius: 28px;
-    color: #FFFAFB;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 20), inset 0px 0px 16px 1px rgba(255, 255, 255, 80);
 }
 .chat-message.member .badge {
-    background-color: #FFFAFB;
-    border: 2px solid #FAABB9;
-    color: #FAABB9;
-    box-shadow: 0px 0px 0px 2px rgba(255, 250, 251, 100);
+    background-color: #FFBB20;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 199, 72, 100);
 }
 .chat-message.member .message::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
@@ -285,21 +271,19 @@ body, html {
 
 /* Regular */
 .chat-message.regular {
-    background-color: #FFFAFB;
-    padding: 4px; 
-    border-radius: 32px;
-    margin-bottom: 10px; 
+    opacity: 0;
 }
 .chat-message.regular .message {
-    background-color: #FFFAFB;
-    border: 2px solid #FFCCD3;
-    border-radius: 28px;
-    color: #C57784;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 20), inset 0px 0px 16px 1px rgba(255, 255, 255, 80);
 }
 .chat-message.regular .badge {
-    background-color: #FFCCD3;
-    border: 2px solid #FFFAFB;
-    color: #FFFAFB;
+    background-color: #FFBB20;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(255, 199, 72, 100);
 }
 .chat-message.regular .message::before {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10966ca79a5efc5393fb30df39c760b0ca83afe2/MyMelody/Assets/Love.svg');
