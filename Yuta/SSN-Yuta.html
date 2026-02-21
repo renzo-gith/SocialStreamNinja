@@ -42,10 +42,7 @@ body, html {
 /* 3. Animasi Pesan */
 /* =================================== */
 .chat-message {
-    padding: 4px 4px;
-    background-color: #ffffff;
-    border-radius: 32px;
-    left: 2px;
+    opacity: 0;
     animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     position: relative;
     display: inline-block;
@@ -338,7 +335,7 @@ body, html {
         setTimeout(() => {
             isProcessing = false;
             processQueue();
-        }, 600); // Jeda 600ms antar pesan agar tidak spam
+        }, 0); // Jeda 0ms antar pesan agar tidak spam
     }
 
     function enqueueMessage(username, message, role = 'regular', extra = {}) {
