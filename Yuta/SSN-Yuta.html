@@ -440,7 +440,7 @@ body, html {
     // --- PENGATURAN FILTER PLATFORM ---
     // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
     // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
-    const ALLOWED_PLATFORMS = ['youtube'];
+    const ALLOWED_PLATFORMS = ['youtube', 'tiktok'];
 
     function addMessageToOverlay(data) {
         // Selalu cetak data mentah untuk debugging
@@ -473,7 +473,7 @@ body, html {
         let roleClass = 'regular';
 
         // EDIT NAMA PENGGUNA DI SINI
-        const STREAMER_USERNAME = ["Kumayama Ryuu", "Renaldy Afif"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
+        const STREAMER_USERNAME = ["Rey ~ Custom Chat Widget", "Renaldy Afif"]; // <-- GANTI DENGAN NAMA PENGGUNA STREAMER ANDA
 
         // Cek dulu apakah pengirimnya adalah streamer
         if (STREAMER_USERNAME.includes(username)) {
