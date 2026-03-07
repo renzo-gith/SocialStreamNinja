@@ -316,7 +316,7 @@ body, html {
     const chatContainer = document.getElementById('chat-container'); // Pastikan ID ini ada di HTML Anda
     const urlParams = new URLSearchParams(window.location.search);
     const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
-    const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 20; //Tambahkan autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
+    const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 60; //Tambahkan autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
 
     // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
     const messageQueue = [];
