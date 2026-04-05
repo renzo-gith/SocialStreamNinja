@@ -87,8 +87,7 @@ body, html {
     background: #ffffff;
     color: #000000;
     font-size: 18px;
-    padding: 16px 42px;
-    border: 2px solid #ffffff;
+    padding: 16px 24px;
     border-radius: 28px;
     display: inline-block;
     min-width: 200px;
@@ -102,11 +101,11 @@ body, html {
     font-weight: 500;
     color: #796A69;
     padding: 2px 18px;
-    border: 2px solid #ffffff;
     border-radius: 20px;
     font-size: 12px;
-    top: -12px;
-    left: 18px;
+    top: -4px;
+    left: -4px;
+    rotate: -3;
     z-index: 5;
     background-color: #ffffff;
     white-space: nowrap;
@@ -148,7 +147,7 @@ body, html {
     url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/434b0668b9ab7ddf938f79a29756849db51419a9/Lenora/Asset/Cloud-3.svg');
     background-color: #1A1C21;
     background-repeat: no-repeat, no-repeat;
-    background-position: left -25px bottom -12px, right -20px top -10px;
+    background-position: left -22px bottom -8px, right -20px top -8px;
     background-size: 58px 38px, 50px 32px;
     border-radius: 28px;
     color: #ffffff;
@@ -196,7 +195,7 @@ body, html {
     url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/434b0668b9ab7ddf938f79a29756849db51419a9/Lenora/Asset/Cloud-3.svg');
     background-color: #1A1C21;
     background-repeat: no-repeat, no-repeat;
-    background-position: left -25px bottom -12px, right -20px top -10px;
+    background-position: left -22px bottom -8px, right -20px top -8px;
     background-size: 58px 38px, 50px 32px;
     border-radius: 28px;
     color: #ffffff;
@@ -244,7 +243,7 @@ body, html {
     url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/bf22c9787e8abc7380b9b8157de8321d6e56b305/Lenora/Asset/3-line.svg');
     background-color: #A33552;
     background-repeat: no-repeat, no-repeat;
-    background-position: left -25px bottom -12px, right 20px bottom -12px;
+    background-position: left -22px bottom -8px, right 20px bottom -12px;
     background-size: 58px 38px, 14px 26px;
     border-radius: 28px;
     color: #ffffff;
@@ -292,7 +291,7 @@ body, html {
     url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/bf22c9787e8abc7380b9b8157de8321d6e56b305/Lenora/Asset/3-line.svg');
     background-color: #A33552;
     background-repeat: no-repeat, no-repeat;
-    background-position: left -25px bottom -12px, right 20px bottom -12px;
+    background-position: left -22px bottom -8px, right 20px bottom -12px;
     background-size: 58px 38px, 14px 26px;
     border-radius: 28px;
     color: #ffffff;
@@ -363,7 +362,7 @@ body, html {
         setTimeout(() => {
             isProcessing = false;
             processQueue();
-        }, 600); // Jeda 600ms antar pesan agar tidak spam
+        }, 0); // Jeda 600ms antar pesan agar tidak spam
     }
 
     function enqueueMessage(username, message, role = 'regular', extra = {}) {
