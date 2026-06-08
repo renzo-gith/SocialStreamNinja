@@ -194,7 +194,7 @@ body, html {
         setTimeout(() => {
             isProcessing = false;
             processQueue();
-        }, 600); // Jeda 600ms antar pesan agar tidak spam
+        }, 0); // Jeda 600ms antar pesan agar tidak spam
     }
 
     function enqueueMessage(username, message, role = 'regular', extra = {}) {
