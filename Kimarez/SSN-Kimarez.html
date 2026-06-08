@@ -59,14 +59,18 @@ body, html {
     margin-bottom: 20px;
     
     background: transparent;
-    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: slideUpIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-@keyframes bounceIn {
-    0% { opacity: 0; transform: scale(0.3) translateX(-80px) translateY(50px) rotate(20deg); }
-    50% { opacity: 1; transform: scale(1.05); }
-    70% { opacity: 1; transform: scale(0.9); }
-    100% { opacity: 1; transform: scale(1); }
+@keyframes slideUpIn {
+    0% { 
+        opacity: 0; 
+        transform: translateY(40px); /* Kotak berawal dari posisi 40px di bawah */
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0);    /* Berhenti pas di posisi aslinya */
+    }
 }
 
 .fade-out {
@@ -75,21 +79,6 @@ body, html {
 @keyframes fadeOut {
     to { opacity: 0; transform: translateY(-50px); }
 }
-
-/* Animasi ornamen */
-@keyframes sway {
-    from { transform: rotate(-6deg); }
-    to { transform: rotate(6deg); }
-}
-@keyframes sway-tilt-neg-90 {
-    from { transform: rotate(-96deg); }
-    to { transform: rotate(-84deg); }
-}
-@keyframes sway-tilt-neg90 {
-    from { transform: rotate(84deg); }
-    to { transform: rotate(96deg); }
-}
-
 
 /* 4. Gaya Pesan Biasa & Lencana */
 /* =================================== */
