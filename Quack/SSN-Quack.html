@@ -1,1 +1,1136 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Overlay</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+    <script type="text/javascript">
+    </script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <!-- Links to Social Stream Ninja resources -->
+    <link rel="canonical" href="https://socialstream.ninja/">
+    <meta name="generator" content="Social Stream Ninja - https://github.com/steveseguin/social_stream">
+<style>
+/* -- TEMA STREAM ELEMENTS DIADAPTASI UNTUK SOCIAL STREAM NINJA -- */
+
+/* 1. Impor Font dan Pengaturan Dasar */
+/* =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700;900&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: 'Quicksand', sans-serif;
+    overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan */
+}
+
+/* 2. Wadah Utama Pesan */
+/* =================================== */
+/* ID ini harus sama dengan yang ada di HTML Anda */
+#chat-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 36px; /* Sedikit mengurangi jarak agar lebih pas */
+    overflow: visible;
+}
+
+/* 3. Animasi Pesan */
+/* =================================== */
+.chat-message {
+    opacity: 0;
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    position: relative;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.chat-message.donation,
+.chat-message.new-subscriber {
+    align-self: center;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3) translateX(-80px) translateY(50px) rotate(20deg); }
+    50% { opacity: 1; transform: scale(1.05); }
+    70% { opacity: 1; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.fade-out {
+    animation: fadeOut 0.6s ease-in forwards;
+}
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(-50px); }
+}
+
+/* Animasi ornamen */
+@keyframes sway {
+    from { transform: rotate(-6deg); }
+    to { transform: rotate(6deg); }
+}
+@keyframes sway-tilt-neg-90 {
+    from { transform: rotate(-96deg); }
+    to { transform: rotate(-84deg); }
+}
+@keyframes sway-tilt-neg90 {
+    from { transform: rotate(84deg); }
+    to { transform: rotate(96deg); }
+}
+@keyframes member-badge-pop {
+    0% { transform: scale(0) rotate(0deg); }
+    60% { transform: scale(1.2) rotate(15deg); }
+    100% { transform: scale(1) rotate(12deg); }
+}
+
+
+/* 4. Gaya Pesan Biasa & Lencana */
+/* =================================== */
+.message {
+    font-weight: 700;
+    background: #ffffff;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 16px 42px;
+    border-radius: 28px;
+    display: inline-block;
+    min-width: 200px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 2px 18px 2px 30px;
+    border-radius: 20px;
+    font-size: 12px;
+    top: -12px;
+    left: 18px;
+    z-index: 5;
+    background-color: #ffffff;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: ellipsis;
+}
+
+/* Perbaikan final untuk SEMUA jenis emoji dan stiker */
+.message img {
+    /* Atur ukuran yang diinginkan */
+    width: 28px !important;
+    height: 28px !important;
+
+    /* Jaga agar tetap sejajar dengan teks */
+    vertical-align: middle !important;
+    
+    /* Perbaikan visual minor */
+    display: inline-block !important;
+    margin: 0px 4px 0 4px !important;
+}
+
+/* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
+/* ================================================= */
+/* Ornamen dasar */
+.message::before, .message::after, .badge::before, .badge::after, .ornament-extra-1, .ornament-extra-2 {
+    content: '';
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform-origin: bottom center;
+}
+
+/* Owner */
+.chat-message.owner {
+    opacity: 0;
+}
+.chat-message.owner .message {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/yellow-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #2B2B03, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0px 0px 12px 1px rgba(54, 52, 0, 100), inset 1px 0px 2px 0px rgba(73, 54, 0, 100);
+}
+.chat-message.owner .badge {
+    background-color: #493C00;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(154, 127, 0, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(154, 127, 0, 100);
+}
+.chat-message.owner .message::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
+}
+.chat-message.owner .message::after {
+    background-image: url('');
+    width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
+    transform: rotate(6deg);
+}
+.chat-message.owner .ornament-extra-1 {
+    background-image: url('');
+    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
+    transform: rotate(18deg);
+}
+.chat-message.owner .ornament-extra-2 {
+    background-image: url('');
+    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
+    transform: translateX(-50%) rotate(23deg);
+}
+.chat-message.owner .badge::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/host-icon.svg');
+    width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
+}
+.chat-message.owner .badge::after {
+    background-image: url('');
+}
+.lottie-ornament-1 {
+    position: absolute;
+    width: 40px;
+    height: 51px;
+    z-index: 3;
+    top: -2px;
+    right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    bottom: -16px;
+    left: -16px;
+    pointer-events: none;
+}
+
+/* Moderator */
+.chat-message.moderator {
+    opacity: 0;
+}
+.chat-message.moderator .message {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/65b96450627ee858d2aba22c0df84bae94862785/RIN/Asset/blue-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #03192B, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0px 0px 12px 1px rgba(0, 35, 73, 100), inset 1px 0px 2px 0px rgba(0, 33, 73, 100);
+}
+.chat-message.moderator .badge {
+    background-color: #002349;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(0, 72, 150, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(0, 72, 150, 100);
+}
+.chat-message.moderator .message::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
+}
+.chat-message.moderator .message::after {
+    background-image: url('');
+    width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
+    transform: rotate(6deg);
+}
+.chat-message.moderator .ornament-extra-1 {
+    background-image: url('');
+    width: 25px; height: 27.8px; top: -16px; right: 52px; z-index: 4;
+    transform: rotate(18deg);
+}
+.chat-message.moderator .ornament-extra-2 {
+    background-image: url('');
+    width: 24.7px; height: 25.2px; bottom: -12px; left: 50%; z-index: 4;
+    transform: translateX(-50%) rotate(23deg);
+}
+.chat-message.moderator .badge::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/mod-icon.svg');
+    width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
+}
+.chat-message.moderator .badge::after {
+    background-image: url('');
+}
+.lottie-ornament-1 {
+    position: absolute;
+    width: 40px;
+    height: 51px;
+    z-index: 3;
+    top: -2px;
+    right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    bottom: -16px;
+    left: -16px;
+    pointer-events: none;
+}
+
+/* Member */
+.chat-message.member {
+    opacity: 0;
+}
+.chat-message.member .message {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
+.chat-message.member .badge {
+    background-color: #490001;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
+}
+.chat-message.member .message::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
+}
+.chat-message.member .message::after {
+    background-image: url('');
+    width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
+    transform: rotate(6deg);
+}
+.chat-message.member .ornament-extra-1 {
+    background-image: url('');
+    width: 22px; height: 22px; top: -11px; right: 52px; z-index: 4;
+    transform: rotate(-14deg);
+}
+.chat-message.member .ornament-extra-2 {
+    background-image: url('');
+}
+.chat-message.member .badge::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/member-icon.svg');
+    width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
+}
+.chat-message.member .badge::after {
+    background-image: url('');
+    width: 10.5px; height: 9px; bottom: 50%; right: -5px; z-index: 5;
+    transform: rotate(-19deg);
+}
+.lottie-ornament-1 {
+    position: absolute;
+    width: 40px;
+    height: 51px;
+    z-index: 3;
+    top: -2px;
+    right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    bottom: -16px;
+    left: -16px;
+    pointer-events: none;
+}
+.youtube-member-badge {
+    position: absolute;
+    bottom: -8px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    z-index: 6;
+}
+
+/* Regular */
+.chat-message.regular {
+    opacity: 0;
+}
+.chat-message.regular .message {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #1C032B, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    border-radius: 12px;
+    color: #ffffff;
+    box-shadow: 0px 0px 12px 1px rgba(49, 0, 54, 100), inset 1px 0px 2px 0px rgba(67, 0, 73, 100);
+}
+.chat-message.regular .badge {
+    background-color: #430049;
+    color: #ffffff;
+    box-shadow: 0px 0px 4px 1px rgba(132, 0, 144, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(132, 0, 144, 100);
+}
+.chat-message.regular .message::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
+}
+.chat-message.regular .message::after {
+    background-image: url('');
+    width: 50px; height: 52px; bottom: -16px; left: -20px; z-index: 4;
+    transform: rotate(6deg);
+}
+.chat-message.regular .ornament-extra-1 {
+    background-image: url('');
+    width: 10.5px; height: 9px; top: -16px; right: 52px; z-index: 4;
+    transform: rotate(-15deg);
+}
+.chat-message.regular .ornament-extra-2 {
+    background-image: url('');
+}
+.chat-message.regular .badge::before {
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/regular-icon.svg');
+    width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
+}
+.chat-message.regular .badge::after {
+    background-image: url('');
+}
+.lottie-ornament-1 {
+    position: absolute;
+    width: 40px;
+    height: 51px;
+    z-index: 3;
+    top: -2px;
+    right: -2px;
+    pointer-events: none;
+}
+.lottie-ornament-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    z-index: 3;
+    bottom: -16px;
+    left: -16px;
+    pointer-events: none;
+}
+.special-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px; /* Sedikit lebih lebar dari chat biasa */
+    border-radius: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden; /* Penting agar border-radius berfungsi */
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Bagian Header/Badge (misal: "DONATION" atau "NEW SUBSCRIBER") */
+.special-card .special-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 6px 16px;
+    text-align: left; /* Rata kiri agar rapi */
+    text-transform: uppercase;
+}
+
+/* Bagian Body/Pesan (misal: "Nama: $5.00 Pesannya") */
+.special-card .special-message {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 16px;
+    overflow-wrap: break-word;
+}
+    
+/* Warna untuk Donasi (Super Chat) */
+/* Container Kartu Donasi & Gift */
+.special-card.donation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    box-shadow: none;
+    width: calc(100% - 60px);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: visible;
+}
+
+/* 1. Badge Atas (MERAH) */
+.sc-badge-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background-color: #490001;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 6px 28px;
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
+}
+
+/* Teks Nominal (Besar) */
+.sc-amount {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+/* Teks "from Username" (Kecil) */
+.sc-from {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* 2. Kotak Bawah (HITAM) */
+.sc-message-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    margin-top: -14px; /* Naik sedikit agar menyatu */
+
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+                      url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+                      linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffffff;
+    text-align: center;
+    overflow-wrap: break-word;
+    border-radius: 0 0 12px 12px;
+    padding: 32px 30px 20px 30px;
+        
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
+
+.sc-badge-container::before {
+    content: '';
+    position: absolute;
+    
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    width: 38px; 
+    height: 26px; 
+    top: -4px; 
+    left: -4px; 
+    z-index: 5;
+    transform: scaleX(-1);
+}
+
+.sc-badge-container::after {
+    content: '';
+    position: absolute;
+    
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    width: 38px; 
+    height: 26px; 
+    top: -4px; 
+    right: -4px; 
+    z-index: 5;
+}
+
+/* --- POSISI LOTTIE --- */
+
+/* Rantai (Hanging from Top Corners of Red Badge) */
+.sc-chain-left,
+.sc-chain-right {
+    position: absolute;
+    width: 40px;
+    height: 51px;
+    top: -2px;
+    pointer-events: none;
+}
+.sc-chain-left {
+    left: -2px;
+}
+.sc-chain-right {
+    right: -2px;
+}
+
+/* Mawar/Kupu-kupu (Bottom Right of Message Box) */
+.sc-rose {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    bottom: -16px;
+    right: -20px;
+    z-index: 10;
+    pointer-events: none;
+    transform: scaleX(-1);
+}
+
+.special-card.new-subscriber {
+    position: relative;
+    background: transparent;
+    box-shadow: none;
+    min-width: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: visible;
+}
+
+/* Sembunyikan headline "NEW SUBSCRIBER" default */
+.special-card.new-subscriber .special-badge {
+    display: none; 
+}
+
+.sub-notification-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    min-width: 400px;
+    max-width: 100%;
+    overflow: visible;
+}
+
+/* Box Bawah (Pesan: "Hallo, aku...") */
+.sub-notification-message {
+    position: relative;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
+    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
+    linear-gradient(to right, #2B0304, #151515);
+    background-repeat: no-repeat, repeat, no-repeat;
+    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
+    background-size: 394px 88px, auto, cover;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 16px 42px;
+    overflow: visible;
+    overflow-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+}
+
+/* Box Atas (Merah: "Someone just subscribed") */
+.sub-notification-badge {
+    position: absolute;
+    z-index: 3;
+    white-space: nowrap;
+    width: max-content;
+    display: inline-block;
+    background-color: #490001;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 6px 28px;
+    top: -10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
+}
+
+.sub-notification-message::before {
+    content: '';
+    position: absolute;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 38px; 
+    height: 26px; 
+    top: -4px; 
+    left: -4px; 
+    z-index: 5;
+    transform: scaleX(-1);
+}
+
+.sub-notification-message::after {
+    content: '';
+    position: absolute;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 38px; 
+    height: 26px; 
+    top: -4px; 
+    right: -4px; 
+    z-index: 5;
+}
+
+.lottie-sub-badge-left,
+.lottie-sub-badge-right {
+    position: absolute;
+    width: 50px; 
+    height: 50px; 
+    top: 50%;
+    transform: translateY(-50%) scale(0.9);
+    z-index: 10;
+    pointer-events: none;
+}
+.lottie-sub-badge-left {
+    left: -24px; 
+}
+.lottie-sub-badge-right {
+    right: -24px; 
+    transform: translateY(-50%) scaleX(-1) scale(0.9); 
+}
+
+.lottie-sub-chain-left,
+.lottie-sub-chain-right {
+    position: absolute;
+    width: 40px; 
+    height: 51px; 
+    z-index: 2;
+    top: -6px;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+.lottie-sub-chain-left {
+    left: -2px;
+}
+.lottie-sub-chain-right {
+    right: -2px;
+}
+
+</style>
+</head>
+<body>
+<div id="chat-container">
+    <div id="message-list-wrapper">
+		<div id="spacer" style="height: 2200px; width: 100%;"></div>
+    </div>
+</div>
+<script>
+    // ===================================================================
+    // == BAGIAN 1: PENGATURAN & LOGIKA KUSTOM DARI STREAM ELEMENTS
+    // ===================================================================
+
+    const chatContainer = document.getElementById('chat-container'); // Pastikan ID ini ada di HTML Anda
+    const urlParams = new URLSearchParams(window.location.search);
+    const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
+    const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 0; // Tambahkan &autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
+
+    // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
+    const messageQueue = [];
+    let isProcessing = false;
+
+    function processQueue() {
+        if (isProcessing || messageQueue.length === 0) return;
+
+        isProcessing = true;
+        const { username, message, role, extra } = messageQueue.shift();
+        addChatMessage(username, message, role, extra);
+
+        setTimeout(() => {
+            isProcessing = false;
+            processQueue();
+        }, 0); // Jeda 600ms antar pesan agar tidak spam
+    }
+
+    function enqueueMessage(username, message, role = 'regular', extra = {}) {
+        messageQueue.push({ username, message, role, extra });
+        if (!isProcessing) {
+            processQueue();
+        }
+    }
+
+    // === FUNGSI PENGGANTI EMOTE ===
+    function makeRichMessageWithEmotes(message) {
+        if (!message) return '';
+        // Mengganti emote kustom
+        let richMessage = message.replace(/:[a-z0-9\-_]+:/gi, (match) => {
+            const youtubeEmote = emotesArray.find(emote => emote.shortcuts.includes(match));
+            if (youtubeEmote) {
+                const emoteUrl = youtubeEmote.image.thumbnails[youtubeEmote.image.thumbnails.length - 1].url;
+                return `<img class="emoji" src="${emoteUrl}" alt="${match}" />`;
+            }
+            return match;
+        });
+        return richMessage;
+    }
+
+    // === FUNGSI ANIMASI ===
+    function animateChatShift(newEl) {
+        const messages = Array.from(chatContainer.children);
+        const firstRects = messages.map(el => el.getBoundingClientRect());
+        
+        chatContainer.appendChild(newEl); // Tambahkan elemen baru dulu
+        
+        const lastRects = messages.map(el => el.getBoundingClientRect());
+        
+        messages.forEach((el, i) => {
+            const deltaY = firstRects[i]?.top - lastRects[i]?.top;
+            if (deltaY) {
+                requestAnimationFrame(() => {
+                    el.style.transform = `translateY(${deltaY}px)`;
+                    el.style.transition = 'transform 0s';
+                });
+            }
+        });
+
+        requestAnimationFrame(() => {
+            messages.forEach(el => {
+                el.style.transform = '';
+                el.style.transition = 'transform 0.4s ease-out';
+            });
+        });
+    }
+
+    // === FUNGSI PEMBUAT TAMPILAN PESAN (HTML Builder) ===
+    function addChatMessage(username, messageHTML, role = 'regular', extra = {}) { // Pastikan 'extra' ada di sini
+        const chatEl = document.createElement('div');
+        chatEl.className = `chat-message ${role}`;
+
+        if (role === 'donation') {
+            // 1. Siapkan Lottie Rantai (Untuk Badge Atas)
+            let lottieChains = `
+                <lottie-player class="sc-chain-left" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
+                <lottie-player class="sc-chain-right" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
+            `;
+
+            // 2. Siapkan Lottie Mawar/Kupu-kupu (Untuk Pesan Bawah)
+            let lottieRose = `
+                <lottie-player class="sc-rose" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" background="transparent" speed="1" autoplay loop></lottie-player>
+            `;
+
+            // 3. Badge Atas (Merah) -> Isi: Nominal + "from Nama" + Rantai
+            let amountText = extra.amount || 'DONATION';
+            let badgeHTML = `
+                <div class="sc-badge-container">
+                    <div class="sc-amount">${amountText}</div>
+                    <div class="sc-from">from ${username}</div>
+                    ${lottieChains}
+                </div>
+            `;
+
+            // 4. Kotak Bawah (Hitam) -> Isi: Pesan + Mawar
+            let messageBoxHTML = '';
+            // Selalu tampilkan kotak bawah jika ini donasi, meskipun pesan kosong (opsional)
+            // Atau hanya jika ada pesan:
+            if (messageHTML && messageHTML.trim() !== "") {
+                messageBoxHTML = `
+                    <div class="sc-message-container">
+                        ${messageHTML}
+                        ${lottieRose}
+                    </div>
+                `;
+            } else {
+                // Jika pesan kosong (Stiker), Mawar pindah ke badge atas? 
+                // Untuk sekarang kita sembunyikan kotak bawah jika kosong.
+            }
+
+            chatEl.innerHTML = `
+                <div class="special-card ${role}">
+                    ${badgeHTML}
+                    ${messageBoxHTML}
+                </div>
+            `;
+
+        } else if (role === 'new-subscriber') {
+            
+            // Lottie 1 (Rose/Butterfly) - untuk DI DALAM badge
+            // Ganti URL 'butterfly.json' jika Anda punya lottie mawar
+            let lottieBadgeOrnaments = `
+                <lottie-player class="lottie-sub-badge-left" 
+                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" 
+                    background="transparent" speed="1" autoplay>
+                </lottie-player>
+                <lottie-player class="lottie-sub-badge-right" 
+                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" 
+                    background="transparent" speed="1" autoplay>
+                </lottie-player>
+            `;
+
+            // Lottie 2 (Chain/Cross) - untuk DI LUAR container
+            // Ganti URL 'chain.json' dengan lottie rantai Anda
+            let lottieChainOrnaments = `
+                <lottie-player class="lottie-sub-chain-left" 
+                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" 
+                    background="transparent" speed="1" autoplay loop>
+                </lottie-player>
+                <lottie-player class="lottie-sub-chain-right" 
+                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" 
+                    background="transparent" speed="1" autoplay loop>
+                </lottie-player>
+            `;
+            
+            // Bagian Atas (Badge)
+            // 'username' sekarang adalah "Someone just subscribed"
+            let notificationBadge = `
+                <div class="sub-notification-badge">
+                    ${lottieBadgeOrnaments}
+                    <span>${username}</span> 
+                </div>
+            `; 
+            
+            // Bagian Bawah (Pesan) - KONDISIONAL
+            let notificationMessage = '';
+            
+            // Cek apakah ada pesan?
+            if (messageHTML && messageHTML.trim() !== "") {
+                
+                // --- PERUBAHAN 1: Rantai dimasukkan ke sini ---
+                // Sebelumnya rantai tidak ada di blok ini. 
+                // Sekarang, rantai digabung dengan pesan.
+                notificationMessage = `
+                    <div class="sub-notification-message">
+                        ${messageHTML}
+                        ${lottieChainOrnaments} 
+                    </div>`;
+            }
+
+            // Gabungkan
+            chatEl.innerHTML = `
+                <div class="special-card ${role}">
+                    <div class="sub-notification-container">
+                        ${notificationBadge}
+                        ${notificationMessage}
+                    </div>
+                    
+                    </div>
+            `;
+            
+        } else {
+            // --- BLOK BARU UNTTUK MEMBUAT BADGE YOUTUBE ---
+            let memberBadgeHTML = '';
+            // Cek jika 'extra' ada DAN 'memberBadgeUrl' ada di dalamnya
+            if (extra && extra.memberBadgeUrl) { 
+                memberBadgeHTML = `<img class="youtube-member-badge" src="${extra.memberBadgeUrl}" />`;
+            }
+            // --- AKHIR BLOK BARU ---
+
+            chatEl.innerHTML = `
+                <div class="badge">${username}</div>
+                <div class="message">
+                    ${messageHTML}
+                    ${memberBadgeHTML} <span class="ornament-extra-1"></span>
+                    <span class="ornament-extra-2"></span>
+
+                    <lottie-player
+                        class="lottie-ornament-1" 
+                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+
+                    <lottie-player
+                        class="lottie-ornament-2" 
+                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay>
+                    </lottie-player>
+                </div>
+            `;
+        }
+
+        // Panggil fungsi animasi Anda, bukan appendChild biasa
+        animateChatShift(chatEl);
+
+        if (AUTO_HIDE > 0) {
+            setTimeout(() => {
+                chatEl.classList.add('fade-out');
+                setTimeout(() => chatEl.remove(), 600);
+            }, AUTO_HIDE * 1000);
+        }
+
+        if (chatContainer.children.length > MAX_MESSAGES) {
+            const firstMessage = chatContainer.children[0];
+            firstMessage.classList.add('fade-out');
+            setTimeout(() => firstMessage.remove(), 600);
+        }
+    }console.log("Ini adalah pesan standar untuk informasi umum.");
+
+    // ===================================================================
+    // == BAGIAN 2: "JEMBATAN" PENGHUBUNG SSN KE SISTEM ANDA
+    // ===================================================================
+
+    // --- PENGATURAN FILTER PLATFORM ---
+    // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
+    // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
+    const ALLOWED_PLATFORMS = ['youtube'];
+
+    function addMessageToOverlay(data) {
+        // Log utama untuk melihat semua data mentah
+        console.log("--- [DEBUG 0] DATA MENTAH DITERIMA ---", JSON.stringify(data, null, 2));
+
+        // --- FILTER PLATFORM DIMULAI ---
+        if (ALLOWED_PLATFORMS.length > 0 && !ALLOWED_PLATFORMS.includes(data.type)) {
+            console.log(`Pesan dari platform '${data.type}' diabaikan.`);
+            return;
+        }
+        // --- FILTER PLATFORM SELESAI ---
+
+        const username = data.chatname;
+        const message = data.chatmessage;
+
+        // === PRIORITAS #1: DONASI (SUPER CHAT) ===
+        if ((data.hasDonation && data.hasDonation !== true && data.hasDonation !== "") || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
+            let roleClass = 'donation';
+            
+            let amountString = data.hasDonation || data.donationAmount;
+            let donationMessage = `<strong>${amountString || ''}</strong> ${message || ''}`;
+            
+            console.log("EVENT DONASI DITEMUKAN (STATIC COLOR):", username, amountString);
+            
+            // KITA TIDAK LAGI MENGIRIM 'style' WARNA
+            enqueueMessage(username, message, roleClass, { amount: amountString, memberBadgeUrl: null });
+            return;
+        }
+
+        // === PRIORITAS #1.5: GIFTED MEMBERSHIP ===
+        if (data.gifted === true || (data.event === true && data.isGift === true)) {
+            let roleClass = 'gifted-membership';
+            let giftMessage = message || "Gifted a membership!";
+            enqueueMessage(username, giftMessage, roleClass, { memberBadgeUrl: null });
+            return;
+        }
+
+        // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
+        if ((data.event === true && (data.isSubscriber === true || data.isNewMember === true)) || data.event === "new-membership") {
+            let roleClass = 'new-subscriber';
+
+            let notificationText = `${username} just subscribed`;
+            let memberMessage = message || ""; // Pesan asli member (bisa kosong)
+            
+            console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
+            enqueueMessage(notificationText, memberMessage, roleClass, { memberBadgeUrl: null });
+            return;
+        }
+        
+        // === PRIORITAS #3: EVENT UMUM LAINNYA (Follow, Like, Share) ===
+        // KODE LAMA ANDA: if (data.event === true) { return; }
+        // Kita masih membiarkannya di sini untuk mengabaikan Follow, Like, dll.
+        if (data.event === true) {
+            console.log("Event umum diabaikan (Follow/Share/Like):", data);
+            return; // Abaikan
+        }
+
+        if (!message) {
+            return;
+        }
+
+        // Tentukan peran untuk pesan obrolan biasa
+        let roleClass = 'regular';
+        let memberBadgeUrl = null; 
+        const STREAMER_USERNAME = ["Ryuuki Kitsune", "Rey ~ Design & Illustration"]; 
+
+        // Ambil SEMUA URL badge terlebih dahulu
+        const badgeSrcs = (data.chatbadges || []).map(badge => {
+            if (typeof badge === 'string') return badge;
+            if (typeof badge === 'object' && typeof badge.src === 'string') return badge.src;
+            return '';
+        }).filter(Boolean);
+        
+        // --- LOG DEBUG 1 ---
+        console.log(`[DEBUG 1 - ${username}] Array 'badgeSrcs' yang ditemukan:`, badgeSrcs);
+
+
+        // Tentukan PERAN terlebih dahulu
+        if (STREAMER_USERNAME.includes(username)) {
+            roleClass = 'owner';
+        } else {
+            if (badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
+                roleClass = 'owner';
+            } else if (data.mod === true || badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+                roleClass = 'moderator';
+            } else if (
+                (data.membership && data.membership !== "") ||
+                badgeSrcs.some(src =>
+                    src.includes('gifter') ||
+                    src.includes('subscriber') ||
+                    src.includes('member') ||
+                    (src.includes('fans_badge') && !src.includes('grey'))
+                )
+            ) {
+                roleClass = 'member'; // Peran 'member' ditetapkan
+            }
+        }
+
+        // --- INI LOGIKA BARU YANG SUDAH DIPERBAIKI ---
+        // SETELAH peran ditentukan, JIKA perannya adalah 'member' DAN ada badge di array,
+        // ambil URL badge PERTAMA, apa pun itu.
+        if (roleClass === 'member' && badgeSrcs.length > 0) {
+            memberBadgeUrl = badgeSrcs[0]; // <-- Mengambil URL pertama dari array
+        }
+        
+        // --- LOG DEBUG 2 & 3 ---
+        console.log(`[DEBUG 2 & 3 - ${username}] Peran: ${roleClass}. URL Badge yang akan dikirim:`, memberBadgeUrl);
+
+        // Kirim pesan dengan URL badge (bisa null jika bukan member atau jika member tapi tak ada badge)
+        enqueueMessage(username, message, roleClass, { memberBadgeUrl: memberBadgeUrl });
+    }
+
+    // ===================================================================
+    // == BAGIAN 3: KODE BAWAAN SSN UNTUK MENERIMA DATA (JANGAN DIUBAH)
+    // ===================================================================
+    var roomID = "iWWnKL28tQ";
+    if (urlParams.has("session")) {
+        roomID = urlParams.get("session");
+    }
+    var password = "false";
+    var featuredMode = false;
+
+    var iframe = document.createElement("iframe");
+    if (featuredMode) {
+        iframe.src = `https://vdo.socialstream.ninja/?ln&password=${password}&salt=vdo.ninja&label=overlay&exclude=${roomID}&scene&novideo&noaudio&cleanoutput&room=${roomID}`;
+    } else {
+        iframe.src = "https://vdo.socialstream.ninja/?ln&salt=vdo.ninja&password=" + password + "&push&label=dock&vd=0&ad=0&novideo&noaudio&autostart&cleanoutput&room=" + roomID;
+    }
+    iframe.style.cssText = "width:0;height:0;border:0;position:absolute;top:-10px;left:-10px;";
+    document.body.appendChild(iframe);
+    window.addEventListener("message", function(e) {
+        if (e.source != iframe.contentWindow) return;
+        if (e.data.dataReceived && e.data.dataReceived.overlayNinja) {
+            addMessageToOverlay(e.data.dataReceived.overlayNinja);
+        }
+    });
+
+    var conCon = 1;
+    var socketserver = false;
+    var serverURL = urlParams.has("localserver") ? "ws://127.0.0.1:3000" : "wss://io.socialstream.ninja";
+
+    function setupSocket() {
+        socketserver.onclose = function() {
+            setTimeout(function() {
+                conCon += 1;
+                socketserver = new WebSocket(serverURL);
+                setupSocket();
+            }, 100 * conCon);
+        };
+        socketserver.onopen = function() {
+            conCon = 1;
+            socketserver.send(JSON.stringify({ "join": roomID, "out": 3, "in": 4 }));
+        };
+        socketserver.addEventListener('message', function(event) {
+            if (event.data) {
+                try {
+                    var data = JSON.parse(event.data);
+                    if (data) {
+                        addMessageToOverlay(data);
+                    }
+                } catch (error) {
+                    console.error("Error processing WebSocket message:", error, "Data:", event.data);
+                }
+            }
+        });
+    }
+
+    if (urlParams.has("server") || urlParams.has("server2")) {
+        serverURL = urlParams.get("server") || urlParams.get("server2") || serverURL;
+        socketserver = new WebSocket(serverURL);
+        setupSocket();
+    }
+</script>
+</body>
+</html>
+
 
