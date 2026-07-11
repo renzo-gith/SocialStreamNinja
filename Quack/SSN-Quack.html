@@ -36,7 +36,7 @@ body, html {
     width: auto;
     display: flex;
     flex-direction: column;
-    gap: 36px; /* Sedikit mengurangi jarak agar lebih pas */
+    gap: 32px; /* Sedikit mengurangi jarak agar lebih pas */
     overflow: visible;
 }
 
@@ -92,47 +92,35 @@ body, html {
 /* 4. Gaya Pesan Biasa & Lencana */
 /* =================================== */
 .message {
-    font-weight: 700;
-    background: #ffffff;
-    color: #ffffff;
-    font-size: 18px;
-    padding: 16px 42px;
-    border-radius: 28px;
-    display: inline-block;
-    min-width: 200px;
-    box-sizing: border-box;
+    grid-area: message;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #000000; /* Warna teks hitam */
+    font-size: 20px;
+    font-weight: 900;
     overflow-wrap: break-word;
-    position: relative;
 }
 
 .badge {
-    position: absolute;
-    font-weight: 600;
-    color: #ffffff;
-    padding: 2px 18px 2px 30px;
-    border-radius: 20px;
-    font-size: 12px;
-    top: -12px;
-    left: 18px;
-    z-index: 5;
-    background-color: #ffffff;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: ellipsis;
+    grid-area: badge;
+    justify-self: start; 
+    border: 2px solid #000000;
+    box-shadow: 3px 3px 0px #000000;
+    border-radius: 0px;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 /* Perbaikan final untuk SEMUA jenis emoji dan stiker */
 .message img {
-    /* Atur ukuran yang diinginkan */
-    width: 28px !important;
-    height: 28px !important;
-
-    /* Jaga agar tetap sejajar dengan teks */
-    vertical-align: middle !important;
-    
-    /* Perbaikan visual minor */
-    display: inline-block !important;
-    margin: 0px 4px 0 4px !important;
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0px 4px;
 }
 
 /* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
@@ -151,23 +139,19 @@ body, html {
     opacity: 0;
 }
 .chat-message.owner .message {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/yellow-gradient-bg.svg'),
-    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-    linear-gradient(to right, #2B2B03, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
+    background-image: linear-gradient(to right, #8B2C2F, #C6484B);
+    border: 1px solid #761F21;
     border-radius: 12px;
-    color: #ffffff;
-    box-shadow: 0px 0px 12px 1px rgba(54, 52, 0, 100), inset 1px 0px 2px 0px rgba(73, 54, 0, 100);
+    color: #FFE6E6;
 }
 .chat-message.owner .badge {
-    background-color: #493C00;
-    color: #ffffff;
-    box-shadow: 0px 0px 4px 1px rgba(154, 127, 0, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(154, 127, 0, 100);
+    background-color: #FFEE3E;
+    color: #D88838;
+    border: 1px solid #D88838;
+    border-radius: 20px
 }
 .chat-message.owner .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-image: url('');
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.owner .message::after {
@@ -186,29 +170,11 @@ body, html {
     transform: translateX(-50%) rotate(23deg);
 }
 .chat-message.owner .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/host-icon.svg');
+    background-image: url('');
     width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
 }
 .chat-message.owner .badge::after {
     background-image: url('');
-}
-.lottie-ornament-1 {
-    position: absolute;
-    width: 40px;
-    height: 51px;
-    z-index: 3;
-    top: -2px;
-    right: -2px;
-    pointer-events: none;
-}
-.lottie-ornament-2 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    z-index: 3;
-    bottom: -16px;
-    left: -16px;
-    pointer-events: none;
 }
 
 /* Moderator */
@@ -216,23 +182,19 @@ body, html {
     opacity: 0;
 }
 .chat-message.moderator .message {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/65b96450627ee858d2aba22c0df84bae94862785/RIN/Asset/blue-gradient-bg.svg'),
-    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-    linear-gradient(to right, #03192B, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
+    background-image: linear-gradient(to right, #8B2C2F, #C6484B);
+    border: 1px solid #761F21;
     border-radius: 12px;
-    color: #ffffff;
-    box-shadow: 0px 0px 12px 1px rgba(0, 35, 73, 100), inset 1px 0px 2px 0px rgba(0, 33, 73, 100);
+    color: #FFE6E6;
 }
 .chat-message.moderator .badge {
-    background-color: #002349;
-    color: #ffffff;
-    box-shadow: 0px 0px 4px 1px rgba(0, 72, 150, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(0, 72, 150, 100);
+    background-color: #FFEE3E;
+    color: #D88838;
+    border: 1px solid #D88838;
+    border-radius: 20px
 }
 .chat-message.moderator .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-image: url('');
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.moderator .message::after {
@@ -251,29 +213,11 @@ body, html {
     transform: translateX(-50%) rotate(23deg);
 }
 .chat-message.moderator .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/mod-icon.svg');
+    background-image: url('');
     width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
 }
 .chat-message.moderator .badge::after {
     background-image: url('');
-}
-.lottie-ornament-1 {
-    position: absolute;
-    width: 40px;
-    height: 51px;
-    z-index: 3;
-    top: -2px;
-    right: -2px;
-    pointer-events: none;
-}
-.lottie-ornament-2 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    z-index: 3;
-    bottom: -16px;
-    left: -16px;
-    pointer-events: none;
 }
 
 /* Member */
@@ -281,23 +225,19 @@ body, html {
     opacity: 0;
 }
 .chat-message.member .message {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
-    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-    linear-gradient(to right, #2B0304, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
+    background-image: linear-gradient(to right, #FFE7B3, #FFF6E3);
+    border: 1px solid #FFC743;
     border-radius: 12px;
-    color: #ffffff;
-    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+    color: #7B5B0F;
 }
 .chat-message.member .badge {
-    background-color: #490001;
-    color: #ffffff;
-    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
+    background-color: #C6484B;
+    color: #FFE6E6;
+    border: 1px solid #761F21;
+    border-radius: 20px
 }
 .chat-message.member .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-image: url('');
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.member .message::after {
@@ -314,7 +254,7 @@ body, html {
     background-image: url('');
 }
 .chat-message.member .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/member-icon.svg');
+    background-image: url('');
     width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
 }
 .chat-message.member .badge::after {
@@ -322,55 +262,25 @@ body, html {
     width: 10.5px; height: 9px; bottom: 50%; right: -5px; z-index: 5;
     transform: rotate(-19deg);
 }
-.lottie-ornament-1 {
-    position: absolute;
-    width: 40px;
-    height: 51px;
-    z-index: 3;
-    top: -2px;
-    right: -2px;
-    pointer-events: none;
-}
-.lottie-ornament-2 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    z-index: 3;
-    bottom: -16px;
-    left: -16px;
-    pointer-events: none;
-}
-.youtube-member-badge {
-    position: absolute;
-    bottom: -8px;
-    right: -10px;
-    width: 28px;
-    height: 28px;
-    z-index: 6;
-}
 
 /* Regular */
 .chat-message.regular {
     opacity: 0;
 }
 .chat-message.regular .message {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/purple-gradient-bg.svg'),
-    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-    linear-gradient(to right, #1C032B, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
+    background-color: #FFF6E3;
+    border: 1px solid #FFC743;
     border-radius: 12px;
-    color: #ffffff;
-    box-shadow: 0px 0px 12px 1px rgba(49, 0, 54, 100), inset 1px 0px 2px 0px rgba(67, 0, 73, 100);
+    color: #7B5B0F;
 }
 .chat-message.regular .badge {
-    background-color: #430049;
-    color: #ffffff;
-    box-shadow: 0px 0px 4px 1px rgba(132, 0, 144, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(132, 0, 144, 100);
+    background-color: #FFEE3E;
+    color: #D88838;
+    border: 1px solid #FFC743;
+    border-radius: 20px
 }
 .chat-message.regular .message::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    background-image: url('');
     width: 38px; height: 26px; top: -4px; right: -4px; z-index: 4;
 }
 .chat-message.regular .message::after {
@@ -387,7 +297,7 @@ body, html {
     background-image: url('');
 }
 .chat-message.regular .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/regular-icon.svg');
+    background-image: url('');
     width: 12px; height: 12px; top: 50%; left: 12px; transform: translateY(-50%); z-index: 5;
 }
 .chat-message.regular .badge::after {
