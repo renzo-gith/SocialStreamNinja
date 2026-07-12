@@ -302,24 +302,6 @@ body, html {
 .chat-message.regular .badge::after {
     background-image: url('');
 }
-.lottie-ornament-1 {
-    position: absolute;
-    width: 40px;
-    height: 51px;
-    z-index: 3;
-    top: -2px;
-    right: -2px;
-    pointer-events: none;
-}
-.lottie-ornament-2 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    z-index: 3;
-    bottom: -16px;
-    left: -16px;
-    pointer-events: none;
-}
 .special-card {
     display: flex;
     flex-direction: column;
@@ -572,41 +554,6 @@ body, html {
     z-index: 5;
 }
 
-.lottie-sub-badge-left,
-.lottie-sub-badge-right {
-    position: absolute;
-    width: 50px; 
-    height: 50px; 
-    top: 50%;
-    transform: translateY(-50%) scale(0.9);
-    z-index: 10;
-    pointer-events: none;
-}
-.lottie-sub-badge-left {
-    left: -24px; 
-}
-.lottie-sub-badge-right {
-    right: -24px; 
-    transform: translateY(-50%) scaleX(-1) scale(0.9); 
-}
-
-.lottie-sub-chain-left,
-.lottie-sub-chain-right {
-    position: absolute;
-    width: 40px; 
-    height: 51px; 
-    z-index: 2;
-    top: -6px;
-    pointer-events: none;
-    transform: scale(0.8);
-}
-.lottie-sub-chain-left {
-    left: -2px;
-}
-.lottie-sub-chain-right {
-    right: -2px;
-}
-
 </style>
 </head>
 <body>
@@ -697,24 +644,12 @@ body, html {
         chatEl.className = `chat-message ${role}`;
 
         if (role === 'donation') {
-            // 1. Siapkan Lottie Rantai (Untuk Badge Atas)
-            let lottieChains = `
-                <lottie-player class="sc-chain-left" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
-                <lottie-player class="sc-chain-right" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" background="transparent" speed="1" autoplay loop></lottie-player>
-            `;
-
-            // 2. Siapkan Lottie Mawar/Kupu-kupu (Untuk Pesan Bawah)
-            let lottieRose = `
-                <lottie-player class="sc-rose" src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" background="transparent" speed="1" autoplay loop></lottie-player>
-            `;
-
             // 3. Badge Atas (Merah) -> Isi: Nominal + "from Nama" + Rantai
             let amountText = extra.amount || 'DONATION';
             let badgeHTML = `
                 <div class="sc-badge-container">
                     <div class="sc-amount">${amountText}</div>
                     <div class="sc-from">from ${username}</div>
-                    ${lottieChains}
                 </div>
             `;
 
@@ -726,7 +661,6 @@ body, html {
                 messageBoxHTML = `
                     <div class="sc-message-container">
                         ${messageHTML}
-                        ${lottieRose}
                     </div>
                 `;
             } else {
@@ -742,38 +676,10 @@ body, html {
             `;
 
         } else if (role === 'new-subscriber') {
-            
-            // Lottie 1 (Rose/Butterfly) - untuk DI DALAM badge
-            // Ganti URL 'butterfly.json' jika Anda punya lottie mawar
-            let lottieBadgeOrnaments = `
-                <lottie-player class="lottie-sub-badge-left" 
-                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" 
-                    background="transparent" speed="1" autoplay>
-                </lottie-player>
-                <lottie-player class="lottie-sub-badge-right" 
-                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json" 
-                    background="transparent" speed="1" autoplay>
-                </lottie-player>
-            `;
-
-            // Lottie 2 (Chain/Cross) - untuk DI LUAR container
-            // Ganti URL 'chain.json' dengan lottie rantai Anda
-            let lottieChainOrnaments = `
-                <lottie-player class="lottie-sub-chain-left" 
-                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" 
-                    background="transparent" speed="1" autoplay loop>
-                </lottie-player>
-                <lottie-player class="lottie-sub-chain-right" 
-                    src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json" 
-                    background="transparent" speed="1" autoplay loop>
-                </lottie-player>
-            `;
-            
             // Bagian Atas (Badge)
             // 'username' sekarang adalah "Someone just subscribed"
             let notificationBadge = `
                 <div class="sub-notification-badge">
-                    ${lottieBadgeOrnaments}
                     <span>${username}</span> 
                 </div>
             `; 
@@ -790,7 +696,6 @@ body, html {
                 notificationMessage = `
                     <div class="sub-notification-message">
                         ${messageHTML}
-                        ${lottieChainOrnaments} 
                     </div>`;
             }
 
@@ -820,23 +725,6 @@ body, html {
                     ${messageHTML}
                     ${memberBadgeHTML} <span class="ornament-extra-1"></span>
                     <span class="ornament-extra-2"></span>
-
-                    <lottie-player
-                        class="lottie-ornament-1" 
-                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/chain.json"
-                        background="transparent"
-                        speed="1"
-                        autoplay
-                        loop>
-                    </lottie-player>
-
-                    <lottie-player
-                        class="lottie-ornament-2" 
-                        src="https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/refs/heads/main/RIN/Asset/butterfly.json"
-                        background="transparent"
-                        speed="1"
-                        autoplay>
-                    </lottie-player>
                 </div>
             `;
         }
