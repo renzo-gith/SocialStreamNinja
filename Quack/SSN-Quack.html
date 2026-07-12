@@ -305,112 +305,87 @@ body, html {
 
 .alert-card {
     position: relative;
-    width: 450px;
-    height: 110px;
-    border-radius: 24px;
+    width: 240px;
+    height: 64px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 40px 0 60px;
+    padding: 16px 14px;
     box-sizing: border-box;
     margin: 20px auto 40px auto;
     font-family: 'Quicksand', sans-serif;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .alert-card::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 90px;
-    background-image: url('LINK_GAMBAR_CINCIN_BINDER.png'); /* GANTI LINK INI NANTI */
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 5;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd0e69aec372f4fef3b8760e8dc7520d933600a/Quack/Asset/pin.svg');
+    width: 22px; height: 26px; top: 8px; left: -10px; z-index: 4;
 }
 
 .alert-title {
-    font-size: 34px;
+    font-size: 20px;
     font-weight: 900;
-    line-height: 1.1;
     z-index: 3;
 }
 .alert-subtitle {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
     z-index: 3;
 }
 
 /* --- ALERT KUNING (NEW MEMBER/FOLLOWER) --- */
 .alert-member {
-    background: linear-gradient(to right, #FFF1CB, #FFDFB0);
-    border: 2px solid #F5B041;
+    background: linear-gradient(to right, #FFE7B3, #FFF6E3);
+    border: 1px solid #FFC743;
 }
 .alert-member .alert-title, 
 .alert-member .alert-subtitle {
-    color: #6E4F18; 
+    color: #7B5B0F; 
 }
 .alert-member::after {
     content: '';
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 160px;
+    width: 92px;
     height: 100%;
-    background-image: url('LINK_GAMBAR_RODA_BESAR.png'); /* GANTI LINK INI NANTI */
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/color-whele.svg');
     background-size: cover;
     background-position: right bottom;
     background-repeat: no-repeat;
-    border-radius: 0 22px 22px 0; 
     z-index: 2;
 }
 .alert-member .ornament-bottom {
-    position: absolute;
-    bottom: -30px;
-    left: 80px;
-    width: 60px;
-    height: 40px;
-    background-image: url('LINK_GAMBAR_CORETAN.png'); /* GANTI LINK INI NANTI */
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd0e69aec372f4fef3b8760e8dc7520d933600a/Quack/Asset/sketch.svg');
+    width: 25px; height: 26px; bottom: -14px; left: 24px; z-index: 4;
 }
 
 /* --- ALERT MERAH (DONATION) --- */
 .alert-donation {
-    background: linear-gradient(to right, #983334, #B73D3F);
-    border: 2px solid #5A191A;
+    background: linear-gradient(to right, #8B2C2F, #C6484B);
+    border: 1px solid #761F21;
 }
 .alert-donation .alert-title, 
 .alert-donation .alert-subtitle {
-    color: #FFE6E6; 
+    color: #FFE6E6;
 }
 .alert-donation::after {
     content: '';
     position: absolute;
     right: -10px;
     bottom: 0;
-    width: 140px;
-    height: 120px;
-    background-image: url('LINK_GAMBAR_BEBEK.png'); /* GANTI LINK INI NANTI */
+    width: 72px;
+    height: 100%;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/Quack.svg');
     background-size: contain;
     background-position: right bottom;
     background-repeat: no-repeat;
     z-index: 4;
 }
 .alert-donation .ornament-bottom {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    background-image: url('LINK_GAMBAR_RODA_KECIL.png'); /* GANTI LINK INI NANTI */
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 5;
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/color-whele.svg');
+    width: 33px; height: 32px; bottom: -18px; left:24px; z-index: 4;
+    transform: rotate(-14deg);
 }
 
 </style>
