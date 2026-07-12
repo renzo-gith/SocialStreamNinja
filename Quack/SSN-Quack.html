@@ -302,255 +302,114 @@ body, html {
 .chat-message.regular .badge::after {
     background-image: url('');
 }
-.special-card {
+
+.alert-card {
+    position: relative;
+    width: 450px;
+    height: 110px;
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
-    min-width: 300px; /* Sedikit lebih lebar dari chat biasa */
-    border-radius: 12px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    overflow: hidden; /* Penting agar border-radius berfungsi */
-    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.5);
-}
-
-/* Bagian Header/Badge (misal: "DONATION" atau "NEW SUBSCRIBER") */
-.special-card .special-badge {
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-    padding: 6px 16px;
-    text-align: left; /* Rata kiri agar rapi */
-    text-transform: uppercase;
-}
-
-/* Bagian Body/Pesan (misal: "Nama: $5.00 Pesannya") */
-.special-card .special-message {
-    font-size: 18px;
-    font-weight: 700;
-    color: #ffffff;
-    padding: 16px;
-    overflow-wrap: break-word;
-}
-    
-/* Warna untuk Donasi (Super Chat) */
-/* Container Kartu Donasi & Gift */
-.special-card.donation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: transparent;
-    box-shadow: none;
-    width: calc(100% - 60px);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    overflow: visible;
-}
-
-/* 1. Badge Atas (MERAH) */
-.sc-badge-container {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    background-color: #490001;
-    color: #ffffff;
-    text-align: center;
-    border-radius: 12px;
-    padding: 6px 28px;
-    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
-}
-
-/* Teks Nominal (Besar) */
-.sc-amount {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 4px;
-}
-
-/* Teks "from Username" (Kecil) */
-.sc-from {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-/* 2. Kotak Bawah (HITAM) */
-.sc-message-container {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    margin-top: -14px; /* Naik sedikit agar menyatu */
-
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
-                      url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-                      linear-gradient(to right, #2B0304, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
-    font-weight: 700;
-    font-size: 18px;
-    color: #ffffff;
-    text-align: center;
-    overflow-wrap: break-word;
-    border-radius: 0 0 12px 12px;
-    padding: 32px 30px 20px 30px;
-        
-    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
-}
-
-.sc-badge-container::before {
-    content: '';
-    position: absolute;
-    
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    
-    width: 38px; 
-    height: 26px; 
-    top: -4px; 
-    left: -4px; 
-    z-index: 5;
-    transform: scaleX(-1);
-}
-
-.sc-badge-container::after {
-    content: '';
-    position: absolute;
-    
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    
-    width: 38px; 
-    height: 26px; 
-    top: -4px; 
-    right: -4px; 
-    z-index: 5;
-}
-
-/* --- POSISI LOTTIE --- */
-
-/* Rantai (Hanging from Top Corners of Red Badge) */
-.sc-chain-left,
-.sc-chain-right {
-    position: absolute;
-    width: 40px;
-    height: 51px;
-    top: -2px;
-    pointer-events: none;
-}
-.sc-chain-left {
-    left: -2px;
-}
-.sc-chain-right {
-    right: -2px;
-}
-
-/* Mawar/Kupu-kupu (Bottom Right of Message Box) */
-.sc-rose {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    bottom: -16px;
-    right: -20px;
-    z-index: 10;
-    pointer-events: none;
-    transform: scaleX(-1);
-}
-
-.special-card.new-subscriber {
-    position: relative;
-    background: transparent;
-    box-shadow: none;
-    min-width: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    overflow: visible;
-}
-
-/* Sembunyikan headline "NEW SUBSCRIBER" default */
-.special-card.new-subscriber .special-badge {
-    display: none; 
-}
-
-.sub-notification-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin-top: 24px;
-    min-width: 400px;
-    max-width: 100%;
-    overflow: visible;
-}
-
-/* Box Bawah (Pesan: "Hallo, aku...") */
-.sub-notification-message {
-    position: relative;
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/f3f6c5a6214f99a318abb62041b3482f1fa9283c/RIN/Asset/red-gradient-bg.svg'),
-    url('https://github.com/renzo-gith/SocialStreamNinja/blob/main/RIN/Asset/spark-pg.png?raw=true'),
-    linear-gradient(to right, #2B0304, #151515);
-    background-repeat: no-repeat, repeat, no-repeat;
-    background-position: -120px calc(100% + 40px), 0px 0px, 0px 0px;
-    background-size: 394px 88px, auto, cover;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 12px;
-    padding: 16px 42px;
-    overflow: visible;
-    overflow-wrap: break-word;
-    width: 100%;
+    justify-content: center;
+    padding: 0 40px 0 60px;
     box-sizing: border-box;
-    box-shadow: 0px 0px 12px 1px rgba(54, 0, 1, 100), inset 1px 0px 2px 0px rgba(73, 0, 1, 100);
+    margin: 20px auto 40px auto;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Box Atas (Merah: "Someone just subscribed") */
-.sub-notification-badge {
-    position: absolute;
-    z-index: 3;
-    white-space: nowrap;
-    width: max-content;
-    display: inline-block;
-    background-color: #490001;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 12px;
-    padding: 6px 28px;
-    top: -10px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: visible;
-    box-shadow: 0px 0px 4px 1px rgba(118, 0, 2, 100),0px 1px 4px 0px rgba(0, 0, 0, 100), inset 1px 1px 6px rgba(118, 0, 2, 100);
-}
-
-.sub-notification-message::before {
+.alert-card::before {
     content: '';
     position: absolute;
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 90px;
+    background-image: url('LINK_GAMBAR_CINCIN_BINDER.png'); /* GANTI LINK INI NANTI */
     background-size: contain;
     background-repeat: no-repeat;
-    width: 38px; 
-    height: 26px; 
-    top: -4px; 
-    left: -4px; 
     z-index: 5;
-    transform: scaleX(-1);
 }
 
-.sub-notification-message::after {
+.alert-title {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.1;
+    z-index: 3;
+}
+.alert-subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    z-index: 3;
+}
+
+/* --- ALERT KUNING (NEW MEMBER/FOLLOWER) --- */
+.alert-member {
+    background: linear-gradient(to right, #FFF1CB, #FFDFB0);
+    border: 2px solid #F5B041;
+}
+.alert-member .alert-title, 
+.alert-member .alert-subtitle {
+    color: #6E4F18; 
+}
+.alert-member::after {
     content: '';
     position: absolute;
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/eecfcc75597d3706b3a47ed41f9198f91421d536/RIN/Asset/chain-1.svg');
+    right: 0;
+    bottom: 0;
+    width: 160px;
+    height: 100%;
+    background-image: url('LINK_GAMBAR_RODA_BESAR.png'); /* GANTI LINK INI NANTI */
+    background-size: cover;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    border-radius: 0 22px 22px 0; 
+    z-index: 2;
+}
+.alert-member .ornament-bottom {
+    position: absolute;
+    bottom: -30px;
+    left: 80px;
+    width: 60px;
+    height: 40px;
+    background-image: url('LINK_GAMBAR_CORETAN.png'); /* GANTI LINK INI NANTI */
     background-size: contain;
     background-repeat: no-repeat;
-    width: 38px; 
-    height: 26px; 
-    top: -4px; 
-    right: -4px; 
+}
+
+/* --- ALERT MERAH (DONATION) --- */
+.alert-donation {
+    background: linear-gradient(to right, #983334, #B73D3F);
+    border: 2px solid #5A191A;
+}
+.alert-donation .alert-title, 
+.alert-donation .alert-subtitle {
+    color: #FFE6E6; 
+}
+.alert-donation::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    bottom: 0;
+    width: 140px;
+    height: 120px;
+    background-image: url('LINK_GAMBAR_BEBEK.png'); /* GANTI LINK INI NANTI */
+    background-size: contain;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    z-index: 4;
+}
+.alert-donation .ornament-bottom {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background-image: url('LINK_GAMBAR_RODA_KECIL.png'); /* GANTI LINK INI NANTI */
+    background-size: contain;
+    background-repeat: no-repeat;
     z-index: 5;
 }
 
@@ -644,70 +503,30 @@ body, html {
         chatEl.className = `chat-message ${role}`;
 
         if (role === 'donation') {
-            // 3. Badge Atas (Merah) -> Isi: Nominal + "from Nama" + Rantai
+            
+            // --- KODE BARU UNTUK DONASI ---
             let amountText = extra.amount || 'DONATION';
-            let badgeHTML = `
-                <div class="sc-badge-container">
-                    <div class="sc-amount">${amountText}</div>
-                    <div class="sc-from">from ${username}</div>
-                </div>
-            `;
-
-            // 4. Kotak Bawah (Hitam) -> Isi: Pesan + Mawar
-            let messageBoxHTML = '';
-            // Selalu tampilkan kotak bawah jika ini donasi, meskipun pesan kosong (opsional)
-            // Atau hanya jika ada pesan:
-            if (messageHTML && messageHTML.trim() !== "") {
-                messageBoxHTML = `
-                    <div class="sc-message-container">
-                        ${messageHTML}
-                    </div>
-                `;
-            } else {
-                // Jika pesan kosong (Stiker), Mawar pindah ke badge atas? 
-                // Untuk sekarang kita sembunyikan kotak bawah jika kosong.
-            }
-
+            
             chatEl.innerHTML = `
-                <div class="special-card ${role}">
-                    ${badgeHTML}
-                    ${messageBoxHTML}
+                <div class="alert-card alert-donation">
+                    <div class="alert-title">${amountText}</div>
+                    <div class="alert-subtitle">from ${username}</div>
+                    <div class="ornament-bottom"></div>
                 </div>
             `;
 
         } else if (role === 'new-subscriber') {
-            // Bagian Atas (Badge)
-            // 'username' sekarang adalah "Someone just subscribed"
-            let notificationBadge = `
-                <div class="sub-notification-badge">
-                    <span>${username}</span> 
-                </div>
-            `; 
             
-            // Bagian Bawah (Pesan) - KONDISIONAL
-            let notificationMessage = '';
+            // --- KODE BARU UNTUK NEW MEMBER ---
+            // Kita bersihkan teks " just subscribed" bawaan agar namanya bersih untuk diberi @
+            let cleanUsername = username.replace(" just subscribed", "");
             
-            // Cek apakah ada pesan?
-            if (messageHTML && messageHTML.trim() !== "") {
-                
-                // --- PERUBAHAN 1: Rantai dimasukkan ke sini ---
-                // Sebelumnya rantai tidak ada di blok ini. 
-                // Sekarang, rantai digabung dengan pesan.
-                notificationMessage = `
-                    <div class="sub-notification-message">
-                        ${messageHTML}
-                    </div>`;
-            }
-
-            // Gabungkan
             chatEl.innerHTML = `
-                <div class="special-card ${role}">
-                    <div class="sub-notification-container">
-                        ${notificationBadge}
-                        ${notificationMessage}
-                    </div>
-                    
-                    </div>
+                <div class="alert-card alert-member">
+                    <div class="alert-title">@${cleanUsername}</div>
+                    <div class="alert-subtitle">welcome to membership</div>
+                    <div class="ornament-bottom"></div>
+                </div>
             `;
             
         } else {
