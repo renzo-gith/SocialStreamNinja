@@ -42,7 +42,6 @@ body, html {
 #alert-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 /* 3. Animasi Pesan */
@@ -104,7 +103,7 @@ body, html {
     font-size: 20px;
     font-weight: 900;
     overflow-wrap: break-word;
-	min-width: 200px;
+	min-width: 160px;
 }
 
 .badge {
@@ -315,7 +314,7 @@ body, html {
     position: relative;
     border-radius: 12px;
     display: flex;
-	min-width: 300px;
+	min-width: 240px;
     flex-direction: column;
     justify-content: center; /* Diganti dari left ke center untuk perataan vertikal yang lebih baik */
     padding: 16px 80px 16px 24px; /* Padding disesuaikan */
@@ -406,14 +405,28 @@ body, html {
     // == BAGIAN 1: PENGATURAN & LOGIKA KUSTOM DARI STREAM ELEMENTS
     // ===================================================================
 
+	const SHOW_MEMBER_BADGE = false; 
+
+    // PEMBLOKIR MUTLAK: Menyuntikkan CSS anti-badge langsung ke sistem jika saklar = false
+    if (!SHOW_MEMBER_BADGE) {
+        const styleBlock = document.createElement('style');
+        styleBlock.innerHTML = `
+            .youtube-member-badge,
+            .message img.youtube-member-badge,
+            .badge img {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+                margin: 0 !important;
+                opacity: 0 !important;
+            }
+        `;
+        document.head.appendChild(styleBlock);
+    }
     const chatContainer = document.getElementById('chat-container'); // Pastikan ID ini ada di HTML Anda
     const urlParams = new URLSearchParams(window.location.search);
     const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
     const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 0; // Tambahkan &autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
-	const SHOW_MEMBER_BADGE = false;
-	if (!SHOW_MEMBER_BADGE) {
-        document.body.classList.add('hide-badges');
-    }
     // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
     const messageQueue = [];
     let isProcessing = false;
