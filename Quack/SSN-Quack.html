@@ -104,6 +104,7 @@ body, html {
     font-size: 20px;
     font-weight: 900;
     overflow-wrap: break-word;
+	min-width: 200px;
 }
 
 .badge {
@@ -314,13 +315,13 @@ body, html {
     position: relative;
     border-radius: 12px;
     display: flex;
+	min-width: 300px;
     flex-direction: column;
     justify-content: center; /* Diganti dari left ke center untuk perataan vertikal yang lebih baik */
     padding: 16px 80px 16px 24px; /* Padding disesuaikan */
     box-sizing: border-box;
     margin: 20px auto;
     font-family: 'Quicksand', sans-serif;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Tambahan shadow opsional */
 }
 
 /* PERBAIKAN: Menambahkan content, position, background-size, & background-repeat */
@@ -410,6 +411,9 @@ body, html {
     const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
     const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 0; // Tambahkan &autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
 	const SHOW_MEMBER_BADGE = false;
+	if (!SHOW_MEMBER_BADGE) {
+        document.body.classList.add('hide-badges');
+    }
     // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
     const messageQueue = [];
     let isProcessing = false;
