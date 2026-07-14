@@ -122,6 +122,15 @@ body, html {
     text-overflow: ellipsis;
 }
 
+.truncate-text {
+    display: inline-block;
+    max-width: 180px; /* Lebar maksimal nama sebelum titik-titik muncul */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+}
+
 /* Perbaikan final untuk SEMUA jenis emoji dan stiker */
 .message img {
     width: 28px;
@@ -319,7 +328,6 @@ body, html {
     justify-content: center; /* Diganti dari left ke center untuk perataan vertikal yang lebih baik */
     padding: 16px 80px 16px 24px; /* Padding disesuaikan */
     box-sizing: border-box;
-    margin: 20px auto;
     font-family: 'Quicksand', sans-serif;
 }
 
