@@ -38,6 +38,12 @@ body, html {
     overflow: visible;
 }
 
+#alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* 3. Animasi Pesan */
 /* =================================== */
 .chat-message {
@@ -305,20 +311,24 @@ body, html {
 
 .alert-card {
     position: relative;
-    width: 240px;
-    height: 64px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    padding: 12px 14px;
+    justify-content: center; /* Diganti dari left ke center untuk perataan vertikal yang lebih baik */
+    padding: 16px 80px 16px 24px; /* Padding disesuaikan */
     box-sizing: border-box;
-    margin: 20px auto 40px auto;
+    margin: 20px auto;
     font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Tambahan shadow opsional */
 }
 
+/* PERBAIKAN: Menambahkan content, position, background-size, & background-repeat */
 .alert-card::before {
+    content: '';
+    position: absolute;
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd0e69aec372f4fef3b8760e8dc7520d933600a/Quack/Asset/pin.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 22px; height: 26px; top: 8px; left: -10px; z-index: 4;
 }
 
@@ -327,71 +337,60 @@ body, html {
     font-weight: 900;
     z-index: 3;
 }
+        
 .alert-subtitle {
     font-size: 14px;
     font-weight: 700;
     z-index: 3;
 }
 
+/* PERBAIKAN: Base class untuk ornament agar tidak mengulang properti absolute di setiap alert */
+.ornament-bottom {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 /* --- ALERT KUNING (NEW MEMBER/FOLLOWER) --- */
 .alert-member {
-    background: linear-gradient(to right, #FFE7B3, #FFF6E3);
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6b654681809b20753e2468ff7203e178e5741d29/Quack/Asset/color%20whele_big.svg'), 
+    linear-gradient(to right, #FFE7B3, #FFF6E3);
+    background-repeat: no-repeat;
+    background-position: right -36px top -8px, 0 0;
+    background-size: 103px 100px, 100% 100%;
     border: 1px solid #FFC743;
 }
+        
 .alert-member .alert-title, 
 .alert-member .alert-subtitle {
     color: #7B5B0F; 
 }
-.alert-member::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 92px;
-    height: 100%;
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/color-whele.svg');
-    background-size: cover;
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    z-index: 2;
-}
+        
 .alert-member .ornament-bottom {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd0e69aec372f4fef3b8760e8dc7520d933600a/Quack/Asset/sketch.svg');
-    width: 25px; height: 26px; bottom: -14px; left: 24px; z-index: 4;
+    width: 25px; height: 26px; bottom: -14px; left: 40px; z-index: 4;
 }
 
 /* --- ALERT MERAH (DONATION) --- */
 .alert-donation {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/Quack.svg'),
+    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6b654681809b20753e2468ff7203e178e5741d29/Quack/Asset/duck%20sketch.svg'),
     linear-gradient(to right, #8B2C2F, #C6484B);
     background-repeat: no-repeat;
-    background-position: right -20px, top 50%;
-    background-size: 73px 96px;
+    background-position: right -24px top -28px, 0 0;
+    background-size: 124px 131px, 100% 100%; /* Penyesuaian agar gradient tampil bersamaan dengan image */
     border: 1px solid #761F21;
 }
+        
 .alert-donation .alert-title, 
 .alert-donation .alert-subtitle {
     color: #FFE6E6;
 }
-.alert-donation::after {
-    content: '';
-    position: absolute;
-    right: -10px;
-    bottom: 0;
-    width: 72px;
-    height: 100%;
-    background-image: url('');
-    background-size: contain;
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    z-index: 4;
-}
+        
 .alert-donation .ornament-bottom {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/color-whele.svg');
-    width: 33px; height: 32px; bottom: -18px; left:24px; z-index: 4;
+    width: 33px; height: 32px; bottom: -18px; left: 40%; z-index: 4;
     transform: rotate(-14deg);
 }
-
 </style>
 </head>
 <body>
