@@ -57,7 +57,8 @@ body, html {
 
 .chat-message.donation,
 .chat-message.new-subscriber {
-    align-self: flex-start;
+    align-self: stretch;
+	width: 100%;
 }
 
 @keyframes bounceIn {
@@ -356,7 +357,8 @@ body, html {
 
 .alert-message {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
+	color: #073349;
     margin-top: 8px; /* Memberi jarak antara nama dan pesan */
     z-index: 3;
     overflow-wrap: break-word; /* Memastikan teks panjang turun ke bawah, tidak menembus batas */
@@ -374,7 +376,7 @@ body, html {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6b654681809b20753e2468ff7203e178e5741d29/Quack/Asset/color%20whele_big.svg'), 
     linear-gradient(to right, #FBE839, #FFF176);
     background-repeat: no-repeat;
-    background-position: right -36px top -8px, 0 0;
+    background-position: right -36px bottom -12px, 0 0;
     background-size: 103px 100px, 100% 100%;
     border: 1px solid #FFC743;
 }
@@ -394,7 +396,7 @@ body, html {
     background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ff373649f7a36b99ebc5cb997e3c05823d16aa0f/Quack/Asset/quack-sketch-white.svg'),
     linear-gradient(to right, #2FA3DC, #76D2FF);
     background-repeat: no-repeat;
-    background-position: right -24px top -28px, 0 0;
+    background-position: right -24px bottom -28px, 0 0;
     background-size: 124px 131px, 100% 100%; /* Penyesuaian agar gradient tampil bersamaan dengan image */
     border: 1px solid #2C8DBC;
 }
@@ -535,7 +537,7 @@ body, html {
         } else if (role === 'new-subscriber') {
             
             // --- KODE BARU UNTUK NEW MEMBER ---
-            let cleanUsername = username.replace(" just subscribed", "");
+            let cleanUsername = username.replace(" just subscribed", "").replace(/^@/, "");
             
             chatEl.innerHTML = `
                 <div class="alert-card alert-member">
@@ -588,7 +590,7 @@ body, html {
     // --- PENGATURAN FILTER PLATFORM ---
     // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
     // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
-    const ALLOWED_PLATFORMS = ['youtube', 'tiktok'];
+    const ALLOWED_PLATFORMS = ['system', 'youtube', 'tiktok'];
 
     function addMessageToOverlay(data) {
         // Log utama untuk melihat semua data mentah
@@ -627,7 +629,7 @@ body, html {
         }
 
         // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
-        if ((data.event === true && (data.isSubscriber === true || data.isNewMember === true)) || data.event === "new-membership") {
+        if (data.isMembership || data.isNewMember || data.event === "new-membership" || (data.event && data.isSubscriber) || (data.membership && data.membership !== "")) {
             let roleClass = 'new-subscriber';
 
             let notificationText = `${username} just subscribed`;
