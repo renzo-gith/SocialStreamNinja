@@ -354,6 +354,14 @@ body, html {
     z-index: 3;
 }
 
+.alert-message {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 8px; /* Memberi jarak antara nama dan pesan */
+    z-index: 3;
+    overflow-wrap: break-word; /* Memastikan teks panjang turun ke bawah, tidak menembus batas */
+}
+
 /* PERBAIKAN: Base class untuk ornament agar tidak mengulang properti absolute di setiap alert */
 .ornament-bottom {
     position: absolute;
@@ -512,10 +520,14 @@ body, html {
             // --- KODE BARU UNTUK DONASI ---
             let amountText = extra.amount || 'DONATION';
             
+            // Mengecek apakah ada pesan. Jika ada, buat elemennya. Jika tidak, kosongkan.
+            let messageElement = messageHTML ? `<div class="alert-message">${messageHTML}</div>` : '';
+            
             chatEl.innerHTML = `
                 <div class="alert-card alert-donation">
                     <div class="alert-title">${amountText}</div>
-                    <div class="alert-subtitle">from ${username}</div>
+                    <div class="alert-subtitle">from <span class="truncate-text">${username}</span></div>
+                    ${messageElement}
                     <div class="ornament-bottom"></div>
                 </div>
             `;
@@ -523,7 +535,6 @@ body, html {
         } else if (role === 'new-subscriber') {
             
             // --- KODE BARU UNTUK NEW MEMBER ---
-            // Kita bersihkan teks " just subscribed" bawaan agar namanya bersih untuk diberi @
             let cleanUsername = username.replace(" just subscribed", "");
             
             chatEl.innerHTML = `
