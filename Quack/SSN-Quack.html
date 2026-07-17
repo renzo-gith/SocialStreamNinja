@@ -629,7 +629,7 @@ body, html {
         }
 
         // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
-        if (data.isMembership || data.isNewMember || data.event === "new-membership" || (data.event && data.isSubscriber) || (data.membership && data.membership !== "")) {
+        if (data.isNewMember || data.event === "new-membership" || (data.event === true && (data.isSubscriber || data.isMembership || data.membership))) {
             let roleClass = 'new-subscriber';
 
             let notificationText = `${username} just subscribed`;
