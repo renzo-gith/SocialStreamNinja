@@ -649,9 +649,6 @@
             width: 100%;
             flex-direction: column;
             justify-content: center;
-            /* Diganti dari left ke center untuk perataan vertikal yang lebih baik */
-            padding: 16px 80px 16px 24px;
-            /* Padding disesuaikan */
             box-sizing: border-box;
             font-family: 'Quicksand', sans-serif;
         }
@@ -660,7 +657,7 @@
         .alert-card::before {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ff373649f7a36b99ebc5cb997e3c05823d16aa0f/Quack/Asset/pin-white.svg');
+            background-image: url('');
             background-size: contain;
             background-repeat: no-repeat;
             width: 22px;
@@ -685,7 +682,7 @@
         .alert-message {
             font-size: 16px;
             font-weight: 700;
-            color: #073349;
+            color: #7BBDFF;
             margin-top: 8px;
             /* Memberi jarak antara nama dan pesan */
             z-index: 3;
@@ -700,54 +697,60 @@
             background-repeat: no-repeat;
         }
 
-        /* --- ALERT KUNING (NEW MEMBER/FOLLOWER) --- */
+        /* --- ALERT (NEW MEMBER/FOLLOWER) --- */
         .alert-member {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6b654681809b20753e2468ff7203e178e5741d29/Quack/Asset/color%20whele_big.svg'),
-                linear-gradient(to right, #FBE839, #FFF176);
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ebef93bdd1bc0592d4a03686fd0615492d8cedef/Yukio/Asset/Cat%20Reg.svg'),
+                linear-gradient(to right, #D8EBFF, #FFFFFF);
             background-repeat: no-repeat;
-            background-position: right -36px bottom -12px, 0 0;
-            background-size: 103px 100px, 100% 100%;
-            border: 1px solid #FFC743;
+            background-position: right -4px bottom -48px, 0 0;
+            background-size: 71px 99.69px, 100% 100%;
+            border-radius: 16px 16px 16px 0px;
+            padding: 14px 60px 14px 20px;
+            gap: 2px;
         }
 
         .alert-member .alert-title,
         .alert-member .alert-subtitle {
-            color: #7B5B0F;
+            color: #004080;
         }
 
         .alert-member .ornament-bottom {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ff373649f7a36b99ebc5cb997e3c05823d16aa0f/Quack/Asset/sketch-blue.svg');
-            width: 25px;
-            height: 26px;
-            bottom: -14px;
-            left: 30%;
+            content: '';
+            position: absolute;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ebef93bdd1bc0592d4a03686fd0615492d8cedef/Yukio/Asset/Corner%20Membership.svg');
+            width: 13.22px;
+            height: 31px;
+            bottom: 0px;
+            left: -13.22px;
             z-index: 4;
         }
 
-        /* --- ALERT MERAH (DONATION) --- */
+        /* --- ALERT (DONATION) --- */
         .alert-donation {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/ff373649f7a36b99ebc5cb997e3c05823d16aa0f/Quack/Asset/quack-sketch-white.svg'),
-                linear-gradient(to right, #2FA3DC, #76D2FF);
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/da2cdaf8efe869717b176b6da477aabee5b6dda5/Yukio/Asset/Cat%20Donate.svg'),
+                linear-gradient(to right, #0059B3, #0073E6);
             background-repeat: no-repeat;
-            background-position: right -24px bottom -28px, 0 0;
-            background-size: 124px 131px, 100% 100%;
-            /* Penyesuaian agar gradient tampil bersamaan dengan image */
-            border: 1px solid #2C8DBC;
+            background-position: right -32px bottom -44px, 0 0;
+            background-size: 140px 166px, 100% 100%;
+            border-radius: 16px 16px 16px 0px;
+            padding: 14px 60px 14px 20px;
+            gap: 2px;
         }
 
         .alert-donation .alert-title,
         .alert-donation .alert-subtitle {
-            color: #E9F8FF;
+            color: #FFFFFF;
         }
 
-        .alert-donation .ornament-bottom {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/10107ddee16535552b2c97006bf6466eec97106e/Quack/Asset/color-whele.svg');
-            width: 33px;
-            height: 32px;
-            bottom: -18px;
-            left: 40%;
+        .alert-donation::after {
+            content: '';
+            position: absolute;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/da2cdaf8efe869717b176b6da477aabee5b6dda5/Yukio/Asset/Corner%20Moderator.svg');
+            width: 13.22px;
+            height: 31px;
+            bottom: 0px;
+            left: -13.22px;
             z-index: 4;
-            transform: rotate(-14deg);
         }
     </style>
 </head>
