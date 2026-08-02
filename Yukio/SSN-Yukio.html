@@ -211,36 +211,39 @@
         /* Owner */
         .chat-message.owner {
             position: relative;
-            background-image: linear-gradient(to right, #BE9721, #D7B44C);
-            border-radius: 16px 16px 16px 0px;
-            padding: 8px 8px;
+            background-color: transparent;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            gap: 6px;
         }
 
         .chat-message.owner .message {
-            background: transparent;
+            background-color: #FFFFFF;
             border: none;
-            padding: 8px 8px;
-            color: #FFFFFF;
+            padding: 16px 20px;
+            color: #8AA8D6;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
+            border-radius: 10px;
         }
 
         .chat-message.owner .badge {
-            position: static;
+            position: relative;
             rotate: 0deg;
-            background-color: #FFFFFF;
-            color: #836407;
+            background-color: #86A7D9;
+            color: #FFFFFF;
             line-height: 1.2;
             border: none;
-            border-radius: 30px;
-            padding: 4px 12px;
+            border-radius: 16px;
+            padding: 2px 18px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
         }
 
         .chat-message.owner::after {
@@ -319,42 +322,46 @@
         /* Moderator */
         .chat-message.moderator {
             position: relative;
-            background-image: linear-gradient(to right, #0059B3, #0073E6);
-            border-radius: 16px 16px 16px 0px;
-            padding: 8px 8px;
+            background-color: transparent;
+            /* Remove background */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            gap: 6px;
         }
 
         .chat-message.moderator .message {
-            background: transparent;
+            background-color: #FFFFFF;
             border: none;
-            padding: 8px 8px;
-            color: #FFFFFF;
+            padding: 16px 20px;
+            color: #8AA8D6;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
+            border-radius: 10px;
         }
 
         .chat-message.moderator .badge {
-            position: static;
+            position: relative;
             rotate: 0deg;
-            background-color: #FFFFFF;
-            color: #0073E6;
+            background-color: #86A7D9;
+            color: #FFFFFF;
             line-height: 1.2;
             border: none;
-            border-radius: 30px;
-            padding: 4px 12px;
+            border-radius: 16px;
+            padding: 2px 18px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
         }
 
         .chat-message.moderator::after {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/991c29129b9761e56eaa22437550e197c0dd6ec8/Yukio/Asset/Corner%20Moderator.svg');
+            background-image: url('');
             width: 13.22px;
             height: 31px;
             bottom: 0px;
@@ -365,7 +372,7 @@
         .chat-message.moderator::before {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/00c2423330cb8018f122dc749a5aacf496cf298a/Yukio/Asset/Cat%20Moon.svg');
+            background-image: url('');
             width: 71.34px;
             height: 67.94px;
             top: -26px;
@@ -427,42 +434,45 @@
         /* Member */
         .chat-message.member {
             position: relative;
-            background-image: linear-gradient(to right, #D8EBFF, #FFFFFF);
-            border-radius: 16px 16px 16px 0px;
-            padding: 8px 8px;
+            background-color: transparent;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            gap: 6px;
         }
 
         .chat-message.member .message {
-            background: transparent;
+            background-color: #FFFFFF;
             border: none;
-            padding: 8px 8px;
-            color: #0073E6;
+            padding: 16px 20px;
+            color: #8AA8D6;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
+            border-radius: 10px;
         }
 
         .chat-message.member .badge {
-            position: static;
+            position: relative;
             rotate: 0deg;
-            background-color: #0073E6;
+            background-color: #86A7D9;
             color: #FFFFFF;
             line-height: 1.2;
             border: none;
-            border-radius: 30px;
-            padding: 4px 12px;
+            border-radius: 16px;
+            padding: 2px 18px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
         }
 
         .chat-message.member::after {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/991c29129b9761e56eaa22437550e197c0dd6ec8/Yukio/Asset/Corner%20Membership.svg');
+            background-image: url('');
             width: 13.22px;
             height: 31px;
             bottom: 0px;
@@ -473,7 +483,7 @@
         .chat-message.member::before {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e2a0813ac02426043b3044e8808816048c6e4115/Yukio/Asset/Cat%20Mem.svg');
+            background-image: url('');
             width: 58.7px;
             height: 92.76px;
             top: -32px;
@@ -542,42 +552,45 @@
         /* Regular */
         .chat-message.regular {
             position: relative;
-            background-color: #FFFFFF;
-            border-radius: 16px 16px 16px 0px;
-            padding: 8px 8px;
+            background-color: transparent;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            gap: 6px;
         }
 
         .chat-message.regular .message {
-            background: transparent;
+            background-color: #FFFFFF;
             border: none;
-            padding: 8px 8px;
-            color: #0073E6;
+            padding: 16px 20px;
+            color: #8AA8D6;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
+            border-radius: 10px;
         }
 
         .chat-message.regular .badge {
-            position: static;
+            position: relative;
             rotate: 0deg;
-            background-color: #79BCFF;
+            background-color: #86A7D9;
             color: #FFFFFF;
             line-height: 1.2;
             border: none;
-            border-radius: 30px;
-            padding: 4px 12px;
+            border-radius: 16px;
+            padding: 2px 18px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
         }
 
         .chat-message.regular::after {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/991c29129b9761e56eaa22437550e197c0dd6ec8/Yukio/Asset/Corner%20Regular.svg');
+            background-image: url('');
             width: 13.22px;
             height: 31px;
             bottom: 0px;
@@ -588,7 +601,7 @@
         .chat-message.regular::before {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/991c29129b9761e56eaa22437550e197c0dd6ec8/Yukio/Asset/Cat%20Reg.svg');
+            background-image: url('');
             width: 28.93px;
             height: 40.62px;
             top: -22px;
