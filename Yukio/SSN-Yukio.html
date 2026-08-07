@@ -38,7 +38,7 @@
             width: auto;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 32px;
             overflow: visible;
         }
 
@@ -689,7 +689,7 @@
         .alert-message {
             font-size: 16px;
             font-weight: 700;
-            color: #7BBDFF;
+            color: #354154;
             margin-top: 8px;
             /* Memberi jarak antara nama dan pesan */
             z-index: 3;
@@ -728,14 +728,26 @@
             text-transform: lowercase;
         }
 
-        .alert-member .ornament-bottom {
+        .alert-member::before {
             content: '';
             position: absolute;
-            background-image: url('');
-            width: 13.22px;
-            height: 31px;
-            bottom: 0px;
-            left: -13.22px;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/daa6340be194c9f148ea1cf2badbe8a909011587/Yukio/Asset/Bealt%20Big.svg');
+            transform: scaleX(-1);
+            width: 130px;
+            height: 102px;
+            top: -19px;
+            left: -21px;
+            z-index: 4;
+        }
+
+        .alert-member::after {
+            content: '';
+            position: absolute;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/daa6340be194c9f148ea1cf2badbe8a909011587/Yukio/Asset/Bealt%20Big.svg');
+            width: 130px;
+            height: 102px;
+            top: -19px;
+            right: -21px;
             z-index: 4;
         }
 
