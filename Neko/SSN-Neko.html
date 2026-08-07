@@ -971,23 +971,30 @@
             }
 
             // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
-            if (data.isNewMember || data.event === "new-membership" || (data.event === true && (data.isSubscriber || data.isMembership || data.membership))) {
+            const isMembershipEvent =
+                data.isNewMember ||
+                data.event === "new-membership" ||
+                data.event === "membership" ||
+                data.membershipHeader ||
+                (data.isMembership && !message) || // New member tanpa pesan
+                (data.isSubscriber && !message);
+
+            if (isMembershipEvent) {
                 let roleClass = 'new-subscriber';
+                let cleanUsername = username ? username.replace(/^@/, "") : "Someone";
+                let notificationText = `${cleanUsername} just subscribed`;
 
-                let notificationText = `${username} just subscribed`;
-                let memberMessage = message || ""; // Pesan asli member (bisa kosong)
-
-                console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
-                enqueueMessage(notificationText, memberMessage, roleClass, { memberBadgeUrl: null });
+                console.log("EVENT MEMBERSHIP DITEMUKAN:", username);
+                enqueueMessage(notificationText, message, roleClass, { memberBadgeUrl: null });
                 return;
             }
 
             // === PRIORITAS #3: EVENT UMUM LAINNYA (Follow, Like, Share) ===
             // KODE LAMA ANDA: if (data.event === true) { return; }
             // Kita masih membiarkannya di sini untuk mengabaikan Follow, Like, dll.
-            if (data.event === true) {
+            if (data.event === true && !data.membership && !data.isMembership) {
                 console.log("Event umum diabaikan (Follow/Share/Like):", data);
-                return; // Abaikan
+                return;
             }
 
             if (!message) {
