@@ -960,18 +960,16 @@
             // --- FILTER PLATFORM SELESAI ---
 
             const username = data.chatname;
-            const message = data.chatmessage;
+            const message = data.chatmessage || "";
 
             // === PRIORITAS #1: DONASI (SUPER CHAT) ===
             if ((data.hasDonation && data.hasDonation !== true && data.hasDonation !== "") || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
                 let roleClass = 'donation';
 
                 let amountString = data.hasDonation || data.donationAmount;
-                let donationMessage = `<strong>${amountString || ''}</strong> ${message || ''}`;
 
                 console.log("EVENT DONASI DITEMUKAN (STATIC COLOR):", username, amountString);
 
-                // KITA TIDAK LAGI MENGIRIM 'style' WARNA
                 enqueueMessage(username, message, roleClass, { amount: amountString, memberBadgeUrl: null });
                 return;
             }
@@ -984,24 +982,32 @@
                 return;
             }
 
-            // === PRIORITAS #2: NEW MEMBER / SUBSCRIBER ===
-            if (data.isNewMember || data.event === "new-membership" || (data.event === true && (data.isSubscriber || data.isMembership || data.membership))) {
+            // === PRIORITAS #2: NEW MEMBER / MEMBERSHIP RENEWAL (MILESTONE) ===
+            // [BAGIAN PERUBAHAN 1]: Menambahkan variabel kriteria khusus untuk menangkap event membership YouTube
+            const isMembershipEvent =
+                data.isNewMember ||
+                data.event === "new-membership" ||
+                data.event === "membership" ||
+                data.membershipHeader ||
+                (data.isMembership && !message) ||
+                (data.isSubscriber && !message);
+
+            if (isMembershipEvent) {
                 let roleClass = 'new-subscriber';
 
-                let notificationText = `${username} just subscribed`;
-                let memberMessage = message || ""; // Pesan asli member (bisa kosong)
+                let cleanUsername = username ? username.replace(/^@/, "") : "Someone";
+                let notificationText = `${cleanUsername} just subscribed`;
 
-                console.log("EVENT NEW SUBSCRIBER DITEMUKAN:", username);
-                enqueueMessage(notificationText, memberMessage, roleClass, { memberBadgeUrl: null });
+                console.log("EVENT NEW MEMBER / MEMBERSHIP DITEMUKAN:", username);
+                enqueueMessage(notificationText, message, roleClass, { memberBadgeUrl: null });
                 return;
             }
 
             // === PRIORITAS #3: EVENT UMUM LAINNYA (Follow, Like, Share) ===
-            // KODE LAMA ANDA: if (data.event === true) { return; }
-            // Kita masih membiarkannya di sini untuk mengabaikan Follow, Like, dll.
-            if (data.event === true) {
+            // [BAGIAN PERUBAHAN 2]: Meloloskan event membership agar tidak di-return secara prematur
+            if (data.event === true && !data.membership && !data.isMembership) {
                 console.log("Event umum diabaikan (Follow/Share/Like):", data);
-                return; // Abaikan
+                return;
             }
 
             if (!message) {
@@ -1020,9 +1026,7 @@
                 return '';
             }).filter(Boolean);
 
-            // --- LOG DEBUG 1 ---
             console.log(`[DEBUG 1 - ${username}] Array 'badgeSrcs' yang ditemukan:`, badgeSrcs);
-
 
             // Tentukan PERAN terlebih dahulu
             if (STREAMER_USERNAME.includes(username)) {
@@ -1034,6 +1038,7 @@
                     roleClass = 'moderator';
                 } else if (
                     (data.membership && data.membership !== "") ||
+                    data.isMembership ||
                     badgeSrcs.some(src =>
                         src.includes('gifter') ||
                         src.includes('subscriber') ||
@@ -1041,21 +1046,16 @@
                         (src.includes('fans_badge') && !src.includes('grey'))
                     )
                 ) {
-                    roleClass = 'member'; // Peran 'member' ditetapkan
+                    roleClass = 'member';
                 }
             }
 
-            // --- INI LOGIKA BARU YANG SUDAH DIPERBAIKI ---
-            // SETELAH peran ditentukan, JIKA perannya adalah 'member' DAN ada badge di array,
-            // ambil URL badge PERTAMA, apa pun itu.
             if (roleClass === 'member' && badgeSrcs.length > 0) {
-                memberBadgeUrl = badgeSrcs[0]; // <-- Mengambil URL pertama dari array
+                memberBadgeUrl = badgeSrcs[0];
             }
 
-            // --- LOG DEBUG 2 & 3 ---
             console.log(`[DEBUG 2 & 3 - ${username}] Peran: ${roleClass}. URL Badge yang akan dikirim:`, memberBadgeUrl);
 
-            // Kirim pesan dengan URL badge (bisa null jika bukan member atau jika member tapi tak ada badge)
             enqueueMessage(username, message, roleClass, { memberBadgeUrl: memberBadgeUrl });
         }
 
