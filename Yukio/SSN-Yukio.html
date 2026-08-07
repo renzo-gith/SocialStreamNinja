@@ -689,7 +689,7 @@
         .alert-message {
             font-size: 16px;
             font-weight: 700;
-            color: #354154;
+            color: #FFFFFF;
             margin-top: 8px;
             /* Memberi jarak antara nama dan pesan */
             z-index: 3;
@@ -753,29 +753,49 @@
 
         /* --- ALERT (DONATION) --- */
         .alert-donation {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/da2cdaf8efe869717b176b6da477aabee5b6dda5/Yukio/Asset/Cat%20Donate.svg'),
-                linear-gradient(to right, #0059B3, #0073E6);
-            background-repeat: no-repeat;
-            background-position: right -32px bottom -44px, 0 0;
-            background-size: 140px 166px, 100% 100%;
-            border-radius: 16px 16px 16px 0px;
-            padding: 14px 60px 14px 20px;
+            background-image: linear-gradient(to right, #242424, #354154, #242424);
+            border-radius: 10px;
+            padding: 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             gap: 2px;
         }
 
-        .alert-donation .alert-title,
-        .alert-donation .alert-subtitle {
+        .alert-donation .alert-title {
             color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .alert-donation .alert-subtitle {
+            color: #7D8EA8;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .alert-donation::before {
+            content: '';
+            position: absolute;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd92a6df9dda0bfc62f0e1c0e92b1f64e67601b/Yukio/Asset/Yuki%20Big.svg');
+            transform: scaleX(-1);
+            width: 130px;
+            height: 102px;
+            top: -19px;
+            left: -21px;
+            z-index: 4;
         }
 
         .alert-donation::after {
             content: '';
             position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/da2cdaf8efe869717b176b6da477aabee5b6dda5/Yukio/Asset/Corner%20Moderator.svg');
-            width: 13.22px;
-            height: 31px;
-            bottom: 0px;
-            left: -13.22px;
+            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd92a6df9dda0bfc62f0e1c0e92b1f64e67601b/Yukio/Asset/Yuki%20Big.svg');
+            transform: scaleX(-1);
+            width: 130px;
+            height: 102px;
+            top: -19px;
+            left: -21px;
             z-index: 4;
         }
     </style>
