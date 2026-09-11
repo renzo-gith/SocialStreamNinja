@@ -154,6 +154,7 @@
             font-weight: 900;
             overflow-wrap: break-word;
             min-width: 160px;
+            border-radius: 12px;
         }
 
         .badge {
@@ -165,7 +166,7 @@
             font-weight: 700;
             letter-spacing: 1px;
             z-index: 5;
-            rotate: -4deg;
+            rotate: 0deg;
             top: -12px;
             left: 20px;
             overflow: visible;
@@ -213,38 +214,35 @@
         /* Owner */
         .chat-message.owner {
             position: relative;
-            background-color: transparent;
+            background-color: #EF7180;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
         }
 
         .chat-message.owner .message {
-            background-image: linear-gradient(to right, #242424, #354154);
-            border: none;
-            padding: 16px 20px;
+            background-color: transparent;
+            padding: 16px 24px;
             color: #FFFFFF;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
-            border-radius: 10px;
+            border: 1px solid #9F3945;
+            border-radius: 12px;
         }
 
         .chat-message.owner .badge {
             position: relative;
             rotate: 0deg;
-            background-color: #242424;
-            color: #FFFFFF;
+            background-color: #FFE2E5;
+            color: #9F3945;
             line-height: 1.2;
-            border: none;
+            border: 1px solid #9F3945;
             border-radius: 16px;
-            padding: 2px 18px;
+            padding: 2px 16px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
-            top: 0;
-            left: 0;
             margin-bottom: 0;
         }
 
@@ -271,7 +269,7 @@
         }
 
         .chat-message.owner .message::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0485d6b4dea32e91e92dba39add16fe8906e279/Yukio/Asset/Yuki%20Big.svg');
+            background-image: url('');
             width: 44px;
             height: 49px;
             top: 6px;
@@ -308,7 +306,7 @@
         }
 
         .chat-message.owner .badge::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6af4bce90c9ccdc843f2c544c21211448f39cb64/Yukio/Asset/Yuki%20Small.svg');
+            background-image: url('');
             width: 22px;
             height: 24px;
             top: -8px;
@@ -323,38 +321,35 @@
         /* Moderator */
         .chat-message.moderator {
             position: relative;
-            background-color: transparent;
+            background-color: #EF7180;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
         }
 
         .chat-message.moderator .message {
-            background-image: linear-gradient(to right, #242424, #354154);
-            border: none;
-            padding: 16px 20px;
+            background-color: transparent;
+            padding: 16px 24px;
             color: #FFFFFF;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
-            border-radius: 10px;
+            border: 1px solid #9F3945;
+            border-radius: 12px;
         }
 
         .chat-message.moderator .badge {
             position: relative;
             rotate: 0deg;
-            background-color: #242424;
-            color: #FFFFFF;
+            background-color: #FFE2E5;
+            color: #9F3945;
             line-height: 1.2;
-            border: none;
+            border: 1px solid #9F3945;
             border-radius: 16px;
-            padding: 2px 18px;
+            padding: 2px 16px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
-            top: 0;
-            left: 0;
             margin-bottom: 0;
         }
 
@@ -381,7 +376,7 @@
         }
 
         .chat-message.moderator .message::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0485d6b4dea32e91e92dba39add16fe8906e279/Yukio/Asset/Yuki%20Big.svg');
+            background-image: url('');
             width: 44px;
             height: 49px;
             top: 6px;
@@ -418,7 +413,7 @@
         }
 
         .chat-message.moderator .badge::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6af4bce90c9ccdc843f2c544c21211448f39cb64/Yukio/Asset/Yuki%20Small.svg');
+            background-image: url('');
             width: 22px;
             height: 24px;
             top: -8px;
@@ -433,38 +428,35 @@
         /* Member */
         .chat-message.member {
             position: relative;
-            background-color: transparent;
+            background-color: #FFE2E5;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
         }
 
         .chat-message.member .message {
-            background-image: linear-gradient(to right, #86A7D9, #C2D5F0);
-            border: none;
-            padding: 16px 20px;
-            color: #FFFFFF;
+            background-color: transparent;
+            padding: 16px 24px;
+            color: #9F3945;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
-            border-radius: 10px;
+            border: 1px solid #EF7180;
+            border-radius: 12px;
         }
 
         .chat-message.member .badge {
             position: relative;
             rotate: 0deg;
-            background-color: #FFFFFF;
-            color: #86A7D9;
+            background-color: #EF7180;
+            color: #FFFFFF;
             line-height: 1.2;
-            border: none;
+            border: 1px solid #9F3945;
             border-radius: 16px;
-            padding: 2px 18px;
+            padding: 2px 16px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
-            top: 0;
-            left: 0;
             margin-bottom: 0;
         }
 
@@ -491,7 +483,7 @@
         }
 
         .chat-message.member .message::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0485d6b4dea32e91e92dba39add16fe8906e279/Yukio/Asset/Yuki%20Big.svg');
+            background-image: url('');
             width: 44px;
             height: 49px;
             top: 6px;
@@ -500,7 +492,7 @@
         }
 
         .chat-message.member .message::after {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/5285539a0fb90b551356261ff6ab348920ed0f4c/Yukio/Asset/Bealt.svg');
+            background-image: url('');
             width: 62.26px;
             height: 43.49px;
             bottom: -16px;
@@ -509,7 +501,7 @@
         }
 
         .chat-message.member .ornament-extra-1 {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/5285539a0fb90b551356261ff6ab348920ed0f4c/Yukio/Asset/Chain.svg');
+            background-image: url('');
             width: 64px;
             height: 68.63px;
             top: 11px;
@@ -528,7 +520,7 @@
         }
 
         .chat-message.member .badge::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6af4bce90c9ccdc843f2c544c21211448f39cb64/Yukio/Asset/Yuki%20Small.svg');
+            background-image: url('');
             width: 22px;
             height: 24px;
             top: -8px;
@@ -549,38 +541,35 @@
         /* Regular */
         .chat-message.regular {
             position: relative;
-            background-color: transparent;
+            background-color: #FFE2E5;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 6px;
         }
 
         .chat-message.regular .message {
-            background-color: #FFFFFF;
-            border: none;
-            padding: 16px 20px;
-            color: #8AA8D6;
+            background-color: transparent;
+            padding: 16px 24px;
+            color: #9F3945;
             font-size: 18px;
             font-weight: 800;
             line-height: 1.2;
-            border-radius: 10px;
+            border: 1px solid #EF7180;
+            border-radius: 12px;
         }
 
         .chat-message.regular .badge {
             position: relative;
             rotate: 0deg;
-            background-color: #86A7D9;
+            background-color: #EF7180;
             color: #FFFFFF;
             line-height: 1.2;
-            border: none;
+            border: 1px solid #9F3945;
             border-radius: 16px;
-            padding: 2px 18px;
+            padding: 2px 16px;
             font-size: 12px;
             font-weight: 700;
             box-shadow: none;
-            top: 0;
-            left: 0;
             margin-bottom: 0;
         }
 
@@ -607,7 +596,7 @@
         }
 
         .chat-message.regular .message::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e0485d6b4dea32e91e92dba39add16fe8906e279/Yukio/Asset/Yuki%20Big.svg');
+            background-image: url('');
             width: 44px;
             height: 49px;
             top: 6px;
@@ -639,7 +628,7 @@
         }
 
         .chat-message.regular .badge::before {
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/6af4bce90c9ccdc843f2c544c21211448f39cb64/Yukio/Asset/Yuki%20Small.svg');
+            background-image: url('');
             width: 22px;
             height: 24px;
             top: -8px;
@@ -649,157 +638,6 @@
 
         .chat-message.regular .badge::after {
             background-image: url('');
-        }
-
-        .alert-card {
-            position: relative;
-            border-radius: 12px;
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            justify-content: center;
-            box-sizing: border-box;
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        /* PERBAIKAN: Menambahkan content, position, background-size, & background-repeat */
-        .alert-card::before {
-            content: '';
-            position: absolute;
-            background-image: url('');
-            background-size: contain;
-            background-repeat: no-repeat;
-            width: 22px;
-            height: 26px;
-            top: 8px;
-            left: -10px;
-            z-index: 4;
-        }
-
-        .alert-title {
-            font-size: 20px;
-            font-weight: 900;
-            z-index: 3;
-        }
-
-        .alert-subtitle {
-            font-size: 14px;
-            font-weight: 700;
-            z-index: 3;
-        }
-
-        .alert-message {
-            font-size: 16px;
-            font-weight: 700;
-            color: #FFFFFF;
-            margin-top: 8px;
-            z-index: 3;
-            overflow-wrap: break-word;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* PERBAIKAN: Base class untuk ornament agar tidak mengulang properti absolute di setiap alert */
-        .ornament-bottom {
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        /* --- ALERT (NEW MEMBER/FOLLOWER) --- */
-        .alert-member {
-            background-image: linear-gradient(to right, #C4DEF5, #FFFFFF, #C4DEF5);
-            border-radius: 10px;
-            padding: 20px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .alert-member .alert-title {
-            color: #354154;
-            font-size: 24px;
-            font-weight: 800;
-        }
-
-        .alert-member .alert-subtitle {
-            color: #88A8DB;
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: lowercase;
-        }
-
-        .alert-member::before {
-            content: '';
-            position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/daa6340be194c9f148ea1cf2badbe8a909011587/Yukio/Asset/Bealt%20Big.svg');
-            transform: scaleX(-1);
-            width: 130px;
-            height: 102px;
-            top: -19px;
-            left: -21px;
-            z-index: 4;
-        }
-
-        .alert-member::after {
-            content: '';
-            position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/daa6340be194c9f148ea1cf2badbe8a909011587/Yukio/Asset/Bealt%20Big.svg');
-            width: 130px;
-            height: 102px;
-            top: -19px;
-            right: -21px;
-            z-index: 4;
-        }
-
-        /* --- ALERT (DONATION) --- */
-        .alert-donation {
-            background-image: linear-gradient(to right, #242424, #354154, #242424);
-            border-radius: 10px;
-            padding: 20px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-        }
-
-        .alert-donation .alert-title {
-            color: #FFFFFF;
-            font-size: 24px;
-            font-weight: 800;
-        }
-
-        .alert-donation .alert-subtitle {
-            color: #7D8EA8;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .alert-donation::before {
-            content: '';
-            position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd92a6df9dda0bfc62f0e1c0e92b1f64e67601b/Yukio/Asset/Yuki%20Big.svg');
-            width: 74px;
-            height: 82px;
-            top: -19px;
-            left: -21px;
-            z-index: 4;
-        }
-
-        .alert-donation::after {
-            content: '';
-            position: absolute;
-            background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/3bd92a6df9dda0bfc62f0e1c0e92b1f64e67601b/Yukio/Asset/Yuki%20Big.svg');
-            transform: scaleX(-1);
-            background-repeat: no-repeat;
-            background-size: contain;
-            width: 74px;
-            height: 82px;
-            top: -19px;
-            right: -21px;
-            z-index: 4;
         }
     </style>
 </head>
