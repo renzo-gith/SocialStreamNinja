@@ -852,7 +852,7 @@
         // --- PENGATURAN FILTER PLATFORM ---
         // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
         // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
-        const ALLOWED_PLATFORMS = ['system', 'youtube', 'tiktok'];
+        const ALLOWED_PLATFORMS = ['youtube', 'tiktok'];
 
         function addMessageToOverlay(data) {
             // Log utama untuk melihat semua data mentah
@@ -923,7 +923,7 @@
             // Tentukan peran untuk pesan obrolan biasa
             let roleClass = 'regular';
             let memberBadgeUrl = null;
-            const STREAMER_USERNAME = ["Ryuuki Kitsune", "Rey ~ Design & Illustration"];
+            const STREAMER_USERNAME = ["Rey ~ Design & Illustration"];
 
             // Ambil SEMUA URL badge terlebih dahulu
             const badgeSrcs = (data.chatbadges || []).map(badge => {
