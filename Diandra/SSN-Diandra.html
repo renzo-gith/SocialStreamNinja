@@ -53,7 +53,7 @@
         /* =================================== */
         .chat-message {
             opacity: 0;
-            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: bounceIn 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
             position: relative;
             display: inline-block;
             align-self: stretch;
@@ -70,22 +70,12 @@
         @keyframes bounceIn {
             0% {
                 opacity: 0;
-                transform: scale(0.3) translateX(-80px) translateY(50px) rotate(20deg);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-
-            70% {
-                opacity: 1;
-                transform: scale(0.9);
+                transform: translateY(20px) scale(0.9) rotate(2deg);
             }
 
             100% {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0) scale(1) rotate(0deg);
             }
         }
 
