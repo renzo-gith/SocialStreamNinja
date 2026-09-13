@@ -46,6 +46,7 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 20px;
+            width: auto;
         }
 
         /* 3. Animasi Pesan */
@@ -55,7 +56,9 @@
             animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             position: relative;
             display: inline-block;
-            align-self: flex-start;
+            align-self: stretch;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .chat-message.donation,
@@ -155,6 +158,8 @@
             overflow-wrap: break-word;
             min-width: 160px;
             border-radius: 12px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .badge {
