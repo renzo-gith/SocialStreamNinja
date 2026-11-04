@@ -542,7 +542,7 @@ class Preview {
     this.ro = new ResizeObserver(() => this.fit()); this.ro.observe(stage);
   }
   load(t, params = {}){
-    this.stop(); this.t = t; this.i = 0; this.win = null;
+    this.stop(); clearInterval(this.poll); this.t = t; this.i = 0; this.win = null;
     this.stage.querySelectorAll("iframe,.note-in").forEach(n => n.remove());
     this.stage.classList.toggle("light", t.stage === "light");
     const f = document.createElement("iframe");
@@ -550,8 +550,18 @@ class Preview {
     const q = new URLSearchParams({ session:"renzo-demo-preview", limit: params.limit || 5 });
     if (params.autohide) q.set("autohide", params.autohide);
     f.src = encPath(t.path) + "?" + q;
-    f.addEventListener("load", () => this.ready(f), { once:true });
     this.frame = f; this.stage.appendChild(f); this.fit();
+    // Jangan tunggu event "load": koneksi bawaan widget ke Social Stream Ninja
+    // bisa menahan load selamanya. Cukup tunggu sampai fungsi widget siap.
+    clearInterval(this.poll);
+    const started = Date.now();
+    this.poll = setInterval(() => {
+      let win = null;
+      try { win = f.contentWindow; win.document; } catch(e){ clearInterval(this.poll); return this.fail(); }
+      if (win && typeof win.addMessageToOverlay === "function" && win.document.getElementById("chat-container")) {
+        clearInterval(this.poll); this.ready(f);
+      } else if (Date.now() - started > 15000) { clearInterval(this.poll); this.fail(); }
+    }, 150);
   }
   fit(){
     if (!this.frame) return;
@@ -559,10 +569,10 @@ class Preview {
     Object.assign(this.frame.style, { width: RENDER_W + "px", height: (h / s) + "px", transform: `scale(${s})` });
   }
   ready(f){
-    let win;
-    try { win = f.contentWindow; win.document; } catch(e){ return this.fail(); }
-    if (!win || typeof win.addMessageToOverlay !== "function") return this.fail();
-    try { win.document.querySelectorAll("iframe").forEach(n => n.remove()); } catch(e){}
+    if (f !== this.frame) return;
+    const win = f.contentWindow;
+    // Hapus koneksi ke server SSN: preview hanya butuh chat demo, dan ini yang bikin berat
+    try { win.document.querySelectorAll("iframe").forEach(n => { n.src = "about:blank"; n.remove(); }); } catch(e){}
     this.win = win;
     [0,1,2,3].forEach(k => setTimeout(() => this.push(), reduceMotion ? 0 : k * 450));
     this.start();
