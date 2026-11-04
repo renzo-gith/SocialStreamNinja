@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Renzo Chat Widget</title>
+<meta name="description" content="Template chat widget gratis dan jasa desain custom untuk streamer dan VTuber. Kompatibel dengan Social Stream Ninja.">
+<link rel="icon" href="site/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Tokens — sama dengan variabel "Rey Colors" di Figma */
+:root{
+  --paper:#f7f4ff;
+  --ink:#2a1f3d;
+  --mute:#6e6585;
+  --line:#e4ddf3;
+  --white:#ffffff;
+  --bubblegum:#ff8fc0;
+  --mint:#8ee3c1;
+  --butter:#ffe07a;
+  --sky:#a9d2ff;
+  --lilac:#cdbdff;
+  --stage:#2a2140;
+  --highlight:#d6337a;
+
+  --display:"Bricolage Grotesque","Plus Jakarta Sans",system-ui,sans-serif;
+  --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pad-x:64px;
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:inherit}
+img{max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--highlight);outline-offset:3px}
+.disp{font-family:var(--display);font-optical-sizing:none;font-variation-settings:"opsz" 14}
+p{margin:0}
+
+.wrap{max-width:1280px;margin:0 auto;padding-left:max(var(--pad-x),env(safe-area-inset-left,0px));padding-right:max(var(--pad-x),env(safe-area-inset-right,0px))}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border:2px solid var(--ink);border-radius:999px;font:700 15px/normal var(--sans);text-decoration:none;cursor:pointer;white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 3px 0 var(--ink)}
+.btn:active{transform:none;box-shadow:none}
+.btn-primary{background:var(--bubblegum);color:var(--ink)}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-secondary{background:transparent;color:var(--ink)}
+
+.chip{display:inline-flex;padding:5px 12px;border-radius:999px;font:600 13px/normal var(--sans);white-space:nowrap}
+.chip-mint{background:var(--mint)}
+.chip-lilac{background:var(--lilac)}
+.chip-butter{background:var(--butter)}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:20;background:var(--white);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-top:20px;padding-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{display:block;width:33px;height:32px}
+.brand b{font-weight:800;font-size:24px;line-height:normal}
+.brand span{font-weight:500;font-size:14px;color:var(--mute)}
+.links{display:flex;align-items:center;gap:32px}
+.links a:not(.btn){font-weight:600;font-size:15px;text-decoration:none}
+.links a:not(.btn):hover{color:var(--highlight)}
+
+/* Hero */
+.hero .wrap{display:flex;align-items:flex-end;gap:24px;padding-top:72px;padding-bottom:96px}
+.stack{display:flex;flex-direction:column;align-items:flex-start;gap:18px;flex:0 0 662px;max-width:100%}
+.line{display:flex;flex-direction:column;align-items:flex-start}
+.line:nth-child(1){transform:rotate(1.5deg)}
+.line:nth-child(2){transform:rotate(-1deg)}
+.line:nth-child(3){transform:rotate(.5deg)}
+.role{position:relative;z-index:2;margin:0 0 -14px 22px;padding:5px 14px 6px;border:2px solid var(--ink);border-radius:999px;background:var(--white);font:700 14px/normal var(--sans)}
+.bubble{margin:0;padding:22px 36px 18px 32px;border-radius:40px 40px 40px 10px;font-weight:800;font-size:80px;line-height:84px;letter-spacing:-.03em;white-space:nowrap}
+.b-host{background:var(--ink);color:var(--paper)}
+.b-member{background:var(--bubblegum)}
+.b-regular{background:var(--butter)}
+.hero-side{flex:0 1 466px;display:flex;flex-direction:column;align-items:flex-start;gap:28px;min-width:0}
+.lead{font-size:19px;line-height:30px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.note{font-weight:500;font-size:14px;line-height:22px;color:var(--mute)}
+
+/* Sections */
+.sec{border-top:1px solid var(--line)}
+.sec>.wrap{display:grid;grid-template-columns:270px minmax(0,1fr);gap:24px;padding-top:48px;padding-bottom:104px}
+section[id],#order{scroll-margin-top:96px}
+.sec-head h2{margin:0;font-weight:700;font-size:40px;line-height:44px}
+.sec-head p{margin-top:12px;max-width:250px;font-size:15px;line-height:24px;color:var(--mute)}
+.sec-body{display:flex;flex-direction:column;gap:28px;min-width:0}
+
+/* Stage (live widget preview) */
+.stage{position:relative;overflow:hidden;background:var(--stage);border-radius:28px}
+.stage iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0;background:transparent;pointer-events:none;color-scheme:light}
+.stage.light{background:#ece8f6}
+.stage .note-in{position:absolute;inset:auto 16px 16px;font-size:12px;line-height:1.4;color:#a59fb8}
+
+/* Filter */
+.filter{display:flex;gap:4px;width:max-content;max-width:100%;padding:5px;border:1px solid var(--line);border-radius:999px;background:var(--white);overflow-x:auto}
+.filter button{display:flex;gap:6px;padding:10px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);font:700 14px/normal var(--sans);cursor:pointer;white-space:nowrap}
+.filter button span{font-weight:500;color:var(--mute)}
+.filter button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.filter button[aria-pressed="true"] span{color:var(--lilac)}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 24px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0}
+.card-top{display:flex;flex-direction:column;gap:10px;width:100%}
+.card .stage{height:300px;width:100%}
+.card-info{display:flex;flex-direction:column;gap:4px;padding:0 6px}
+.card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card h3{margin:0;font-weight:700;font-size:24px;line-height:normal;overflow-wrap:anywhere}
+.card .plat{font-weight:500;font-size:14px;color:var(--mute)}
+.more{display:none}
+
+/* Builder */
+.panel{display:flex;gap:28px;padding:28px;border-radius:36px;background:var(--white)}
+.form{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:20px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.field>label,.field>.lbl{font-weight:700;font-size:14px}
+.hint{font-size:13px;line-height:20px;color:var(--mute)}
+.row{display:flex;gap:16px}
+.row>.field{flex:1 1 0}
+.input{width:100%;padding:14px 16px;border:2px solid transparent;border-radius:16px;background:var(--paper);color:var(--ink);font:500 16px/normal var(--sans)}
+.input:focus{outline:none;border-color:var(--ink)}
+.input::placeholder{color:var(--mute)}
+select.input{appearance:none;-webkit-appearance:none;padding-right:44px;background-image:url("site/assets/chevron-down.svg");background-repeat:no-repeat;background-position:right 16px center;background-size:16px 16px;cursor:pointer}
+input.input[aria-invalid="true"]{border-color:var(--highlight)}
+.out{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:22px;background:var(--white);overflow:hidden}
+.out .url{padding:16px 18px;font-weight:500;font-size:14px;line-height:22px;overflow-wrap:anywhere}
+.out .url b{color:var(--highlight)}
+.out .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 18px;background:var(--paper)}
+.out .bar span{font-weight:500;font-size:13px;color:var(--mute)}
+.status{min-height:1.2em;margin-top:-8px;font-weight:700;font-size:13px;color:var(--highlight)}
+.live{flex:0 0 330px;align-self:stretch;min-height:480px}
+.live .chip{position:absolute;top:16px;left:16px;z-index:2}
+
+/* Steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;flex-direction:column;gap:10px;padding:20px 20px 24px;border-radius:24px 24px 24px 6px;background:var(--white);min-width:0}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;margin-bottom:6px;border-radius:50%;font:800 20px/1 var(--display);font-optical-sizing:none;font-variation-settings:"opsz" 14}
+.steps li:nth-child(1)::before{background:var(--bubblegum)}
+.steps li:nth-child(2)::before{background:var(--sky)}
+.steps li:nth-child(3)::before{background:var(--butter)}
+.steps li:nth-child(4)::before{background:var(--mint)}
+.steps h3{margin:0;font-weight:700;font-size:20px;line-height:24px}
+.steps p{font-size:14px;line-height:22px;color:var(--mute)}
+
+/* Packages */
+.packages{padding:8px 28px;border-radius:36px;background:var(--white)}
+.pk-row{display:grid;grid-template-columns:170px minmax(0,1fr) 110px 140px;gap:12px;align-items:start}
+.pk-head{padding:18px 0 14px;border-bottom:2px solid var(--line);font-weight:600;font-size:13px;color:var(--mute)}
+.pk{position:relative;margin:0 -28px;padding:24px 28px;border-radius:40px;cursor:pointer;transition:transform .2s ease,background-color .2s ease}
+.pk::after{content:"";position:absolute;left:28px;right:28px;bottom:0;border-bottom:1px solid var(--line);transition:opacity .2s ease}
+.pk:last-child::after{display:none}
+.pk-name{justify-self:start;padding:6px 14px 8px;border-radius:999px;font-weight:700;font-size:20px;line-height:normal;white-space:nowrap;transition:background-color .2s ease}
+.pk ul{margin:0;padding:0;list-style:none;font-size:15px;line-height:25px}
+.pk li::before{content:"•";margin-right:.6em}
+.pk-time{font-weight:500;font-size:15px;line-height:25px}
+.pk-time span{display:none}
+.pk-price{font-weight:700;font-size:22px;line-height:28px;white-space:nowrap}
+.pk[data-tone="sky"]{--tone:var(--sky)}
+.pk[data-tone="pink"]{--tone:var(--bubblegum)}
+.pk[data-tone="butter"]{--tone:var(--butter)}
+.pk .pk-name{background:var(--tone)}
+@media (hover:hover){
+  .pk:hover{z-index:2;background:var(--tone);transform:scale(1.1) rotate(.44deg)}
+  .pk:hover .pk-name{background:var(--white)}
+  .pk:hover::after,.pk:has(+ .pk:hover)::after{opacity:0}
+}
+.pk:focus-visible{z-index:2;background:var(--tone);outline-offset:4px}
+.pk:focus-visible .pk-name{background:var(--white)}
+
+.port{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 16px 16px 24px;border:1.5px dashed var(--mute);border-radius:28px}
+.port p{max-width:520px;font-weight:500;font-size:15px;line-height:24px}
+
+/* Order */
+.order{display:flex;gap:24px;align-items:flex-start}
+.order-form{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:20px;padding:28px 28px 32px;border-radius:36px;background:var(--lilac)}
+.order-form h3{margin:0;font-weight:700;font-size:36px;line-height:normal}
+.order-form .input{background:var(--white)}
+.order-form textarea.input{height:110px;padding-bottom:14px;resize:vertical;line-height:24px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 14px;border-radius:999px;background:var(--white);font-weight:700;font-size:14px;cursor:pointer}
+.opt input{appearance:none;-webkit-appearance:none;width:16px;height:16px;margin:0;background:url("site/assets/checkbox.svg") center/16px 16px no-repeat;cursor:pointer}
+.opt input:checked{background-image:url("site/assets/checkbox-checked.svg")}
+.opt input:focus-visible{outline:2px solid var(--highlight);outline-offset:2px;border-radius:5px}
+.opt:has(input:checked){background:var(--ink);color:var(--paper)}
+.order-preview{flex:0 0 340px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.order-preview .lbl{font-weight:700;font-size:14px}
+.msg{margin:0;padding:18px 20px;border-radius:24px 24px 6px 24px;background:var(--white);font:400 14px/22px var(--sans);white-space:pre-wrap;overflow-wrap:anywhere}
+.order-actions{display:flex;flex-wrap:wrap;gap:10px}
+.contact{font-size:13px;line-height:20px;color:var(--mute)}
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px 32px;padding-top:28px;padding-bottom:40px;font-weight:500;font-size:13px;color:var(--mute)}
+footer a{color:var(--ink)}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;padding:12px 18px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:700;font-size:14px}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn,.pk,.pk-name{transition:none}
+  .btn:hover{transform:none}
+  .pk:hover{transform:none}
+}
+
+/* Tablet */
+@media (max-width:1180px){
+  :root{--pad-x:40px}
+  .hero .wrap{flex-direction:column;align-items:flex-start;gap:40px}
+  .stack{flex-basis:auto}
+  .hero-side{flex-basis:auto;max-width:560px}
+  .sec>.wrap{grid-template-columns:minmax(0,1fr)}
+  .sec-head p{max-width:520px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .links a:not(.btn){display:none}
+  .brand span{display:none}
+  .bubble{font-size:56px;line-height:60px}
+  .panel{flex-direction:column}
+  .live{flex-basis:auto;min-height:380px;height:380px}
+  .order{flex-direction:column;align-items:stretch}
+  .order-preview{flex-basis:auto}
+}
+
+/* Mobile (frame 390) */
+@media (max-width:760px){
+  :root{--pad-x:16px}
+  .nav .wrap{padding-top:14px;padding-bottom:14px}
+  .hero .wrap{gap:36px;padding-top:36px;padding-bottom:56px}
+  .stack{gap:12px}
+  .role{margin:0 0 -10px 16px;padding:3px 10px 4px;font-size:12px}
+  .bubble{padding:14px 22px 12px 20px;border-radius:26px 26px 26px 8px;font-size:42px;line-height:46px}
+  .hero-side{gap:22px}
+  .lead{font-size:17px;line-height:27px}
+  .sec>.wrap{padding-top:40px;padding-bottom:64px}
+  .sec-head h2{font-size:32px;line-height:36px}
+  .sec-head p{margin-top:8px}
+  .sec-body{gap:20px}
+  .cards{grid-template-columns:minmax(0,1fr);gap:36px}
+  .cards.collapsed .card:nth-child(n+4){display:none}
+  .more{display:flex;width:100%}
+  .panel{gap:20px;padding:16px;border-radius:28px}
+  .row{flex-direction:column;gap:20px}
+  .form .row{flex-direction:row;gap:16px}
+  .out .bar{flex-direction:row-reverse;justify-content:flex-end;padding:12px 16px 14px}
+  .steps{grid-template-columns:minmax(0,1fr);gap:12px}
+  .steps li::before{margin-bottom:0}
+  .packages{padding:4px 20px;border-radius:28px}
+  .pk-head{display:none}
+  .pk{grid-template-columns:minmax(0,1fr);gap:10px;margin:0 -20px;padding:20px;cursor:default}
+  .pk::after{left:20px;right:20px}
+  .pk-price{order:-1;grid-row:2;font-size:26px;line-height:30px}
+  .pk-name{grid-row:1}
+  .pk-time span{display:inline}
+  .port{flex-direction:column;align-items:flex-start;gap:14px;padding:18px 20px}
+  .order-form{padding:24px 20px;border-radius:28px}
+  footer .wrap{flex-direction:column;gap:8px;padding-top:24px;padding-bottom:36px}
+}
+@media (max-width:360px){
+  .form .row{flex-direction:column;gap:20px}
+  .bubble{font-size:38px;line-height:42px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Renzo Custom Chat Widget, ke atas">
+      <img src="site/assets/logo.svg" width="33" height="32" alt="">
+      <b class="disp" id="brandName">Renzo</b>
+      <span>Custom Chat Widget</span>
+    </a>
+    <nav class="links" aria-label="Utama">
+      <a href="#template">Template</a>
+      <a href="#buat-url">Buat URL</a>
+      <a href="#cara-pasang">Cara pasang</a>
+      <a href="#custom">Jasa custom</a>
+      <a class="btn btn-primary" href="#order">Pesan custom</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Pembuka">
+    <div class="wrap">
+      <h1 class="stack" aria-label="Chat widget untuk streamer dan VTuber">
+        <span class="line" aria-hidden="true"><span class="role">host</span><span class="bubble disp b-host">Chat widget</span></span>
+        <span class="line" aria-hidden="true"><span class="role">member</span><span class="bubble disp b-member">untuk streamer</span></span>
+        <span class="line" aria-hidden="true"><span class="role">regular</span><span class="bubble disp b-regular">&amp; VTuber</span></span>
+      </h1>
+      <div class="hero-side">
+        <p class="lead">Pilih template gratis, tempel kode session dari Social Stream Ninja, lalu salin satu URL ke OBS. Butuh tampilan yang cuma dimiliki channel kamu? Pesan desain custom.</p>
+        <div class="ctas">
+          <a class="btn btn-dark" href="#template">Lihat template</a>
+          <a class="btn btn-secondary" href="#custom">Lihat paket custom</a>
+        </div>
+        <p class="note">Jalan di YouTube, TikTok, dan Twitch lewat Social Stream Ninja. Tidak perlu install apa pun di OBS.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="template" aria-labelledby="h-template">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="disp" id="h-template">Template</h2>
+        <p>Template gratis bisa langsung dipakai. Karya klien ditampilkan sebagai contoh, dan bisa dipesan dengan gaya serupa.</p>
+      </div>
+      <div class="sec-body">
+        <div class="filter" role="group" aria-label="Saring template">
+          <button type="button" data-filter="all" aria-pressed="true">Semua <span data-count="all"></span></button>
+          <button type="button" data-filter="free" aria-pressed="false">Gratis <span data-count="free"></span></button>
+          <button type="button" data-filter="client" aria-pressed="false">Karya klien <span data-count="client"></span></button>
+        </div>
+        <div class="cards collapsed" id="cards"></div>
+        <button type="button" class="btn btn-secondary more" id="more">Tampilkan semua</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="buat-url" aria-labelledby="h-url">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="disp" id="h-url">Buat URL OBS</h2>
+        <p>Isi kode session dari Social Stream Ninja. URL langsung jadi dan tinggal disalin.</p>
+      </div>
+      <div class="sec-body">
+        <div class="panel">
+          <form class="form" id="builder" novalidate>
+            <div class="field">
+              <label for="b-template">Template</label>
+              <select class="input" id="b-template"></select>
+              <span class="hint" id="b-template-hint"></span>
+            </div>
+            <div class="field">
+              <label for="b-session">Kode session</label>
+              <input class="input" type="text" id="b-session" placeholder="contoh: a1b2c3d4e5" autocomplete="off" spellcheck="false">
+              <span class="hint">Ada di menu ekstensi Social Stream Ninja, di akhir link overlay setelah ?session=</span>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="b-limit">Pesan maksimal di layar</label>
+                <input class="input" type="number" id="b-limit" min="1" max="30" value="8">
+              </div>
+              <div class="field">
+                <label for="b-hide">Hilang setelah (detik)</label>
+                <input class="input" type="number" id="b-hide" min="0" max="600" value="0">
+                <span class="hint">0 berarti pesan tidak hilang sendiri</span>
+              </div>
+            </div>
+            <div class="out" aria-live="polite">
+              <div class="url" id="b-url"></div>
+              <div class="bar">
+                <span>Browser Source OBS: lebar 500, tinggi 800</span>
+                <button type="button" class="btn btn-primary" id="b-copy">Salin URL</button>
+              </div>
+            </div>
+            <div class="status" id="b-status" role="status"></div>
+          </form>
+          <div class="stage live" id="builderStage"><span class="chip chip-butter">Preview langsung</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="cara-pasang" aria-labelledby="h-howto">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="disp" id="h-howto">Cara pasang</h2>
+        <p>Sekali pasang. Setelah itu chat muncul otomatis setiap kali kamu live.</p>
+      </div>
+      <div class="sec-body">
+        <ol class="steps">
+          <li><h3 class="disp">Pasang Social Stream Ninja</h3><p>Install ekstensinya di Chrome, aktifkan, lalu buka pop-out chat YouTube atau TikTok Live.</p></li>
+          <li><h3 class="disp">Ambil kode session</h3><p>Buka menu ekstensi. Salin teks setelah ?session= pada link overlay.</p></li>
+          <li><h3 class="disp">Buat URL di atas</h3><p>Pilih template, tempel kode session, lalu tekan Salin URL.</p></li>
+          <li><h3 class="disp">Tambahkan ke OBS</h3><p>Sources, tambah, Browser. Tempel URL, atur lebar 500 dan tinggi 800, lalu OK.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="custom" aria-labelledby="h-custom">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="disp" id="h-custom">Jasa custom</h2>
+        <p>Desain dibuat dari nol sesuai karakter, warna, dan lore channel kamu. Ornamen digambar sendiri, bukan aset stok.</p>
+      </div>
+      <div class="sec-body">
+        <div class="packages" role="table" aria-label="Paket jasa custom">
+          <div class="pk-row pk-head" role="row">
+            <span role="columnheader">Paket</span><span role="columnheader">Isi</span><span role="columnheader">Pengerjaan</span><span role="columnheader">Harga</span>
+          </div>
+          <div id="pkBody"></div>
+        </div>
+
+        <div class="port">
+          <p>Semua karya klien di bagian Template adalah hasil pesanan custom. Lihat untuk referensi gaya, lalu sebutkan namanya saat order.</p>
+          <a class="btn btn-secondary" href="#template" data-goto-filter="client">Lihat karya klien</a>
+        </div>
+
+        <div class="order" id="order">
+          <form class="order-form" id="orderForm" novalidate>
+            <h3 class="disp">Order</h3>
+            <div class="row">
+              <div class="field">
+                <label for="o-name">Nama channel</label>
+                <input class="input" type="text" id="o-name" autocomplete="nickname" placeholder="contoh: Kumayama Ryuu">
+              </div>
+              <div class="field">
+                <label for="o-date">Dipakai mulai</label>
+                <input class="input" type="date" id="o-date">
+              </div>
+            </div>
+            <div class="field">
+              <span class="lbl" id="o-plat-l">Platform</span>
+              <div class="opts" role="group" aria-labelledby="o-plat-l">
+                <label class="opt"><input type="checkbox" name="plat" value="YouTube" checked> YouTube</label>
+                <label class="opt"><input type="checkbox" name="plat" value="TikTok"> TikTok</label>
+                <label class="opt"><input type="checkbox" name="plat" value="Twitch"> Twitch</label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="o-pkg">Paket</label>
+              <select class="input" id="o-pkg"></select>
+            </div>
+            <div class="field">
+              <label for="o-brief">Tema dan referensi</label>
+              <textarea class="input" id="o-brief" placeholder="Warna utama, karakter atau maskot, mood (imut, gelap, retro), link model VTuber atau channel."></textarea>
+            </div>
+          </form>
+          <div class="order-preview">
+            <span class="lbl">Pesan yang akan dikirim</span>
+            <pre class="msg" id="o-preview"></pre>
+            <div class="order-actions">
+              <a class="btn btn-primary" id="o-send" href="#" target="_blank" rel="noopener">Kirim lewat Discord</a>
+              <button type="button" class="btn btn-secondary" id="o-copy">Salin pesan</button>
+            </div>
+            <p class="contact" id="o-contact"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> <span data-brand>Renzo</span>. Custom Chat Widget.</span>
+    <span>Kompatibel dengan <a href="https://socialstream.ninja/" target="_blank" rel="noopener">Social Stream Ninja</a>. Proyek independen, tidak berafiliasi.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+/* ==== PENGATURAN — ubah di sini ==== */
+const CONFIG = {
+  brand: "Renzo",
+  greeting: "Halo Ren",
+  siteBase: "https://renzo-gith.github.io/SocialStreamNinja/", // dipakai kalau halaman dibuka di luar GitHub Pages
+  discord: "",   // link Discord (server invite atau profil), contoh "https://discord.gg/xxxx". Kosong = tombol Kirim disembunyikan
+  contact: "",   // kontak yang ditampilkan di bawah tombol, contoh "Discord: renzo.widget"
+  packages: [
+    { id:"recolor", name:"Recolor", tone:"sky", time:"2–3 hari", price:"Rp150.000",
+      items:["Pakai salah satu desain yang ada","Warna, font, dan nama host disesuaikan","1× revisi"] },
+    { id:"custom", name:"Custom", tone:"pink", time:"5–7 hari", price:"Rp350.000",
+      items:["Desain baru dari nol","Tampilan beda untuk host, moderator, member, regular","Ornamen SVG digambar sendiri","2× revisi"] },
+    { id:"custom-alert", name:"Custom + Alert", tone:"butter", time:"7–10 hari", price:"Rp550.000",
+      items:["Semua isi paket Custom","Pop-up alert donasi Trakteer atau Saweria","Animasi masuk dan keluar","3× revisi"] }
+  ]
+};
+
+/* ==== DAFTAR DESAIN — free:true = muncul sebagai template gratis ==== */
+const TEMPLATES = [
+  { id:"green-leaf",     name:"Green Leaf",     path:"Test/SSN-TestGreenLeaf.html",            platforms:["youtube"], free:true },
+  { id:"love-spark",     name:"Love & Spark",   path:"Test/1-Love&Spark/SSN-LoveSpark.html",   platforms:["youtube"], free:true },
+  { id:"diandra",        name:"Diandra",        path:"Diandra/SSN-Diandra.html",               platforms:["youtube","tiktok"] },
+  { id:"felinda",        name:"Felinda",        path:"Felinda/SSN-Felinda.html",               platforms:["youtube","tiktok","twitch"] },
+  { id:"hanna",          name:"Hanna",          path:"Hanna/SSN-Hanna.html",                   platforms:["youtube","tiktok"] },
+  { id:"kimarez",        name:"Kimarez",        path:"Kimarez/SSN-Kimarez.html",               platforms:["tiktok"], stage:"light" },
+  { id:"kumayama-ryuu",  name:"Kumayama Ryuu",  path:"Kumayama Ryuu/SSN-KumayamaRyuu.html",    platforms:["youtube"] },
+  { id:"leaa",           name:"Leaa",           path:"Leaa/SSN-Leaa.html",                     platforms:["tiktok"] },
+  { id:"lenora",         name:"Lenora",         path:"Lenora/SSN-Lenora.html",                 platforms:["youtube"] },
+  { id:"mymelody",       name:"My Melody",      path:"MyMelody/SSN-MyMelody.html",             platforms:["youtube"] },
+  { id:"neko",           name:"Neko",           path:"Neko/SSN-Neko.html",                     platforms:["youtube","tiktok"] },
+  { id:"omen",           name:"Omen",           path:"Omen/SSN-Omen.html",                     platforms:["youtube"] },
+  { id:"prolaksi",       name:"Prolaksi",       path:"Prolaksi/SSN-Prolaksi.html",             platforms:["youtube"] },
+  { id:"quack",          name:"Quack",          path:"Quack/SSN-Quack.html",                   platforms:["youtube","tiktok"] },
+  { id:"rin",            name:"RIN",            path:"RIN/SSN-Rin.html",                       platforms:["youtube"] },
+  { id:"ryuuki-kitsune", name:"Ryuuki Kitsune", path:"Ryuuki Kitsune/SSN-RyuukiKitsune.html",  platforms:["tiktok"] },
+  { id:"veys",           name:"Veys",           path:"Veys/SSN-Veys.html",                     platforms:["youtube"] },
+  { id:"vierstin",       name:"Vierstin",       path:"Vierstin/SSN-Vierstin.html",             platforms:["youtube","tiktok","twitch"] },
+  { id:"yukio",          name:"Yukio",          path:"Yukio/SSN-Yukio.html",                   platforms:["youtube","tiktok"] },
+  { id:"yuta",           name:"Yuta",           path:"Yuta/SSN-Yuta.html",                     platforms:["youtube","tiktok"] }
+];
+
+/* ==== Chat demo untuk preview ==== */
+const PLAT_LABEL = { youtube:"YouTube", tiktok:"TikTok", twitch:"Twitch" };
+const DEMO = [
+  { role:"regular",   name:"pixelmochi", text:"Halo kak, baru nemu channel ini 👋" },
+  { role:"member",    name:"Raka Senja", text:"Member 6 bulan hadir! Gas terus kak" },
+  { role:"moderator", name:"mod.nadia",  text:"Jangan spam ya teman-teman, santai aja" },
+  { role:"owner",     name:"Host",       text:"Makasih udah mampir semua 💖" },
+  { role:"regular",   name:"kopi_susu",  text:"Bos ini map yang kemarin bukan?" },
+  { role:"member",    name:"Luna Arsy",  text:"Akhirnya live lagi, kangen" },
+  { role:"regular",   name:"Bima_08",    text:"wkwk kocak banget barusan" },
+  { role:"owner",     name:"Host",       text:"Oke kita lanjut satu ronde lagi ya" }
+];
+const RENDER_W = 440;
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const encPath = p => p.split("/").map(encodeURIComponent).join("/");
+const byId = id => TEMPLATES.find(t => t.id === id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const SITE = /^https?:$/.test(location.protocol) ? new URL(".", location.href).href : CONFIG.siteBase;
+const platList = t => t.platforms.map(p => PLAT_LABEL[p]).join(", ");
+
+document.querySelectorAll("[data-brand]").forEach(n => n.textContent = CONFIG.brand);
+document.getElementById("brandName").textContent = CONFIG.brand;
+
+function demoPayload(t, d){
+  const type = t.platforms.includes("youtube") ? "youtube" : t.platforms[0];
+  const data = { type, chatname:d.name, chatmessage:d.text, chatbadges:[], mod:false, membership:"" };
+  if (d.role === "owner") data.chatbadges = ["https://demo.local/badges/owner.png"];
+  if (d.role === "moderator") data.mod = true;
+  if (d.role === "member") data.membership = "MEMBERSHIP";
+  return data;
+}
+
+/* Satu preview = satu iframe same-origin yang diberi chat demo */
+class Preview {
+  constructor(stage){
+    this.stage = stage; this.t = null; this.timer = null; this.i = 0; this.visible = false;
+    this.ro = new ResizeObserver(() => this.fit()); this.ro.observe(stage);
+  }
+  load(t, params = {}){
+    this.stop(); this.t = t; this.i = 0; this.win = null;
+    this.stage.querySelectorAll("iframe,.note-in").forEach(n => n.remove());
+    this.stage.classList.toggle("light", t.stage === "light");
+    const f = document.createElement("iframe");
+    f.title = "Preview " + t.name; f.tabIndex = -1; f.setAttribute("aria-hidden","true");
+    const q = new URLSearchParams({ session:"renzo-demo-preview", limit: params.limit || 5 });
+    if (params.autohide) q.set("autohide", params.autohide);
+    f.src = encPath(t.path) + "?" + q;
+    f.addEventListener("load", () => this.ready(f), { once:true });
+    this.frame = f; this.stage.appendChild(f); this.fit();
+  }
+  fit(){
+    if (!this.frame) return;
+    const w = this.stage.clientWidth, h = this.stage.clientHeight, s = w / RENDER_W;
+    Object.assign(this.frame.style, { width: RENDER_W + "px", height: (h / s) + "px", transform: `scale(${s})` });
+  }
+  ready(f){
+    let win;
+    try { win = f.contentWindow; win.document; } catch(e){ return this.fail(); }
+    if (!win || typeof win.addMessageToOverlay !== "function") return this.fail();
+    try { win.document.querySelectorAll("iframe").forEach(n => n.remove()); } catch(e){}
+    this.win = win;
+    [0,1,2,3].forEach(k => setTimeout(() => this.push(), reduceMotion ? 0 : k * 450));
+    this.start();
+  }
+  fail(){
+    const n = document.createElement("p"); n.className = "note-in";
+    n.textContent = "Preview tampil saat halaman dibuka dari GitHub Pages.";
+    this.stage.appendChild(n);
+  }
+  push(){
+    if (!this.win) return;
+    const d = DEMO[this.i++ % DEMO.length];
+    try { this.win.addMessageToOverlay(demoPayload(this.t, d)); } catch(e){}
+  }
+  start(){ if (reduceMotion || this.timer || !this.win || !this.visible) return; this.timer = setInterval(() => this.push(), 2600); }
+  stop(){ clearInterval(this.timer); this.timer = null; }
+  setVisible(v){ this.visible = v; v ? this.start() : this.stop(); }
+}
+
+const previews = new Map();
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const p = previews.get(e.target); if (!p) return;
+    if (e.isIntersecting && !p.frame && p.pending) p.load(p.pending, p.params);
+    p.setVisible(e.isIntersecting);
+  });
+}, { rootMargin:"200px 0px" });
+function mount(stage, t, params){
+  let p = previews.get(stage);
+  if (!p){ p = new Preview(stage); previews.set(stage, p); io.observe(stage); }
+  p.pending = t; p.params = params;
+  if (p.frame) p.load(t, params);
+  return p;
+}
+
+/* ==== Galeri ==== */
+const cardsEl = document.getElementById("cards"), moreBtn = document.getElementById("more");
+function renderCards(filter){
+  previews.forEach((p, el) => { if (cardsEl.contains(el)){ p.stop(); io.unobserve(el); previews.delete(el); } });
+  const list = TEMPLATES.filter(t => filter === "all" || (filter === "free" ? t.free : !t.free));
+  cardsEl.innerHTML = list.map(t => `
+    <article class="card" data-id="${t.id}">
+      <div class="card-top">
+        <div class="stage"></div>
+        <div class="card-info">
+          <div class="card-meta"><h3 class="disp">${esc(t.name)}</h3>
+            <span class="chip ${t.free ? "chip-mint" : "chip-lilac"}">${t.free ? "Gratis" : "Karya klien"}</span></div>
+          <p class="plat">${platList(t)}</p>
+        </div>
+      </div>
+      ${t.free
+        ? `<a class="btn btn-dark" href="#buat-url" data-use="${t.id}">Pakai template</a>`
+        : `<a class="btn btn-secondary" href="#order" data-like="${t.id}">Pakai referensi</a>`}
+    </article>`).join("");
+  cardsEl.querySelectorAll(".card").forEach(c => mount(c.querySelector(".stage"), byId(c.dataset.id), { limit:4 }));
+  cardsEl.classList.add("collapsed");
+  moreBtn.hidden = list.length <= 3;
+  moreBtn.textContent = "Tampilkan semua (" + list.length + ")";
+}
+function setFilter(f){
+  document.querySelectorAll("[data-filter]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === f)));
+  renderCards(f);
+}
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => setFilter(b.dataset.filter)));
+document.querySelectorAll("[data-goto-filter]").forEach(a => a.addEventListener("click", () => setFilter(a.dataset.gotoFilter)));
+moreBtn.addEventListener("click", () => { cardsEl.classList.remove("collapsed"); moreBtn.hidden = true; });
+const counts = { all:TEMPLATES.length, free:TEMPLATES.filter(t => t.free).length, client:TEMPLATES.filter(t => !t.free).length };
+document.querySelectorAll("[data-count]").forEach(s => s.textContent = counts[s.dataset.count]);
+
+/* ==== Pembuat URL ==== */
+const bT = document.getElementById("b-template"), bS = document.getElementById("b-session"),
+      bL = document.getElementById("b-limit"), bH = document.getElementById("b-hide"),
+      bU = document.getElementById("b-url"), bSt = document.getElementById("b-status"),
+      bHint = document.getElementById("b-template-hint"), bStage = document.getElementById("builderStage");
+bT.innerHTML = TEMPLATES.filter(t => t.free).map(t => `<option value="${t.id}">${esc(t.name)}</option>`).join("");
+const clampNum = (v, lo, hi, d) => { const n = parseInt(v, 10); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : d; };
+const cleanSession = s => s.trim().replace(/^.*[?&]session=/, "").replace(/[&#].*$/, "");
+let reloadT;
+function buildURL(){
+  const t = byId(bT.value), session = cleanSession(bS.value);
+  const limit = clampNum(bL.value, 1, 30, 8), hide = clampNum(bH.value, 0, 600, 0);
+  bHint.textContent = "Mendukung " + platList(t);
+  const base = new URL(encPath(t.path), SITE).href;
+  const extra = (limit !== 8 ? "&limit=" + limit : "") + (hide > 0 ? "&autohide=" + hide : "");
+  bU.innerHTML = esc(base.replace(/^https?:\/\//, "")) + "?session=<b>" + (session ? esc(session) : "KODE-SESSION") + "</b>" + esc(extra);
+  bS.removeAttribute("aria-invalid");
+  return { t, session, url: base + "?session=" + encodeURIComponent(session) + extra, limit, hide };
+}
+function refreshBuilder(reload){
+  const r = buildURL();
+  if (!reload) return;
+  clearTimeout(reloadT);
+  reloadT = setTimeout(() => { const p = mount(bStage, r.t, { limit:r.limit, autohide:r.hide }); if (!p.frame) p.load(r.t, { limit:r.limit, autohide:r.hide }); }, 300);
+}
+bT.addEventListener("change", () => refreshBuilder(true));
+bL.addEventListener("input", () => refreshBuilder(true));
+bH.addEventListener("input", () => refreshBuilder(true));
+bS.addEventListener("input", () => { bSt.textContent = ""; refreshBuilder(false); });
+document.getElementById("builder").addEventListener("submit", e => e.preventDefault());
+document.getElementById("b-copy").addEventListener("click", () => {
+  const r = buildURL();
+  if (!r.session){ bS.setAttribute("aria-invalid","true"); bSt.textContent = "Isi kode session dulu supaya widget terhubung ke chat kamu."; bS.focus(); return; }
+  copy(r.url, "URL disalin. Tempel di Browser Source OBS.");
+});
+refreshBuilder(true);
+
+/* ==== Paket & order ==== */
+const oName = document.getElementById("o-name"), oDate = document.getElementById("o-date"),
+      oPkg = document.getElementById("o-pkg"), oBrief = document.getElementById("o-brief"),
+      oPrev = document.getElementById("o-preview"), oSend = document.getElementById("o-send");
+document.getElementById("pkBody").innerHTML = CONFIG.packages.map(p => `
+  <div class="pk-row pk" role="row" data-tone="${p.tone}" data-pkg="${p.id}" tabindex="0" aria-label="Pilih paket ${esc(p.name)}">
+    <span class="pk-name disp" role="cell">${esc(p.name)}</span>
+    <ul role="cell">${p.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+    <span class="pk-time" role="cell"><span>Pengerjaan </span>${esc(p.time)}</span>
+    <span class="pk-price disp" role="cell">${esc(p.price)}</span>
+  </div>`).join("");
+oPkg.innerHTML = CONFIG.packages.map(p => `<option value="${p.id}">${esc(p.name)} (${esc(p.price)})</option>`).join("");
+oPkg.value = "custom";
+function pickPackage(id){ oPkg.value = id; renderOrder(); document.getElementById("order").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); }
+document.getElementById("pkBody").addEventListener("click", e => { const r = e.target.closest("[data-pkg]"); if (r) pickPackage(r.dataset.pkg); });
+document.getElementById("pkBody").addEventListener("keydown", e => { const r = e.target.closest("[data-pkg]"); if (r && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); pickPackage(r.dataset.pkg); } });
+
+function orderText(){
+  const plats = [...document.querySelectorAll('input[name="plat"]:checked')].map(i => i.value);
+  const pkg = CONFIG.packages.find(p => p.id === oPkg.value);
+  const date = oDate.value ? new Date(oDate.value + "T00:00").toLocaleDateString("id-ID", { day:"numeric", month:"long", year:"numeric" }) : "-";
+  return [
+    CONFIG.greeting + ", saya mau order chat widget.",
+    "",
+    "Channel: " + (oName.value.trim() || "-"),
+    "Platform: " + (plats.join(", ") || "-"),
+    "Paket: " + pkg.name + " (" + pkg.price + ")",
+    "Dipakai mulai: " + date,
+    "",
+    "Tema dan referensi:",
+    oBrief.value.trim() || "-"
+  ].join("\n");
+}
+function renderOrder(){
+  oPrev.textContent = orderText();
+  oSend.hidden = !CONFIG.discord;
+  if (CONFIG.discord) oSend.href = CONFIG.discord;
+}
+document.getElementById("orderForm").addEventListener("input", renderOrder);
+document.getElementById("orderForm").addEventListener("change", renderOrder);
+document.getElementById("orderForm").addEventListener("submit", e => e.preventDefault());
+// Discord tidak bisa diisi otomatis, jadi pesan disalin dulu lalu Discord dibuka
+oSend.addEventListener("click", () => copy(orderText(), "Pesan disalin. Tempel di Discord."));
+document.getElementById("o-copy").addEventListener("click", () => copy(orderText(), "Pesan order disalin."));
+const contactEl = document.getElementById("o-contact");
+if (CONFIG.contact) contactEl.textContent = "Atau kirim manual ke " + CONFIG.contact;
+else contactEl.hidden = true;
+cardsEl.addEventListener("click", e => {
+  const use = e.target.closest("[data-use]"); if (use){ bT.value = use.dataset.use; refreshBuilder(true); }
+  const like = e.target.closest("[data-like]"); if (like){ oBrief.value = "Mirip desain " + byId(like.dataset.like).name + ". "; oPkg.value = "custom"; renderOrder(); setTimeout(() => oBrief.focus({ preventScroll:true }), 500); }
+});
+renderOrder();
+
+/* ==== Util ==== */
+const toastEl = document.getElementById("toast"); let toastT;
+function toast(msg){ toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => toastEl.hidden = true, 2400); }
+function copy(text, msg){
+  const fallback = () => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch(e){} ta.remove(); toast(ok ? msg : "Gagal menyalin. Pilih teksnya lalu salin manual."); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => toast(msg), fallback);
+  else fallback();
+}
+document.getElementById("yr").textContent = new Date().getFullYear();
+renderCards("all");
+</script>
+</body>
+</html>
