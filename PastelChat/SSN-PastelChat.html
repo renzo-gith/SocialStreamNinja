@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Chat Overlay</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+    <script src="https://socialstream.ninja/libs/colours.js" type="text/javascript"></script>
+    <!-- Links to Social Stream Ninja resources -->
+    <link rel="canonical" href="https://socialstream.ninja/">
+    <meta name="generator" content="Social Stream Ninja - https://github.com/steveseguin/social_stream">
+    <style>
+        /* -- PASTEL CHAT: CHAT WIDGET UNTUK SOCIAL STREAM NINJA -- */
+        /* Ukuran mengikuti desain Figma (frame "Pastel Chat") dikali --k.
+           Tambahkan &scale=1.2 dst. di URL untuk memperbesar (default 1). */
+
+        /* 1. Impor Font dan Pengaturan Dasar */
+        /* =================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700&family=Fredoka:wght@500;600&display=swap');
+
+        :root {
+            --k: 1;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* 2. Wadah Utama Pesan */
+        /* =================================== */
+        #chat-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            gap: calc(20px * var(--k));
+            overflow: visible;
+        }
+
+        /* 3. Animasi Pesan */
+        /* =================================== */
+        .chat-message {
+            opacity: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            align-self: stretch;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 2px;
+
+            /* Warna default (Regular) */
+            --fill: #FDF5E0;
+            --line: #63423C;
+            --ring: #FDF5E0;
+            --text: #DAB879;
+            --tag: #DAB879;
+            --tag-text: #FDF5E0;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 0.6s ease-in forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        /* 4. Tag Nama (username) */
+        /* =================================== */
+        .badge {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            max-width: calc(100% - (37.84px * var(--k)) - 8px);
+            box-sizing: border-box;
+            margin-left: calc(37.84px * var(--k));
+            margin-bottom: calc(-17px * var(--k));
+            padding: calc(4px * var(--k)) calc(18px * var(--k));
+            background: var(--tag);
+            border: calc(2px * var(--k)) solid var(--line);
+            border-radius: calc(12px * var(--k));
+            box-shadow: 0 0 0 calc(2px * var(--k)) var(--ring);
+            color: var(--tag-text);
+            font-family: 'Fredoka', 'Quicksand', sans-serif;
+            font-size: calc(12px * var(--k));
+            font-weight: 500;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .truncate-text {
+            display: inline-block;
+            max-width: 220px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
+        }
+
+        /* 5. Gelembung Pesan */
+        /* =================================== */
+        .message {
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+            max-width: calc(100% - 4px);
+            padding: calc(16px * var(--k)) calc(32px * var(--k));
+            background: var(--fill);
+            border: calc(2px * var(--k)) solid var(--line);
+            border-radius: calc(32px * var(--k));
+            box-shadow: 0 0 0 calc(2px * var(--k)) var(--ring);
+            color: var(--text);
+            font-size: calc(18px * var(--k));
+            font-weight: 700;
+            line-height: 1.25;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        /* Emoji & stiker */
+        .message img,
+        .message svg {
+            width: 1.3em;
+            height: 1.3em;
+            vertical-align: middle;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        /* 6. Warna per Peran */
+        /* =================================== */
+        /* Moderator: hijau */
+        .chat-message.moderator {
+            --fill: #D0DF5E;
+            --line: #3E5C1E;
+            --ring: #D0DF5E;
+            --text: #73A340;
+            --tag: #73A340;
+            --tag-text: #D0DF5E;
+        }
+
+        /* Owner: biru toska (juga dipakai untuk donasi) */
+        .chat-message.owner,
+        .chat-message.donation {
+            --fill: #84D3DA;
+            --line: #285460;
+            --ring: #84D3DA;
+            --text: #609BAB;
+            --tag: #609BAB;
+            --tag-text: #84D3DA;
+        }
+
+        /* Member / Subscriber: pink salem (juga dipakai untuk member baru) */
+        .chat-message.member,
+        .chat-message.gifted-membership,
+        .chat-message.new-subscriber {
+            --fill: #FFC5B7;
+            --line: #F27771;
+            --ring: #FFC5B7;
+            --text: #FE847E;
+            --tag: #FE847E;
+            --tag-text: #FFC5B7;
+        }
+
+        /* 7. Alert (Super Chat / Donasi & Member Baru) */
+        /* =================================== */
+        .alert-subtitle {
+            display: block;
+            font-size: 0.75em;
+            font-weight: 600;
+            opacity: 0.85;
+        }
+
+        .alert-subtitle + .alert-text {
+            margin-top: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <div id="message-list-wrapper">
+            <div id="spacer" style="height: 2200px; width: 100%;"></div>
+        </div>
+    </div>
+    <script>
+        // ===================================================================
+        // == BAGIAN 1: PENGATURAN & LOGIKA KUSTOM DARI STREAM ELEMENTS
+        // ===================================================================
+
+        const SHOW_MEMBER_BADGE = false;
+
+        // PEMBLOKIR MUTLAK: Menyuntikkan CSS anti-badge langsung ke sistem jika saklar = false
+        if (!SHOW_MEMBER_BADGE) {
+            const styleBlock = document.createElement('style');
+            styleBlock.innerHTML = `
+            .youtube-member-badge,
+            .message img.youtube-member-badge,
+            .badge img {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+                margin: 0 !important;
+                opacity: 0 !important;
+            }
+        `;
+            document.head.appendChild(styleBlock);
+        }
+        const chatContainer = document.getElementById('chat-container'); // Pastikan ID ini ada di HTML Anda
+        const urlParams = new URLSearchParams(window.location.search);
+        const MAX_MESSAGES = urlParams.has("limit") ? parseInt(urlParams.get("limit")) : 8;
+        const AUTO_HIDE = urlParams.has("autohide") ? parseInt(urlParams.get("autohide")) : 0; // Tambahkan &autohide=30 di URL untuk menyembunyikan pesan setelah 30 detik
+        // Tambahkan &scale=1.2 dst. di URL untuk memperbesar (default 1 = ukuran desain Figma)
+        if (urlParams.has("scale") && !isNaN(parseFloat(urlParams.get("scale")))) {
+            document.documentElement.style.setProperty('--k', parseFloat(urlParams.get("scale")));
+        }
+        // === QUEUE SYSTEM (Sistem Antrian Pesan) ===
+        const messageQueue = [];
+        let isProcessing = false;
+
+        function processQueue() {
+            if (isProcessing || messageQueue.length === 0) return;
+
+            isProcessing = true;
+            const { username, message, role, extra } = messageQueue.shift();
+            addChatMessage(username, message, role, extra);
+
+            setTimeout(() => {
+                isProcessing = false;
+                processQueue();
+            }, 0); // Jeda 600ms antar pesan agar tidak spam
+        }
+
+        function enqueueMessage(username, message, role = 'regular', extra = {}) {
+            messageQueue.push({ username, message, role, extra });
+            if (!isProcessing) {
+                processQueue();
+            }
+        }
+
+        // === FUNGSI PENGGANTI EMOTE ===
+        function makeRichMessageWithEmotes(message) {
+            if (!message) return '';
+            // Mengganti emote kustom
+            let richMessage = message.replace(/:[a-z0-9\-_]+:/gi, (match) => {
+                const youtubeEmote = emotesArray.find(emote => emote.shortcuts.includes(match));
+                if (youtubeEmote) {
+                    const emoteUrl = youtubeEmote.image.thumbnails[youtubeEmote.image.thumbnails.length - 1].url;
+                    return `<img class="emoji" src="${emoteUrl}" alt="${match}" />`;
+                }
+                return match;
+            });
+            return richMessage;
+        }
+
+        // === FUNGSI ANIMASI ===
+        function animateChatShift(newEl) {
+            const messages = Array.from(chatContainer.children);
+            const firstRects = messages.map(el => el.getBoundingClientRect());
+
+            chatContainer.appendChild(newEl); // Tambahkan elemen baru dulu
+
+            const lastRects = messages.map(el => el.getBoundingClientRect());
+
+            messages.forEach((el, i) => {
+                const deltaY = firstRects[i]?.top - lastRects[i]?.top;
+                if (deltaY) {
+                    requestAnimationFrame(() => {
+                        el.style.transform = `translateY(${deltaY}px)`;
+                        el.style.transition = 'transform 0s';
+                    });
+                }
+            });
+
+            requestAnimationFrame(() => {
+                messages.forEach(el => {
+                    el.style.transform = '';
+                    el.style.transition = 'transform 0.4s ease-out';
+                });
+            });
+        }
+
+        // === FUNGSI PEMBUAT TAMPILAN PESAN (HTML Builder) ===
+        function addChatMessage(username, messageHTML, role = 'regular', extra = {}) { // Pastikan 'extra' ada di sini
+            const chatEl = document.createElement('div');
+            chatEl.className = `chat-message ${role}`;
+
+            if (role === 'donation') {
+
+                // --- DONASI / SUPER CHAT: tag = nominal, gelembung = nama + pesan ---
+                let amountText = extra.amount || 'DONATION';
+                let messageElement = messageHTML ? `<span class="alert-text">${messageHTML}</span>` : '';
+
+                chatEl.innerHTML = `
+                <div class="badge"><span class="truncate-text">${amountText}</span></div>
+                <div class="message">
+                    <span class="alert-subtitle">from <span class="truncate-text">${username}</span></span>
+                    ${messageElement}
+                </div>
+            `;
+
+            } else if (role === 'new-subscriber') {
+
+                // --- MEMBER BARU ---
+                let cleanUsername = username.replace(" just subscribed", "").replace(/^@/, "");
+
+                chatEl.innerHTML = `
+                <div class="badge"><span class="truncate-text">New Member</span></div>
+                <div class="message">
+                    <span class="alert-subtitle">welcome to membership</span>
+                    <span class="alert-text">@${cleanUsername}</span>
+                </div>
+            `;
+
+            } else {
+                // --- BLOK BARU UNTTUK MEMBUAT BADGE YOUTUBE ---
+                let memberBadgeHTML = '';
+                // Cek jika 'extra' ada DAN 'memberBadgeUrl' ada di dalamnya
+                if (extra && extra.memberBadgeUrl) {
+                    memberBadgeHTML = `<img class="youtube-member-badge" src="${extra.memberBadgeUrl}" />`;
+                }
+                // --- AKHIR BLOK BARU ---
+
+                chatEl.innerHTML = `
+                <div class="badge"><span class="truncate-text">${username}</span></div>
+                <div class="message">${messageHTML}${memberBadgeHTML}</div>
+            `;
+            }
+
+            // Panggil fungsi animasi Anda, bukan appendChild biasa
+            animateChatShift(chatEl);
+
+            if (AUTO_HIDE > 0) {
+                setTimeout(() => {
+                    chatEl.classList.add('fade-out');
+                    setTimeout(() => chatEl.remove(), 600);
+                }, AUTO_HIDE * 1000);
+            }
+
+            if (chatContainer.children.length > MAX_MESSAGES) {
+                const firstMessage = chatContainer.children[0];
+                firstMessage.classList.add('fade-out');
+                setTimeout(() => firstMessage.remove(), 600);
+            }
+        }
+        console.log("Ini adalah pesan standar untuk informasi umum.");
+
+        // ===================================================================
+        // == BAGIAN 2: "JEMBATAN" PENGHUBUNG SSN KE SISTEM ANDA
+        // ===================================================================
+
+        // --- PENGATURAN FILTER PLATFORM ---
+        // Untuk menerima SEMUA platform, isi dengan array kosong: const ALLOWED_PLATFORMS = [];
+        // Untuk menerima HANYA platform tertentu, sebutkan di dalam array (contoh: 'youtube', 'tiktok', 'twitch')
+        const ALLOWED_PLATFORMS = ['youtube', 'tiktok', 'twitch'];
+
+        function addMessageToOverlay(data) {
+            // Log utama untuk melihat semua data mentah
+            console.log("--- [DEBUG 0] DATA MENTAH DITERIMA ---", JSON.stringify(data, null, 2));
+
+            // --- FILTER PLATFORM DIMULAI ---
+            if (ALLOWED_PLATFORMS.length > 0 && !ALLOWED_PLATFORMS.includes(data.type)) {
+                console.log(`Pesan dari platform '${data.type}' diabaikan.`);
+                return;
+            }
+            // --- FILTER PLATFORM SELESAI ---
+
+            const username = data.chatname;
+            const message = data.chatmessage || "";
+
+            // === PRIORITAS #1: DONASI (SUPER CHAT) ===
+            if ((data.hasDonation && data.hasDonation !== true && data.hasDonation !== "") || (data.donationAmount && parseFloat(data.donationAmount) > 0)) {
+                let roleClass = 'donation';
+
+                let amountString = data.hasDonation || data.donationAmount;
+
+                console.log("EVENT DONASI DITEMUKAN (STATIC COLOR):", username, amountString);
+
+                enqueueMessage(username, message, roleClass, { amount: amountString, memberBadgeUrl: null });
+                return;
+            }
+
+            // === PRIORITAS #1.5: GIFTED MEMBERSHIP ===
+            if (data.gifted === true || (data.event === true && data.isGift === true)) {
+                let roleClass = 'gifted-membership';
+                let giftMessage = message || "Gifted a membership!";
+                enqueueMessage(username, giftMessage, roleClass, { memberBadgeUrl: null });
+                return;
+            }
+
+            // === PRIORITAS #2: NEW MEMBER / MEMBERSHIP RENEWAL (MILESTONE) ===
+            // [BAGIAN PERUBAHAN 1]: Menambahkan variabel kriteria khusus untuk menangkap event membership YouTube
+            const isMembershipEvent =
+                data.isNewMember ||
+                data.event === "new-membership" ||
+                data.event === "membership" ||
+                data.membershipHeader ||
+                (data.isMembership && !message) ||
+                (data.isSubscriber && !message);
+
+            if (isMembershipEvent) {
+                let roleClass = 'new-subscriber';
+
+                let cleanUsername = username ? username.replace(/^@/, "") : "Someone";
+                let notificationText = `${cleanUsername} just subscribed`;
+
+                console.log("EVENT NEW MEMBER / MEMBERSHIP DITEMUKAN:", username);
+                enqueueMessage(notificationText, message, roleClass, { memberBadgeUrl: null });
+                return;
+            }
+
+            // === PRIORITAS #3: EVENT UMUM LAINNYA (Follow, Like, Share) ===
+            // [BAGIAN PERUBAHAN 2]: Meloloskan event membership agar tidak di-return secara prematur
+            if (data.event === true && !data.membership && !data.isMembership) {
+                console.log("Event umum diabaikan (Follow/Share/Like):", data);
+                return;
+            }
+
+            if (!message) {
+                return;
+            }
+
+            // Tentukan peran untuk pesan obrolan biasa
+            let roleClass = 'regular';
+            let memberBadgeUrl = null;
+            const STREAMER_USERNAME = []; // Isi nama akun streamer, contoh: ["NamaStreamer"] (penting untuk TikTok & Twitch)
+
+            // Ambil SEMUA URL badge terlebih dahulu
+            const badgeSrcs = (data.chatbadges || []).map(badge => {
+                if (typeof badge === 'string') return badge;
+                if (badge && typeof badge === 'object') {
+                    return [badge.src, badge.alt, badge.title, badge.name, badge.type, badge.text]
+                        .filter(v => typeof v === 'string').join(' ');
+                }
+                return '';
+            }).filter(Boolean).map(s => s.toLowerCase());
+
+            console.log(`[DEBUG 1 - ${username}] Array 'badgeSrcs' yang ditemukan:`, badgeSrcs);
+
+            // Tentukan PERAN terlebih dahulu
+            if (STREAMER_USERNAME.includes(username)) {
+                roleClass = 'owner';
+            } else {
+                if (data.isOwner === true || data.broadcaster === true || badgeSrcs.some(src => src.includes('broadcaster') || src.includes('owner'))) {
+                    roleClass = 'owner';
+                } else if (data.mod === true || data.moderator === true || data.isModerator === true || badgeSrcs.some(src => src.includes('moderator') || src.includes('moderater'))) {
+                    roleClass = 'moderator';
+                } else if (
+                    (data.membership && data.membership !== "") ||
+                    data.isMembership ||
+                    data.isSubscriber ||
+                    badgeSrcs.some(src =>
+                        src.includes('gifter') ||
+                        src.includes('subscriber') ||
+                        src.includes('member') ||
+                        (src.includes('fans_badge') && !src.includes('grey'))
+                    )
+                ) {
+                    roleClass = 'member';
+                }
+            }
+
+            if (roleClass === 'member' && data.chatbadges && data.chatbadges.length > 0) {
+                const first = data.chatbadges[0];
+                memberBadgeUrl = typeof first === 'string' ? first : (first && first.src) || null;
+            }
+
+            console.log(`[DEBUG 2 & 3 - ${username}] Peran: ${roleClass}. URL Badge yang akan dikirim:`, memberBadgeUrl);
+
+            enqueueMessage(username, message, roleClass, { memberBadgeUrl: memberBadgeUrl });
+        }
+
+        // ===================================================================
+        // == BAGIAN 3: KODE BAWAAN SSN UNTUK MENERIMA DATA (JANGAN DIUBAH)
+        // ===================================================================
+        var roomID = "iWWnKL28tQ";
+        if (urlParams.has("session")) {
+            roomID = urlParams.get("session");
+        }
+        var password = "false";
+        var featuredMode = false;
+
+        var iframe = document.createElement("iframe");
+        if (featuredMode) {
+            iframe.src = `https://vdo.socialstream.ninja/?ln&password=${password}&salt=vdo.ninja&label=overlay&exclude=${roomID}&scene&novideo&noaudio&cleanoutput&room=${roomID}`;
+        } else {
+            iframe.src = "https://vdo.socialstream.ninja/?ln&salt=vdo.ninja&password=" + password + "&push&label=dock&vd=0&ad=0&novideo&noaudio&autostart&cleanoutput&room=" + roomID;
+        }
+        iframe.style.cssText = "width:0;height:0;border:0;position:absolute;top:-10px;left:-10px;";
+        document.body.appendChild(iframe);
+        window.addEventListener("message", function (e) {
+            if (e.source != iframe.contentWindow) return;
+            if (e.data.dataReceived && e.data.dataReceived.overlayNinja) {
+                addMessageToOverlay(e.data.dataReceived.overlayNinja);
+            }
+        });
+
+        var conCon = 1;
+        var socketserver = false;
+        var serverURL = urlParams.has("localserver") ? "ws://127.0.0.1:3000" : "wss://io.socialstream.ninja";
+
+        function setupSocket() {
+            socketserver.onclose = function () {
+                setTimeout(function () {
+                    conCon += 1;
+                    socketserver = new WebSocket(serverURL);
+                    setupSocket();
+                }, 100 * conCon);
+            };
+            socketserver.onopen = function () {
+                conCon = 1;
+                socketserver.send(JSON.stringify({ "join": roomID, "out": 3, "in": 4 }));
+            };
+            socketserver.addEventListener('message', function (event) {
+                if (event.data) {
+                    try {
+                        var data = JSON.parse(event.data);
+                        if (data) {
+                            addMessageToOverlay(data);
+                        }
+                    } catch (error) {
+                        console.error("Error processing WebSocket message:", error, "Data:", event.data);
+                    }
+                }
+            });
+        }
+
+        if (urlParams.has("server") || urlParams.has("server2")) {
+            serverURL = urlParams.get("server") || urlParams.get("server2") || serverURL;
+            socketserver = new WebSocket(serverURL);
+            setupSocket();
+        }
+    </script>
+</body>
+
+</html>
