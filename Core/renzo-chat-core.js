@@ -54,7 +54,8 @@
     var HIDDEN_PLATFORMS = listParam("hidetype") || [];
     var SHOW_EVENTS = listParam("showevents") || (CFG.showEvents || []);
 
-    var STREAMERS = (CFG.streamers || []).concat(listParam("owner") || []).map(function (s) { return String(s).trim().toLowerCase(); });
+    // "@nama" dan "nama" dianggap sama
+    var STREAMERS = (CFG.streamers || []).concat(listParam("owner") || []).map(function (s) { return String(s).trim().toLowerCase().replace(/^@+/, ""); });
 
     if (urlParams.has("scale")) {
         var k = parseFloat(urlParams.get("scale"));
@@ -236,7 +237,8 @@
 
     function isStreamer(data) {
         if (!STREAMERS.length) return false;
-        return STREAMERS.indexOf(lower(data.chatname)) !== -1 || (data.username && STREAMERS.indexOf(lower(data.username)) !== -1);
+        var noAt = function (s) { return lower(s).replace(/^@+/, ""); };
+        return STREAMERS.indexOf(noAt(data.chatname)) !== -1 || (data.username && STREAMERS.indexOf(noAt(data.username)) !== -1);
     }
 
     function addMessageToOverlay(data) {
