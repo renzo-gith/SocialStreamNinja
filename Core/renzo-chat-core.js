@@ -14,6 +14,7 @@
  *
  * Parameter URL (semua opsional kecuali session):
  *   ?session=KODE          kode session SSN (wajib, tanpa ini widget tidak terhubung)
+ *   ?demo=1                putar chat contoh tanpa session (untuk atur posisi di OBS / kirim ke klien)
  *   &limit=8               jumlah pesan maksimal di layar
  *   &autohide=30           pesan hilang setelah N detik (0 = tidak hilang)
  *   &scale=1.2             perbesar/perkecil ukuran (mengubah CSS --k)
@@ -344,6 +345,48 @@
         }));
     }
     window.addMessageToOverlay = addMessageToOverlay;
+
+    // ---------------- Mode demo (&demo=1) ----------------
+    // Memutar chat contoh tanpa terhubung ke SSN. Kalau ada &demo=1, mode demo selalu dipakai
+    // walaupun ada ?session= (hapus &demo=1 sebelum live).
+    var DEMO_STICKER = "data:image/svg+xml," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">' +
+        '<circle cx="48" cy="48" r="44" fill="#FFD342" stroke="#EBA100" stroke-width="4"/>' +
+        '<circle cx="34" cy="40" r="6" fill="#282828"/><circle cx="62" cy="40" r="6" fill="#282828"/>' +
+        '<path d="M30 58 Q48 76 66 58" fill="none" stroke="#282828" stroke-width="5" stroke-linecap="round"/>' +
+        '<circle cx="24" cy="56" r="6" fill="#FF6A6A" opacity=".7"/><circle cx="72" cy="56" r="6" fill="#FF6A6A" opacity=".7"/></svg>');
+    var DEMO_MESSAGES = [
+        { chatname: "pixelmochi", chatmessage: "Halo kak, baru nemu channel ini 👋" },
+        { chatname: "Raka Senja", chatmessage: "Member 6 bulan hadir! Gas terus kak", membership: "MEMBERSHIP" },
+        { chatname: "mod.nadia", chatmessage: "Jangan spam ya teman-teman, santai aja", mod: true },
+        { chatname: "Host", chatmessage: "Makasih udah mampir semua, jangan lupa support aku ya", chatbadges: ["https://demo.local/badges/owner.png"] },
+        { chatname: "kopi_susu", chatmessage: "Lucu banget stikernya", contentimg: DEMO_STICKER },
+        { chatname: "Bima_08", chatmessage: "Semangat buat live hari ini!", hasDonation: "$5.00", donoValue: 5 },
+        { chatname: "@Luna Arsy", chatmessage: "", isNewMember: true },
+        { chatname: "NamaPenggunaYangSangatPanjangSekaliUntukTes", chatmessage: "Nama panjang harus terpotong rapi, pesan panjang juga harus turun ke baris berikutnya tanpa keluar dari layar." },
+        { chatname: "Luna Arsy", chatmessage: "Akhirnya live lagi, kangen 💖", membership: "MEMBERSHIP" },
+        { chatname: "mod.nadia", chatmessage: "Ingat ya, tetap sopan di chat", mod: true }
+    ];
+    function startDemo() {
+        var types = ["youtube", "tiktok", "twitch"].filter(function (t) {
+            return (!PLATFORMS.length || PLATFORMS.indexOf(t) !== -1) && HIDDEN_PLATFORMS.indexOf(t) === -1;
+        });
+        if (!types.length) types = PLATFORMS.length ? PLATFORMS.slice() : ["youtube"];
+        var i = 0;
+        function next() {
+            var m = Object.assign({}, DEMO_MESSAGES[i % DEMO_MESSAGES.length]);
+            m.type = types[i % types.length];
+            m.id = "demo-" + i;
+            i += 1;
+            addMessageToOverlay(m);
+        }
+        for (var n = 0; n < 3; n++) setTimeout(next, n * 600);
+        setTimeout(function () { setInterval(next, 2500); }, 1800);
+    }
+    if (urlParams.has("demo") && urlParams.get("demo") !== "0" && urlParams.get("demo") !== "false") {
+        startDemo();
+        return;
+    }
 
     // ---------------- Koneksi ke SSN ----------------
     if (!urlParams.has("session") || !urlParams.get("session")) {
