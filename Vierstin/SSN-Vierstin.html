@@ -9,45 +9,52 @@
     <link rel="canonical" href="https://socialstream.ninja/">
     <meta name="generator" content="Social Stream Ninja - https://github.com/steveseguin/social_stream">
 <style>
-/* -- TEMA STREAM ELEMENTS DIADAPTASI UNTUK SOCIAL STREAM NINJA -- */
-/* Ganti seluruh isi <style> Anda dengan kode ini */
-
-/* 1. Impor Font dan Pengaturan Dasar */
-/* =================================== */
-@import url('https://fonts.googleapis.com/css2?family=Radley:wght@600;700;900&display=swap');
+/* VIERSTIN — desain Figma "Pirstin / Section 2" (399:650)
+   Urutan peran: regular (putih), member (cokelat tua), moderator (krem), owner (pink). */
+@import url('https://fonts.googleapis.com/css2?family=Radley&display=swap');
 
 body, html {
     margin: 0;
     padding: 0;
     background: transparent;
     font-family: 'Radley', serif;
-    overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan */
+    overflow: hidden;
 }
 
-/* 2. Wadah Utama Pesan */
-/* =================================== */
-/* ID ini harus sama dengan yang ada di HTML Anda */
+/* Lebar area chat = lebar Browser Source dikurangi margin 20px */
 #chat-container {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    width: 400px;
+    right: 20px;
     display: flex;
     flex-direction: column;
-    gap: 28px; /* Sedikit mengurangi jarak agar lebih pas */
+    gap: 28px;
     overflow: visible;
 }
 
-/* 3. Animasi Pesan */
-/* =================================== */
+/* Kotak luar (padding 4px) — default = Regular */
 .chat-message {
-    padding: 4px 4px;
-    background-color: #ffffff;
-    border-radius: 14px;
-    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    --outer: #ffffff;
+    --inner: linear-gradient(#ffffff, #ffffff);
+    --line: linear-gradient(to bottom, #ffc9c9, #a35f76);
+    --text: #ff7070;
+    --tag: #ffffff;
+    --tag-line: #ff7070;
+    --tag-text: #ff7070;
+    --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M6 0C6 3.31348 8.68594 6 12 6C8.68594 6 6 8.68652 6 12C6 8.68652 3.31406 6 0 6C3.31406 6 6 3.31348 6 0Z' fill='%23FF7070'/%3E%3C/svg%3E");
+    --star-size: 12px;
+    --drip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='51' height='24' viewBox='0 0 51 24' fill='none'%3E%3Cpath d='M2.50368 10.8924C6.09606 13.2863 5.89535 15.8796 5.49619 16.877C4.29989 19.8692 4.29872 23.46 6.69366 23.46C9.48945 23.46 9.68733 20.4677 9.0886 18.0739C8.38233 15.2502 9.48945 13.842 11.8694 13.26C14.2494 12.678 15.6747 14.4832 18.0696 15.0817C21.5594 15.9537 24.5248 11.3785 27 9.69561C31.8788 6.37845 37.8278 6.1049 40.8215 8.49871C43.8152 10.8925 41.3607 12.6879 41.9595 16.2786C42.5582 19.8693 46.8089 19.2708 47.4076 16.2786C48.0063 13.2863 46.8089 12.6879 46.8089 9.69561C46.8089 6.70335 51 6.1049 51 3.7111C51 1.31729 48.0063 0.718843 41.4203 1.31729C34.8342 1.91575 32.4392 0.718906 29.4456 0.120454C26.4519 -0.477997 24.6557 1.31723 18.6683 1.91568C12.681 2.51413 9.68849 0.120326 4.29988 0.718777C-1.08872 1.31723 -1.08871 8.49863 2.50368 10.8924Z' fill='%23FF8A9C'/%3E%3Cpath d='M3.11998 2.30069C1.07998 3.38868 0.650531 6.45994 1.66933 7.81994C2.18059 3.5699 6.60058 1.6999 9.58016 2.30069C8.30058 1.5299 5.15998 1.21269 3.11998 2.30069Z' fill='white'/%3E%3Cpath d='M5.75102 22.1002C5.07102 21.4202 5.28227 19.5277 5.58102 18.7002C6.02071 17.4825 5.75105 19.7201 6.60105 20.9102C7.35351 21.9638 6.60102 22.9502 5.75102 22.1002Z' fill='white'/%3E%3Cpath d='M43.0909 17.3522C42.4109 16.6722 42.6221 14.7796 42.9209 13.9522C43.3606 12.7345 43.0909 14.972 43.9409 16.1622C44.6934 17.2158 43.9409 18.2022 43.0909 17.3522Z' fill='white'/%3E%3C/svg%3E");
+
     position: relative;
-    display: inline-block;
     align-self: flex-start;
+    box-sizing: border-box;
+    min-width: 120px;
+    max-width: calc(100% - 10px); /* sisakan ruang untuk stroberi */
+    padding: 4px;
+    border-radius: 12px;
+    background: var(--outer);
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes bounceIn {
@@ -64,66 +71,112 @@ body, html {
     to { opacity: 0; transform: translateY(-50px); }
 }
 
-/* Animasi ornamen */
-@keyframes sway {
-    from { transform: rotate(-6deg); }
-    to { transform: rotate(6deg); }
-}
-@keyframes sway-tilt-neg-90 {
-    from { transform: rotate(-96deg); }
-    to { transform: rotate(-84deg); }
-}
-@keyframes sway-tilt-neg90 {
-    from { transform: rotate(84deg); }
-    to { transform: rotate(96deg); }
-}
-
-
-/* 4. Gaya Pesan Biasa & Lencana */
-/* =================================== */
+/* Kotak dalam: garis 1px (bisa gradasi) */
 .message {
-    font-weight: 700;
-    background: #ffffff;
-    color: #FF7070;
-    font-size: 14px;
-    padding: 8px 32px;
-    border-radius: 10px;
-    display: inline-block;
-    min-width: 100px;
     box-sizing: border-box;
-    overflow-wrap: break-word;
-    position: relative;
+    padding: 8px 42px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: var(--inner) padding-box, var(--line) border-box;
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.3;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
+/* Lelehan di kiri atas */
+.chat-message::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    width: 51px;
+    height: 24px;
+    background: var(--drip) no-repeat 0 0 / contain;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Label nama */
 .badge {
     position: absolute;
-    font-weight: 700;
-    color: #FF7070;
-    padding: 2px 10px;
-    border: 0.5px solid #FF7070;
-    border-radius: 6px;
-    font-size: 12px;
-    top: -26px;
     left: 8px;
-    z-index: 4;
-    background-color: #ffffff;
+    bottom: calc(100% + 3px);
+    z-index: 3;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--tag);
+    box-shadow: 0 0 0 0.5px var(--tag-line);
+    color: var(--tag-text);
+    font-size: 10px;
+    line-height: 13px;
     white-space: nowrap;
-    overflow: visible;
-    text-overflow: ellipsis;
+}
+/* Daun di kiri atas label */
+.badge::before {
+    content: '';
+    position: absolute;
+    left: -3.4px;
+    top: -4.5px;
+    width: 12px;
+    height: 10px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='13' viewBox='0 0 16 13' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.80852 0.122948C3.71698 0.369392 4.67724 0.99291 5.59996 2.15534C6.59937 1.71161 7.46444 1.83887 7.81874 1.9896C11.592 -0.579566 14.3864 1.94562 15.3108 3.53036C14.553 4.04637 13.7093 4.32802 12.9229 4.46685C11.8826 4.64981 10.942 4.58323 10.434 4.47876C11.7452 5.86318 10.7117 8.71757 10.0319 9.9713C8.61622 10.1443 5.58167 10.0598 4.77411 8.33251C4.68367 8.85183 4.39327 9.77186 3.82421 10.6866C3.40963 11.3529 2.84627 12.0173 2.10439 12.5224C0.968707 11.0815 -0.356671 7.55611 3.41659 4.98695C3.40677 4.60817 3.59783 3.77987 4.34434 3.02278C3.61485 2.13094 2.95158 1.75879 2.45018 1.62437C1.84384 1.45993 1.39742 1.61748 1.20949 1.74544C1.06087 1.84663 0.88854 1.8866 0.72176 1.87136C0.495998 1.85133 0.279081 1.73077 0.139197 1.52533C0.0029778 1.32527 -0.0305802 1.08588 0.025945 0.87319C0.0714627 0.705058 0.173121 0.553371 0.326655 0.448832C0.44457 0.368545 0.579272 0.294434 0.728372 0.230906C0.877256 0.16706 1.04032 0.113482 1.21496 0.0742621C1.37077 0.0390633 1.53621 0.0153736 1.70925 0.0054992C2.04806 -0.0143866 2.41869 0.0177325 2.80852 0.122948Z' fill='%2300AE6B'/%3E%3C/svg%3E") no-repeat center / contain;
+    transform: rotate(-34.3deg);
+}
+/* Bintang di kanan label */
+.badge::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: calc(var(--star-size) * -0.55);
+    width: var(--star-size);
+    height: var(--star-size);
+    margin-top: 1px;
+    background: var(--star) no-repeat center / contain;
+    transform: translateY(-50%);
 }
 
-/* Perbaikan final untuk SEMUA jenis emoji dan stiker */
-.message img {
-    /* Atur ukuran yang diinginkan */
-    width: 28px !important;
-    height: 28px !important;
+/* Nama panjang dipotong dengan "…" (ornamen label tetap terlihat) */
+.badge .name {
+    display: inline-block;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
 
-    /* Jaga agar tetap sejajar dengan teks */
+/* Stroberi di kanan bawah, memantul saat chat muncul */
+.berry {
+    position: absolute;
+    right: -8.7px;
+    bottom: -8.8px;
+    z-index: 3;
+    width: 32.7px;
+    height: 35.8px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='33' height='36' viewBox='0 0 33 36' fill='none'%3E%3Cpath d='M15.4172 5.25492C16.4807 6.52505 19.881 8.26519 21.4482 8.97649C23.1718 10.5912 25.7475 11.2141 26.5441 11.1375C25.4099 9.98852 23.9104 8.85653 23.2906 8.63025C24.5008 8.52417 25.4672 7.12539 25.7992 6.43926C24.1891 5.82479 22.6128 6.74593 22.0259 7.28331C22.1399 5.40076 21.0035 4.11512 20.421 3.70762C19.6434 5.04058 19.7232 6.07522 19.8604 6.42592C17.8505 5.09091 16.0608 5.089 15.4172 5.25492Z' fill='%237FD37A'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.64969 8.76249C12.4525 3.95842 18.0548 6.54691 21.7301 8.69721C25.4106 10.8383 30.4204 14.4415 27.6178 19.2454C25.0358 23.6709 15.5584 32.004 9.8494 29.0612C4.47712 25.5409 7.06811 13.1874 9.64969 8.76249Z' fill='url(%23g)'/%3E%3Cpath d='M16.1092 7.89997C17.2942 7.00309 18.475 6.96407 18.9173 7.05668C19.9014 7.35503 22.0237 8.14102 22.6408 8.89812C23.2579 9.65522 22.7264 11.2091 22.3835 11.8914C22.0462 9.97401 21.1528 8.80203 20.7482 8.4557C18.9955 7.8302 16.9252 7.82458 16.1092 7.89997Z' fill='%237FD37A'/%3E%3Cg fill='%23FFE1E1'%3E%3Cpath d='M11.8283 11.8324C11.4703 12.4459 11.11 12.4285 10.7691 12.2297C10.4283 12.0308 10.236 11.7258 10.594 11.1123C10.9519 10.4988 11.7245 9.8091 12.0653 10.008C12.4062 10.2068 12.1862 11.2189 11.8283 11.8324Z'/%3E%3Cpath d='M10.7794 18.1683C10.4215 18.7818 10.0612 18.7645 9.72031 18.5656C9.37947 18.3668 9.1872 18.0617 9.54514 17.4482C9.90307 16.8347 10.6757 16.145 11.0165 16.3439C11.3573 16.5427 11.1374 17.5548 10.7794 18.1683Z'/%3E%3Cpath d='M10.9845 22.9208C10.6266 23.5343 10.2662 23.5169 9.92539 23.3181C9.58455 23.1192 9.39228 22.8142 9.75021 22.2006C10.1081 21.5871 10.8807 20.8975 11.2216 21.0963C11.5624 21.2952 11.3424 22.3072 10.9845 22.9208Z'/%3E%3Cpath d='M12.754 27.2611C12.3961 27.8746 12.0358 27.8572 11.6949 27.6584C11.3541 27.4595 11.1618 27.1545 11.5197 26.541C11.8777 25.9275 12.6503 25.2378 12.9911 25.4367C13.332 25.6355 13.112 26.6476 12.754 27.2611Z'/%3E%3Cpath d='M15.7169 21.0492C15.359 21.6627 14.9987 21.6453 14.6578 21.4465C14.317 21.2476 14.1247 20.9426 14.4826 20.3291C14.8406 19.7156 15.6132 19.0259 15.954 19.2247C16.2948 19.4236 16.0749 20.4357 15.7169 21.0492Z'/%3E%3Cpath d='M19.0099 17.6751C18.652 18.2887 18.2916 18.2713 17.9508 18.0724C17.6099 17.8736 17.4177 17.5686 17.7756 16.955C18.1335 16.3415 18.9061 15.6519 19.247 15.8507C19.5878 16.0496 19.3678 17.0616 19.0099 17.6751Z'/%3E%3Cpath d='M23.3283 14.2401C22.9703 14.8536 22.61 14.8362 22.2691 14.6374C21.9283 14.4385 21.736 14.1335 22.094 13.52C22.4519 12.9065 23.2245 12.2168 23.5653 12.4157C23.9062 12.6145 23.6862 13.6266 23.3283 14.2401Z'/%3E%3Cpath d='M25.2833 17.6961C24.9254 18.3097 24.5651 18.2923 24.2242 18.0934C23.8834 17.8946 23.6911 17.5895 24.049 16.976C24.407 16.3625 25.1796 15.6729 25.5204 15.8717C25.8612 16.0706 25.6413 17.0826 25.2833 17.6961Z'/%3E%3Cpath d='M23.2247 21.7899C22.8668 22.4034 22.5065 22.386 22.1656 22.1872C21.8248 21.9883 21.6325 21.6833 21.9904 21.0698C22.3484 20.4563 23.121 19.7666 23.4618 19.9655C23.8027 20.1643 23.5827 21.1764 23.2247 21.7899Z'/%3E%3Cpath d='M18.0216 25.0404C17.6637 25.6539 17.3033 25.6365 16.9625 25.4377C16.6217 25.2388 16.4294 24.9338 16.7873 24.3203C17.1453 23.7068 17.9178 23.0171 18.2587 23.216C18.5995 23.4148 18.3795 24.4269 18.0216 25.0404Z'/%3E%3Cpath d='M14.5646 15.0829C14.2066 15.6964 13.8463 15.679 13.5055 15.4802C13.1646 15.2813 12.9724 14.9763 13.3303 14.3628C13.6882 13.7492 14.4608 13.0596 14.8017 13.2584C15.1425 13.4573 14.9225 14.4693 14.5646 15.0829Z'/%3E%3Cpath d='M18.3517 11.9974C17.9938 12.6109 17.6334 12.5936 17.2926 12.3947C16.9517 12.1959 16.7595 11.8908 17.1174 11.2773C17.4753 10.6638 18.2479 9.97414 18.5888 10.173C18.9296 10.3718 18.7096 11.3839 18.3517 11.9974Z'/%3E%3C/g%3E%3Cdefs%3E%3ClinearGradient id='g' x1='21.7298' y1='8.69704' x2='9.84916' y2='29.0611' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23EC5976'/%3E%3Cstop offset='1' stop-color='%23FF7B95'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") no-repeat center / contain;
+    transform-origin: 50% 85%;
+    animation: berryBounce 1s ease-out 0.45s both;
+    pointer-events: none;
+}
+@keyframes berryBounce {
+    0%   { transform: translateY(0) scale(1, 1); }
+    18%  { transform: translateY(-12px) scale(0.94, 1.06); }
+    36%  { transform: translateY(0) scale(1.12, 0.88); }
+    52%  { transform: translateY(-6px) scale(0.97, 1.03); }
+    68%  { transform: translateY(0) scale(1.05, 0.95); }
+    82%  { transform: translateY(-2px) scale(1, 1); }
+    100% { transform: translateY(0) scale(1, 1); }
+}
+
+/* Emote */
+.message img {
+    width: 1.35em !important;
+    height: 1.35em !important;
     vertical-align: middle !important;
-    
-    /* Perbaikan visual minor */
     display: inline-block !important;
-    margin: -4px 2px 0 2px !important;
+    margin: -3px 1px 0 1px !important;
 }
 
 /* Stiker / gambar konten */
@@ -134,155 +187,63 @@ body, html {
     height: auto !important;
     max-width: 80px !important;
     max-height: 80px !important;
-    margin: 6px 0 0 0 !important;
+    margin: 6px auto 0 auto !important;
     border-radius: 8px;
 }
 
-/* Nama panjang dipotong dengan "…" (ornamen badge tetap terlihat) */
-.badge .name {
-    display: inline-block;
-    max-width: 240px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    vertical-align: bottom;
-}
+/* ===== Peran ===== */
 
-/* 5. Gaya Berdasarkan Peran (Owner, Moderator, dll.) */
-/* ================================================= */
-/* Ornamen dasar */
-.message::before, .message::after, .badge::before, .badge::after, .ornament-extra-1, .ornament-extra-2 {
-    content: '';
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transform-origin: bottom center;
-}
-
-/* Owner */
-.chat-message.owner {
-    background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
-    padding: 4px; 
-    border-radius: 14px;
-    margin-bottom: 10px; 
-}
-.chat-message.owner .message {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/ornament-bg.svg'), 
-    linear-gradient(to bottom, #FCC8C4, #E46870);
-    background-repeat: no-repeat, no-repeat;
-    background-position: center calc(50% - 12px), center;
-    background-size: clamp(56px, 50%, 80vw) auto, cover;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-}
-.chat-message.owner .badge {
-    background-image: linear-gradient(to bottom, #FCC8C4, #E46870);
-    border: 0.5px solid #ffffff;
-    color: #ffffff;
-}
-.chat-message.owner .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
-  transform: rotate(-35deg);
-}
-.chat-message.owner .badge::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/star%20putih.svg');
-    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
-}
-
-/* Moderator */
-.chat-message.moderator {
-  background-image: linear-gradient(to bottom, #E46870, #5E0B15);
-  padding: 1px;
-  border: 4px solid #4B1F1B;
-  border-radius: 15px;
-  margin-bottom: 10px; 
-}
-.chat-message.moderator .message {
-  background-color: #4B1F1B;
-  color: #F6C4C3;
-}
-.chat-message.moderator .badge {
-  background-color: #4B1F1B;
-  border: 0.5px solid #E46870;
-  color: #F6C4C3;
-}
-.chat-message.moderator .message::before {
-  background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/lumeran%20pink%2050x24.svg');
-  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
-}
-.chat-message.moderator .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
-  transform: rotate(-35deg);
-}
-.chat-message.moderator .badge::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/star%20merah.svg');
-    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
-}
-
-/* Member */
-.chat-message.member {
-  background-image: linear-gradient(to right, #E46870, #5E0B15);
-  padding: 4px; 
-  border-radius: 14px;
-  margin-bottom: 10px; 
-}
-.chat-message.member .message {
-  background-image: linear-gradient(to right, #E46870, #5E0B15);
-  border: 1px solid #F6C4C3;
-  color: #F6C4C3;
-}
-.chat-message.member .badge {
-  background-image: linear-gradient(to right, #E46870, #5E0B15);
-  border: 0.5px solid #F6C4C3;
-  color: #F6C4C3;
-}
-.chat-message.member .message::before {
-  background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/lumeran%20cerah%2050x24.svg');
-  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
-}
-.chat-message.member .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
-  transform: rotate(-35deg);
-}
-.chat-message.member .badge::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/star%20pink.svg');
-    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
-}
-
-/* Regular */
-.chat-message.regular {
-  background-color: #FFEBD3;
-  padding: 4px;
-  border-radius: 14px;
-  margin-bottom: 10px; 
-}
-.chat-message.regular .message {
-  background-color: #FFEBD3;
-  border: 1px solid #4B1F1B;
-  color: #4B1F1B;
-}
-.chat-message.regular .badge {
-  background-color: #FFEBD3;
-  border: 0.5px solid #4B1F1B;
-  color: #4B1F1B;
-}
-.chat-message.regular .message::before {
-  background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e2ee1873f92ea90b04dc3cce99e00f821e3d2d04/Vierstin/Asset/lumeran%20coklat%2050x24.svg');
-  width: 50px; height: 24px; top: -8px; left: -7px; z-index: 2;
-}
+/* Regular: daun lebih besar */
 .chat-message.regular .badge::before {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/e2ee1873f92ea90b04dc3cce99e00f821e3d2d04/Vierstin/Asset/tangkai%2012x10.svg');
-  width: 16px; height: 13px; top: -6px; left: -1px; z-index: 5;
-  transform: rotate(-35deg);
-}
-.chat-message.regular .badge::after {
-    background-image: url('https://raw.githubusercontent.com/renzo-gith/SocialStreamNinja/378d5db63cdc88f9195accfa5465dbb051444cb7/Vierstin/Asset/star%20coklat.svg');
-    width: 12px; height: 12px; top: 50%; right: -6px;transform: translateY(-50%); z-index: 5;
+    left: -4.5px;
+    top: -6px;
+    width: 16px;
+    height: 13px;
 }
 
+/* Member: cokelat tua */
+.chat-message.member {
+    --outer: #4a2c08;
+    --inner: linear-gradient(#4a2c08, #4a2c08);
+    --line: linear-gradient(to bottom, #fec7c8, #b63f40);
+    --text: #ffaaa1;
+    --tag: linear-gradient(to right, #a13125, #4a240a);
+    --tag-line: #ffaaa1;
+    --tag-text: #ffaaa1;
+    --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M6 0C6 3.31348 8.68594 6 12 6C8.68594 6 6 8.68652 6 12C6 8.68652 3.31406 6 0 6C3.31406 6 6 3.31348 6 0Z' fill='%23FFAAA1'/%3E%3C/svg%3E");
+    --star-size: 10px;
+}
+
+/* Moderator: krem */
+.chat-message.moderator {
+    --outer: linear-gradient(to right, #eed5bf, #ffffff);
+    --inner: linear-gradient(to right, #eed5bf, #ffffff);
+    --line: linear-gradient(#764025, #764025);
+    --text: #764025;
+    --tag: linear-gradient(to right, #eed5bf, #ffffff);
+    --tag-line: #764025;
+    --tag-text: #764025;
+    --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M6 0C6 3.31348 8.68594 6 12 6C8.68594 6 6 8.68652 6 12C6 8.68652 3.31406 6 0 6C3.31406 6 6 3.31348 6 0Z' fill='%23764025'/%3E%3C/svg%3E");
+    --drip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='51' height='24' viewBox='0 0 51 24' fill='none'%3E%3Cpath d='M2.50368 10.8924C6.09606 13.2863 5.89535 15.8796 5.49619 16.877C4.29989 19.8692 4.29872 23.46 6.69366 23.46C9.48945 23.46 9.68733 20.4677 9.0886 18.0739C8.38233 15.2502 9.48945 13.842 11.8694 13.26C14.2494 12.678 15.6747 14.4832 18.0696 15.0817C21.5594 15.9537 24.5248 11.3785 27 9.69561C31.8788 6.37845 37.8278 6.1049 40.8215 8.49871C43.8152 10.8925 41.3607 12.6879 41.9595 16.2786C42.5582 19.8693 46.8089 19.2708 47.4076 16.2786C48.0063 13.2863 46.8089 12.6879 46.8089 9.69561C46.8089 6.70335 51 6.1049 51 3.7111C51 1.31729 48.0063 0.718843 41.4203 1.31729C34.8342 1.91575 32.4392 0.718906 29.4456 0.120454C26.4519 -0.477997 24.6557 1.31723 18.6683 1.91568C12.681 2.51413 9.68849 0.120326 4.29988 0.718777C-1.08872 1.31723 -1.08871 8.49863 2.50368 10.8924Z' fill='%23764025'/%3E%3Cpath d='M3.11998 2.30069C1.07998 3.38868 0.650531 6.45994 1.66933 7.81994C2.18059 3.5699 6.60058 1.6999 9.58016 2.30069C8.30058 1.5299 5.15998 1.21269 3.11998 2.30069Z' fill='white'/%3E%3Cpath d='M5.75102 22.1002C5.07102 21.4202 5.28227 19.5277 5.58102 18.7002C6.02071 17.4825 5.75105 19.7201 6.60105 20.9102C7.35351 21.9638 6.60102 22.9502 5.75102 22.1002Z' fill='white'/%3E%3Cpath d='M43.0909 17.3522C42.4109 16.6722 42.6221 14.7796 42.9209 13.9522C43.3606 12.7345 43.0909 14.972 43.9409 16.1622C44.6934 17.2158 43.9409 18.2022 43.0909 17.3522Z' fill='white'/%3E%3C/svg%3E");
+}
+
+/* Owner: pink, tanpa lelehan */
+.chat-message.owner {
+    --outer: linear-gradient(to bottom, #f5bacc, #e6798c);
+    --inner: linear-gradient(to bottom, #f5bacc, #e6798c);
+    --line: linear-gradient(#ffffff, #ffffff);
+    --text: #ffffff;
+    --tag: linear-gradient(to bottom, #f5bacc, #e6798c);
+    --tag-line: #ffffff;
+    --tag-text: #ffffff;
+    --star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M6 0C6 3.31348 8.68594 6 12 6C8.68594 6 6 8.68652 6 12C6 8.68652 3.31406 6 0 6C3.31406 6 6 3.31348 6 0Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    --star-size: 10px;
+    --drip: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .berry { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -415,11 +376,8 @@ body, html {
 
         chatEl.innerHTML = `
             <div class="badge"><span class="name">${esc(item.username)}</span></div>
-            <div class="message">
-                ${item.messageHTML}${contentMediaHTML(item.contentimg)}
-                <span class="ornament-extra-1"></span>
-                <span class="ornament-extra-2"></span>
-            </div>
+            <div class="message">${item.messageHTML}${contentMediaHTML(item.contentimg)}</div>
+            <span class="berry"></span>
         `;
 
         animateChatShift(chatEl);
